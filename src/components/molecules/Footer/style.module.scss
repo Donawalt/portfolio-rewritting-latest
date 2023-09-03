@@ -1,0 +1,39 @@
+@import "../../../assets//styles/variables.scss";
+@import "../../../assets/styles/mixins.scss";
+
+.do_footer {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 28px;
+    padding-top: 16px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-top: 1px solid gray;
+    align-items: flex-end;
+    ul {
+        display: flex;
+
+        li {
+            position: relative;
+            margin-left: 24px;
+
+            svg {
+                position: absolute;
+                right: -12px;
+                top: 50%;
+                transform: translate(50%, -50%);
+            }
+        }
+    }
+    @include interpolate(margin, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 28px );
+    @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 40px );
+    @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 40px );
+    @include mq(tablet, max){
+        margin: 16px;
+        ul{
+            li{
+                margin-left: 26px;
+            }
+        }
+    }
+}

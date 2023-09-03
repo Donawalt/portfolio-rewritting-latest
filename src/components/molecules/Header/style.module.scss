@@ -1,0 +1,30 @@
+@import "../../../assets//styles/variables.scss";
+@import "../../../assets/styles/mixins.scss";
+.do_header{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding-top: 32px;
+    align-items: center;
+    padding-left: 32px;
+    padding-right: 32px;
+    z-index: map-get($z-indexes, 'header');
+    a{
+        justify-self: center;
+        color: white;
+        text-decoration: none;
+    }
+    ul:nth-child(3){
+        justify-self: flex-end;
+    }
+    @include mq(tablet, max){
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 16px;
+        padding-right: 16px;
+        background-color: map-get($brands-primary, 'background' );
+    }
+}

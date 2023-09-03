@@ -1,0 +1,28 @@
+.root{
+    margin-bottom: 40px;
+    label{
+        display: block;
+        transform: translateY(100%);
+        transition: 300ms;
+    }
+    input,textarea {
+        background-color: transparent;
+        color: white;
+        border: none;
+        border-bottom: 1px solid white;
+        display: block;
+        width: 100%;
+        &:focus{
+            outline: none;
+        }
+    }
+    textarea{
+        min-height: 110px;
+    }
+
+    &:hover, &.not_empty {
+        label{
+            transform: translateY(-22%);
+        }
+    }
+}

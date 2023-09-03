@@ -1,0 +1,9 @@
+.root {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    & > input{
+        margin-left: auto;
+        margin-right: 0px;
+    }
+}

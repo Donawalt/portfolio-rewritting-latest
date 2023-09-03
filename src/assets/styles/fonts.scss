@@ -1,0 +1,86 @@
+/**
+* FONTS FOR ALL THE SITE
+**/
+@font-face {
+    font-family: 'scilla_narrowregular_italic';
+    src: url('/fonts/scillanarrow-regularitalic-webfont.eot');
+    src: url('/fonts/scillanarrow-regularitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/scillanarrow-regularitalic-webfont.woff2') format('woff2'),
+         url('/fonts/scillanarrow-regularitalic-webfont.woff') format('woff'),
+         url('/fonts/scillanarrow-regularitalic-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'scillaregular_italic';
+    src: url('/fonts/scilla-regularitalic-webfont.eot');
+    src: url('/fonts/scilla-regularitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/scilla-regularitalic-webfont.woff2') format('woff2'),
+         url('/fonts/scilla-regularitalic-webfont.woff') format('woff'),
+         url('/fonts/scilla-regularitalic-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'scillaregular';
+    src: url('/fonts/scilla-regular-webfont.eot');
+    src: url('/fonts/scilla-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/scilla-regular-webfont.woff2') format('woff2'),
+         url('/fonts/scilla-regular-webfont.woff') format('woff'),
+         url('/fonts/scilla-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'scilla_narrowregular';
+    src: url('/fonts/scillanarrow-regular-webfont.eot');
+    src: url('/fonts/scillanarrow-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/scillanarrow-regular-webfont.woff2') format('woff2'),
+         url('/fonts/scillanarrow-regular-webfont.woff') format('woff'),
+         url('/fonts/scillanarrow-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Jost*';
+    src: url('/fonts/Jost-Medium.eot');
+    src: url('/fonts/Jost-Medium.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/Jost-Medium.woff2') format('woff2'),
+        url('/fonts/Jost-Medium.woff') format('woff'),
+        url('/fonts/Jost-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Jost*';
+    src: url('/fonts/Jost-Light.eot');
+    src: url('/fonts/Jost-Light.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/Jost-Light.woff2') format('woff2'),
+        url('/fonts/Jost-Light.woff') format('woff'),
+        url('/fonts/Jost-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Jost*';
+    src: url('/fonts/Jost-Thin.eot');
+    src: url('/fonts/Jost-Thin.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/Jost-Thin.woff2') format('woff2'),
+        url('/fonts/Jost-Thin.woff') format('woff'),
+        url('/fonts/Jost-Thin.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}

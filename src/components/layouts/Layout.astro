@@ -1,0 +1,12 @@
+---
+import '../../assets/styles/root.scss';
+import NoiseCanvas from '../atoms/NoiseCanvas/index.';
+import Header from '../molecules/Header/index.';
+import Footer from '../molecules/Footer/index.';
+---
+<body data-barba="wrapper">
+    <Header />
+	<main data-barba="container" id="container"><slot /></main>
+    <Footer />
+    <NoiseCanvas />
+</body>

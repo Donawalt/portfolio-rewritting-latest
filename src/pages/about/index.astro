@@ -1,0 +1,183 @@
+---
+const rootDir = process.cwd();
+// Tools
+import imageSize from "image-size";
+
+import SEO from "../../components/layouts/utils/SEO.astro";
+import Layout from "../../components/layouts/Layout.astro";
+
+import Section from "../../components/organisms/Section";
+import AboutStyle from "./about.module.scss";
+
+// Import companies and awards logo 
+import { CompaniesLogo } from '../../components/atoms/Logo/index.'
+
+// Import demo assets
+import DemoPictureDesktopJPEG from "../../assets/images/pages/design-system/demo-picture-desktop.jpg";
+import DemoPictureDesktopWEBP from "../../assets/images/pages/design-system/demo-picture-desktop.webp";
+import DemoPictureDesktopRetinaJPEG from "../../assets/images/pages/design-system/demo-picture-desktop-retina.jpg";
+import DemoPictureDesktopRetinaWEBP from "../../assets/images/pages/design-system/demo-picture-desktop-retina.webp";
+import DemoPictureDesktopRetinaX2JPEG from "../../assets/images/pages/design-system/demo-picture-desktop-retina-x2.jpg";
+import DemoPictureDesktopRetinaX2WEBP from "../../assets/images/pages/design-system/demo-picture-desktop-retina-x2.webp";
+
+import DemoPictureMobileJPEG from "../../assets/images/pages/design-system/demo-picture-mobile.jpg";
+import DemoPictureMobileWEBP from "../../assets/images/pages/design-system/demo-picture-mobile.webp";
+import DemoPictureMobileRetinaJPEG from "../../assets/images/pages/design-system/demo-picture-mobile-retina.jpg";
+import DemoPictureMobileRetinaWEBP from "../../assets/images/pages/design-system/demo-picture-mobile-retina.webp";
+
+import DemoPictureMobileLazyJPEG from "../../assets/images/pages/design-system/demo-picture-mobile-lazy.jpg";
+import DemoPictureDesktopLazyJPEG from "../../assets/images/pages/design-system/demo-picture-desktop-lazy.jpg";
+
+let DemoPictureDesktopJPEG_DATA = imageSize(
+    rootDir + "/" + DemoPictureDesktopJPEG
+);
+DemoPictureDesktopJPEG_DATA = {
+    ...DemoPictureDesktopJPEG_DATA,
+    src: DemoPictureDesktopJPEG,
+};
+let DemoPictureMobileJPEG_DATA = imageSize(
+    rootDir + "/" + DemoPictureMobileJPEG
+);
+DemoPictureMobileJPEG_DATA = {
+    ...DemoPictureMobileJPEG_DATA,
+    src: DemoPictureMobileJPEG,
+};
+
+
+---
+
+<SEO>
+    <Layout>
+        <main class={AboutStyle.do_about_page}>
+            <section class={AboutStyle.do_about_hero}>
+                <h1>
+                    <span class="do-text-s">About</span> Donaël Walter
+                </h1>
+                <p>
+                    Hey, i’m Creative ( Developper, Designer, Photographer ).
+                    What i love is building strong, high-quality ans
+                    user-friendly experiences, for brand and more .
+                </p>
+            </section>
+            <Section
+                type="media-h-picture"
+                images={{
+                    mobile: {
+                        jpeg: [
+                            DemoPictureMobileJPEG,
+                            DemoPictureMobileRetinaJPEG,
+                        ],
+                        webp: [
+                            DemoPictureMobileWEBP,
+                            DemoPictureMobileRetinaWEBP,
+                        ],
+                    },
+                    desktop: {
+                        jpeg: [
+                            DemoPictureDesktopJPEG,
+                            DemoPictureDesktopRetinaJPEG,
+                            DemoPictureDesktopRetinaX2JPEG,
+                        ],
+                        webp: [
+                            DemoPictureDesktopWEBP,
+                            DemoPictureDesktopRetinaWEBP,
+                            DemoPictureDesktopRetinaX2WEBP,
+                        ],
+                    },
+                }}
+                alt="Ceci est le texte alternatif par défaut"
+                posterMobile={DemoPictureMobileLazyJPEG}
+                posterDesktop={DemoPictureDesktopLazyJPEG}
+                widthDesktop={DemoPictureDesktopJPEG_DATA.width}
+                heightDesktop={DemoPictureDesktopJPEG_DATA.height}
+                widthMobile={DemoPictureMobileJPEG_DATA.width}
+                heightMobile={DemoPictureMobileJPEG_DATA.height}
+                lazy={true}
+                client:load
+            />
+            <section class={AboutStyle.do_paragraph}>
+                <p>
+                    I'm a creative, passionate and sporty spirit, constantly
+                    fascinated by the impact of visual elements. From posters to
+                    films, music videos and architecture, right down to car
+                    logos, I'm captivated by every detail. This passion has led
+                    me to design my own creations, investing my energy every day
+                    in everything I do. Whether in my work, my sporting
+                    activities or my personal projects, I like to push things to
+                    the very last detail.
+                </p>
+            </section>
+            <Section
+                type="experiences"
+                title="Previously"
+                description="I’m proud and lucky to have passed through these agencies which taught me a lot and helped me to evolve in relation to my professional project, and the digital world."
+                experiences={[
+                    {
+                        icone: 'vinium',
+                        name: "Vinium",
+                        description: "Internship - 2019",
+                    },
+                    {
+                        icone: 'opsone',
+                        name: "Opsone",
+                        description: "Work-Study position - 2019 - 2020",
+                    },
+                ]}
+            />
+            <Section
+                type="experiences"
+                title="Awards & Featured"
+                description="Yes for know the list is pretty short ... But maybe if we collaborate I'm sure she won't be there long. Winning prizes is one thing, but working on interesting and useful projects is the main thing."
+                experiences={[
+                    {
+                        icone: 'MAXI',
+                        name: "Inspiration Feed",
+                        description: "Bihua",
+                    },
+                    {
+                        icone: 'CSSDA',
+                        name: "Site of the day",
+                        description: "Bihua",
+                    },
+                ]}
+            />
+            <Section
+                type="media-f-picture"
+                images={{
+                    mobile: {
+                        jpeg: [
+                            DemoPictureMobileJPEG,
+                            DemoPictureMobileRetinaJPEG,
+                        ],
+                        webp: [
+                            DemoPictureMobileWEBP,
+                            DemoPictureMobileRetinaWEBP,
+                        ],
+                    },
+                    desktop: {
+                        jpeg: [
+                            DemoPictureDesktopJPEG,
+                            DemoPictureDesktopRetinaJPEG,
+                            DemoPictureDesktopRetinaX2JPEG,
+                        ],
+                        webp: [
+                            DemoPictureDesktopWEBP,
+                            DemoPictureDesktopRetinaWEBP,
+                            DemoPictureDesktopRetinaX2WEBP,
+                        ],
+                    },
+                }}
+                alt="Ceci est le texte alternatif par défaut"
+                posterMobile={DemoPictureMobileLazyJPEG}
+                posterDesktop={DemoPictureDesktopLazyJPEG}
+                widthDesktop={DemoPictureDesktopJPEG_DATA.width}
+                heightDesktop={DemoPictureDesktopJPEG_DATA.height}
+                widthMobile={DemoPictureMobileJPEG_DATA.width}
+                heightMobile={DemoPictureMobileJPEG_DATA.height}
+                lazy={true}
+                client:load
+            />
+            <Section type="working-together" client:load/>
+        </main>
+    </Layout>
+</SEO>

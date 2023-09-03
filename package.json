@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-freelance",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --host",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^2.2.1",
+    "@barba/core": "^2.9.7",
+    "@barba/prefetch": "^2.1.10",
+    "@studio-freight/lenis": "^1.0.16",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "astro": "^2.10.14",
+    "gsap": "^3.12.2",
+    "image-size": "^1.0.2",
+    "imagesloaded": "^5.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.63.6"
+  }
+}

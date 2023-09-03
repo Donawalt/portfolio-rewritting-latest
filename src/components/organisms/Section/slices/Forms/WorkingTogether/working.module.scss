@@ -1,0 +1,36 @@
+.root {
+    h2 {
+        margin-bottom: 64px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        padding-left: 8vw;
+        padding-right: 8vw;
+
+        div:nth-child(1) {
+            padding: 32px 16px;
+            display: block;
+            height: fit-content;
+
+            h3{
+                text-transform: uppercase;
+                margin-bottom: 16px;
+            }
+
+            p{
+                margin-bottom: 24px;
+            }
+            border-radius: 16px;
+            border: 1px solid #3A3A3A;
+
+            button{
+                width: 100%;
+            }
+        }
+    }
+}
