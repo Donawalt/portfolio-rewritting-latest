@@ -1,12 +1,182 @@
 ---
-import '../../assets/styles/root.scss';
-import NoiseCanvas from '../atoms/NoiseCanvas/index.';
-import Header from '../molecules/Header/index.';
-import Footer from '../molecules/Footer/index.';
+//import '../../assets/styles/root.scss';
+import NoiseCanvas from "../atoms/NoiseCanvas/index.";
+import Header from "../molecules/Header/index.";
+import Footer from "../molecules/Footer/index.";
 ---
+
 <body data-barba="wrapper">
     <Header />
-	<main data-barba="container" id="container"><slot /></main>
+    <main data-barba="container" id="container"><slot /></main>
     <Footer />
     <NoiseCanvas />
 </body>
+
+<style is:global>
+    // fonts
+    // define all styles
+    h1,
+    .do-text-xxxl {
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 120px;
+        line-height: 1.2;
+        font-variant-ligatures: common-ligatures;
+        font-family: "scillaregular", "Times New Roman", Times, serif;
+
+        @include mq("tablet", max) {
+            font-size: 36px;
+        }
+        @include interpolate(
+            font-size,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            36px,
+            120px
+        );
+    }
+
+    h2,
+    .do-text-xxl {
+        font-family: "Scilla";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 90px;
+        line-height: 97%;
+        font-variant-ligatures: common-ligatures;
+        font-family: "scillaregular", "Times New Roman", Times, serif;
+
+        @include mq("tablet", max) {
+            font-size: 30px;
+        }
+        @include interpolate(
+            font-size,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            30px,
+            90px
+        );
+    }
+
+    h3,
+    .do-text-xl {
+        font-family: "Scilla";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 60px;
+        line-height: 97%;
+
+        @include mq("tablet", max) {
+            font-size: 25px;
+        }
+        @include interpolate(
+            font-size,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            25px,
+            60px
+        );
+    }
+
+    h4,
+    .do-text-xl {
+        font-family: "Scilla";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 45px;
+        line-height: 45px;
+        text-align: center;
+        font-feature-settings: "ordn" on;
+
+        @include mq("tablet", max) {
+            font-size: 14px;
+        }
+        @include interpolate(
+            font-size,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            14px,
+            45px
+        );
+    }
+
+    h5,
+    h6,
+    p,
+    a,
+    button,
+    .do-text-default {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 22px;
+        line-height: initial;
+
+        @include mq("tablet", max) {
+            font-size: 14px;
+            line-height: initial;
+        }
+        @include interpolate(
+            font-size,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            14px,
+            22px
+        );
+    }
+
+    .do-text-s {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 97%;
+
+        @include mq("tablet", max) {
+            font-size: 12px;
+        }
+        @include interpolate(
+            font-size,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            12px,
+            18px
+        );
+    }
+
+    .do-text-xs {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 97%;
+
+        @include mq("tablet", max) {
+            font-size: 10px;
+        }
+        @include interpolate(
+            font-size,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            10px,
+            16px
+        );
+    }
+
+    /* styles.css */
+
+    .page-enter {
+        opacity: 0;
+    }
+
+    .page-enter-active {
+        opacity: 1;
+        transition: opacity 300ms;
+    }
+
+    .page-exit {
+        opacity: 1;
+    }
+
+    .page-exit-active {
+        opacity: 0;
+        transition: opacity 300ms;
+    }
+</style>

@@ -1,6 +1,8 @@
 .root {
+    @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 80px, 100px );
+    @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 100px, 180px );
     h2 {
-        margin-bottom: 64px;
+        margin-bottom: 80px;
         text-align: center;
         text-transform: uppercase;
     }
@@ -32,5 +34,15 @@
                 width: 100%;
             }
         }
+
+        @include mq('tablet', max){
+            display: block;
+            div:nth-child(1) {
+                margin-bottom: 80px;
+            }
+        }
+    }
+    @include mq("tablet", max){
+        margin-bottom: 120px;
     }
 }

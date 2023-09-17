@@ -13,6 +13,18 @@ html {
     background-color: map-get($brands-primary, 'background');
     color: map-get($brands-primary, 'text');
     font-family: "Jost*";
+
+}
+
+body{
+    padding-top: 81px;
+    @include interpolate(padding-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 32px, 81px );
+    @include mq('tablet', max){
+        padding-top: 32px;
+    }
+}
+
+// fonts 
     // define all styles 
     h1,
     .do-text-xxxl {
@@ -115,15 +127,7 @@ html {
         }
         @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 10px, 16px )
     }
-}
 
-body{
-    padding-top: 81px;
-    @include interpolate(padding-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 32px, 81px );
-    @include mq('tablet', max){
-        padding-top: 32px;
-    }
-}
 
 /* styles.css */
 

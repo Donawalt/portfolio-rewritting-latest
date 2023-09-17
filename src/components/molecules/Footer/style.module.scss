@@ -30,9 +30,15 @@
     @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 40px );
     @include mq(tablet, max){
         margin: 16px;
+        flex-direction: column-reverse;
+        align-items: center;
         ul{
+            margin-bottom: 16px;
             li{
                 margin-left: 26px;
+                &:nth-child(1){
+                    margin-left: 0px;
+                }
             }
         }
     }

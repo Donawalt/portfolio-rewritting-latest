@@ -2,7 +2,7 @@
 @import "../../../../../assets/styles/mixins.scss";
 
 .do_experiences {
-    margin-top: 180px;
+    margin-top: 200px;
     @include grid(8, 16px, 32px);
     &>div {
         grid-column: 1 / 8;
