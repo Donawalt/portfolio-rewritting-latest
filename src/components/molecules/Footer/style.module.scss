@@ -16,7 +16,14 @@
         li {
             position: relative;
             margin-left: 24px;
-
+            a{
+                color: inherit;
+                text-decoration: none;
+                transition: 300ms;
+                &:hover{
+                    color: cornflowerblue;
+                }
+            }
             svg {
                 position: absolute;
                 right: -12px;

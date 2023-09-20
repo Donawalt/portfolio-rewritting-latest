@@ -1,0 +1,32 @@
+.root {
+    display: grid;
+    
+    @include interpolate(padding-left, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 32px);
+    @include interpolate(padding-right, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 32px);
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(322px, auto));
+    grid-gap: 16px;
+    grid-auto-flow: row dense;
+    grid-auto-rows: 250px;
+
+    li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    :nth-child(18n + 4) {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    :nth-child(9n + 16) {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    @include mq("tablet", max){
+        grid-template-columns: 1fr 1fr;
+    }
+}

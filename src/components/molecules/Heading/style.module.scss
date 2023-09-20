@@ -1,0 +1,8 @@
+.root{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 100px, 180px );
+    @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 80px, 120px );
+}
