@@ -12,11 +12,24 @@
             margin-left: 8px;
         }
         div{
-            background-color: blanchedalmond;
             border-radius: 16px;
             height:100%;
             width: 100%;
             transition: 300ms;
+            overflow: hidden;
+            picture{
+                display: block;
+                height: 100%;
+                width: 100%;
+                scale: 1;
+                transition: 300ms;
+                img{
+                    display: block;
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
         }
 
         &:hover{
@@ -24,7 +37,10 @@
                 opacity: 1;
              }
              div{
-                opacity: 0.8
+                opacity: 0.8;
+                picture{
+                    scale: 1.1;
+                }
              }
         }
         svg{

@@ -6,7 +6,11 @@ const ProjectItem = (props: { index, title, picture }) => {
     return (
         <a href="/projects/design" className={Style.root}>
             <h3 className='do-text-s'>Ceci est un titre test</h3>
-            <div></div>
+            <div>
+                <picture>
+                    <img src="https://source.unsplash.com/random/1920×1080" alt="Image de test" />
+                </picture>
+            </div>
             <svg width="46" height="43" viewBox="0 0 46 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_139_0)">
                     <path d="M22.9184 12.3202C22.8369 19.2453 28.5461 24.882 35.6418 24.8015H35.3156C28.383 24.882 22.8369 30.5187 22.9184 37.3633V37.2827C22.8369 30.4382 17.2092 24.9625 10.3581 24.882H10.2766C17.2092 24.8015 22.9184 19.2453 22.9184 12.3202Z" fill="white" />

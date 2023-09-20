@@ -1,4 +1,4 @@
-import Picture from "../../../../atoms/Picture/index.";
+import Picture from "../../../../atoms/Picture";
 import Video from "../../../../atoms/Video/index.";
 import React from "react";
 
