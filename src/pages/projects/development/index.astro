@@ -2,9 +2,14 @@
 import Layout from "../../../components/layouts/Layout.astro";
 import SEO from "../../../components/layouts/utils/SEO.astro";
 
+import { client } from "../../../assets/scripts/utils/api/sanityClient";
+import { getAllProjects } from "../../../assets/scripts/utils/api/api";
 //
 import Heading from '../../../components/molecules/Heading';
 import ProjectList from '../../../components/molecules/ProjectList'
+
+let allProjects = await client.fetch(getAllProjects());
+allProjects = allProjects.filter(el => el.category === 'development')
 ---
 
 <SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography">
@@ -13,7 +18,7 @@ import ProjectList from '../../../components/molecules/ProjectList'
             <h1>Development</h1>
             <p>Web development projects selection</p>
         </Heading>
-        <ProjectList />
+        <ProjectList projects={allProjects} client:load/>
 	</Layout>
 </SEO>
 

@@ -1,0 +1,35 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../../components/layouts/Layout.astro";
+import SEO from "../../../components/layouts/utils/SEO.astro";
+import Project from '../../../components/templates/Project.astro';
+import { getAllProjects } from "../../../assets/scripts/utils/api/api";
+import { client } from "../../../assets/scripts/utils/api/sanityClient";
+
+export const getStaticPaths = (async () => {
+    let allLandings = await client.fetch(getAllProjects());
+    allLandings = allLandings.filter(el => el.category === 'photography')
+
+    const allLandingsLength = allLandings.length;
+    return allLandings.map((page, index)=>{
+
+        const nextPage = index === allLandingsLength - 1 ? allLandings[0] : allLandings[index + 1];
+        return {
+            params: {slug: page.seoSlug.current},
+            props: {page, nextPage}
+        }
+    });
+}) satisfies GetStaticPaths;
+
+const {slug, type} = Astro.params;
+const {page, nextPage} = Astro.props;
+---
+<SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography">
+	<Layout>
+        <Project title={page.name} subTitle={page.subtitle} cover={page.cover} tag={page?.tag} introduction={page?.introduction} skills={page?.skills} content={page.content} nextProject={nextPage} slug={slug}/>
+    </Layout>
+</SEO>
+
+<script define:vars={{page}}>
+    console.log("Content", page)
+</script>

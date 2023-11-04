@@ -6,15 +6,20 @@ import SEO from "../../components/layouts/utils/SEO.astro";
 import Heading from '../../components/molecules/Heading';
 
 import ProjectList from '../../components/molecules/ProjectList'
+
+import { client } from "../../assets/scripts/utils/api/sanityClient";
+import { getAllProjects } from "../../assets/scripts/utils/api/api";
+
+let allProjects = await client.fetch(getAllProjects());
 ---
 
-<SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography">
+<SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography" description="">
 	<Layout>
 		<Heading>
             <h1>Projects</h1>
             <p slot="subtitle">An overview of what I make/do</p>
         </Heading>
-        <ProjectList />
+        <ProjectList projects={allProjects} client:load/>
 	</Layout>
 </SEO>
 

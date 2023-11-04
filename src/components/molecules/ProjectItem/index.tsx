@@ -1,15 +1,21 @@
+import Picture from '../../atoms/Picture';
 import Style from './style.module.scss';
 
-const ProjectItem = (props: { index, title, picture }) => {
-    const { index, title, picture } = props;
-
+const ProjectItem = (props: { index, title, picture, link }) => {
+    const { index, title, picture, link } = props;
+    console.log('This is list item picture', picture)
     return (
-        <a href="/projects/design" className={Style.root}>
-            <h3 className='do-text-s'>Ceci est un titre test</h3>
+        <a href={link ? link : "/projects/design"} className={Style.root}>
+            <h3 className='do-text-s'>{title ? title : "Lorem ipsum dolor"}</h3>
             <div>
-                <picture>
+                {picture && <Picture url={picture.asset._ref} widthDesktop={1376}
+                    heightDesktop={400}
+                    widthMobile={640}
+                    heightMobile={200}
+                    alt={picture.alt} />}
+                    {!picture && (<picture>
                     <img src="https://source.unsplash.com/random/1920×1080" alt="Image de test" />
-                </picture>
+                </picture>)}
             </div>
             <svg width="46" height="43" viewBox="0 0 46 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_139_0)">

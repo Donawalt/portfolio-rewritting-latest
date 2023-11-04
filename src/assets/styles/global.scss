@@ -72,9 +72,9 @@ body{
         font-feature-settings: 'ordn' on;
 
         @include mq('tablet', max){
-            font-size: 14px;
+            font-size: 18px;
         }
-        @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 14px, 45px );
+        @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 45px );
     }
 
     h5,
@@ -119,6 +119,25 @@ body{
         @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 10px, 16px )
     }
 
+// Flex align 
+.do-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.do-left {
+    display: flex;
+    justify-content: center;
+    align-items: left;
+}
+
+.do-right {
+    display: flex;
+    justify-content: center;
+    align-items: right;
+}
 
 /* styles.css */
 

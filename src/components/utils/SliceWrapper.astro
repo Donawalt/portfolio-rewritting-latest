@@ -1,0 +1,126 @@
+---
+import { NoMatchingStaticPathFound } from "astro/dist/core/errors/errors-data";
+import Citation from "../organisms/Section/slices/Citation";
+import Images from "../organisms/Section/slices/Images";
+import {
+    FullPicture,
+    BasicPicture,
+    DoublePicture,
+    GridPicture,
+} from "../organisms/Section/slices/Media";
+
+let { node } = Astro.props;
+if (node._type === "images" && Object.keys(node).length === 3) {
+    node.images = node.images.map((el) => {
+        return {
+            url: el.asset?._ref,
+            widthDesktop: 500,
+            heightDesktop: 700,
+            heightMobile: 900,
+            widthMobile: 600,
+            crop: null,
+            alt: el?.alt,
+            posterDesktop: null,
+            posterMobile: null,
+            lazy: true,
+            images: null,
+        };
+    });
+
+    // console.log(node)
+}
+---
+
+<!---Managfe Citation -->{
+    node._type === "citation" && (
+        <Citation author={node?.author} content={node?.content} />
+    )
+}
+
+<div>
+<!---Manage Images -->
+{
+    node._type === "images" && node?.isFull && (
+        <FullPicture
+            url={node.images[0].asset._ref}
+            widthDesktop={1920}
+            heightDesktop={1080}
+            heightMobile={900}
+            widthMobile={600}
+            crop={null}
+            alt={node.images[0].alt}
+            posterDesktop={null}
+            posterMobile={null}
+            lazy={true}
+            images={null}
+            client:load
+        />
+    )
+}
+{
+    node._type === "images" && typeof node.isFull !== 'undefined' && !node?.isFull && Object.keys(node).length === 4  && (
+        <BasicPicture
+            url={node.images[0].asset._ref}
+            widthDesktop={1440}
+            heightDesktop={810}
+            heightMobile={900}
+            widthMobile={600}
+            crop={null}
+            alt={node.images[0].alt}
+            posterDesktop={null}
+            posterMobile={null}
+            lazy={true}
+            images={null}
+            client:load
+        />
+    )
+}
+{
+    node._type === "images" &&
+        node?.position &&
+        node?.position !== "center" && (
+            <DoublePicture
+                pictureLeft={{
+                    url: node.images[0].asset._ref,
+                    widthDesktop: 500,
+                    heightDesktop: 700,
+                    heightMobile: 900,
+                    widthMobile: 600,
+                    crop: null,
+                    alt: node.images[0].alt,
+                    posterDesktop: null,
+                    posterMobile: null,
+                    lazy: true,
+                    images: null,
+                }}
+                pictureRight={{
+                    url: node.images[1].asset._ref,
+                    widthDesktop: 500,
+                    heightDesktop: 700,
+                    heightMobile: 900,
+                    widthMobile: 600,
+                    crop: null,
+                    alt: node.images[1].alt,
+                    posterDesktop: null,
+                    posterMobile: null,
+                    lazy: true,
+                    images: null,
+                }}
+                up={node.position}
+            client:load/>
+        )
+}
+
+{
+    node._type === "images" && Object.keys(node).length === 3 && (
+        <GridPicture pictures={node.images} client:load/>
+    )
+}
+</div>
+
+
+<style lang="scss">
+    div{
+        grid-column: 1/16;
+    }
+</style>

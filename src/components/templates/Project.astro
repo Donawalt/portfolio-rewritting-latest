@@ -1,9 +1,233 @@
 ---
-import Tag from '../atoms/Tag/index.';
-import Heading from '../molecules/Heading';
+import Tag from "../atoms/Tag/index.";
+import Heading from "../molecules/Heading";
+import { PortableText } from "astro-portabletext";
+
+import Section from "../organisms/Section";
+import { SliceMachine } from "../utils/SliceMachine.astro";
+import Picture from "../atoms/Picture";
+import { loadTSConfig } from "astro/dist/core/config";
+
+const {
+    title,
+    subTitle,
+    tag,
+    introduction,
+    skills,
+    content,
+    cover,
+    nextProject,
+    slug,
+} = Astro.props;
+
+console.log(nextProject, nextProject?.slug);
 ---
+
 <Heading>
-    <p slot="top">Location - STUDIO - Type</p>
-    <h1>Voici le nom de mon propre projet</h1>
-    <div slot='subtitle'><Tag type='discret'>Ceci est mon tag</Tag></div>
+    <p slot="top">{subTitle}</p>
+    <h1>{title}</h1>
+    {
+        tag && (
+            <div slot="subtitle" data-slot="subtitle">
+                <Tag type="discret">{tag}</Tag>
+            </div>
+        )
+    }
 </Heading>
+<Section
+    type="media-h-picture"
+    url={cover.asset._ref}
+    alt={cover.alt}
+    widthDesktop={1376}
+    heightDesktop={400}
+    widthMobile={640}
+    heightMobile={200}
+    lazy={false}
+    client:load
+/>
+{
+    introduction && skills && (
+        <section class="do_project_hero">
+            <div>
+                <PortableText value={introduction} />
+            </div>
+
+            <ul>
+                {skills &&
+                    skills.map((el) => (
+                        <li>
+                            <Tag type="">{el}</Tag>
+                        </li>
+                    ))}
+            </ul>
+        </section>
+    )
+}
+{
+    content && (
+        <section class="do_project_content">
+            <PortableText value={content} components={SliceMachine} />
+        </section>
+    )
+}
+
+{
+    nextProject?.slug && (
+        <section>
+            <a href={nextProject.seoSlug.current} class="do_picture-wrapper">
+                <div>
+                    <Picture
+                        url={nextProject.cover.asset._ref}
+                        alt={nextProject.name}
+                        widthDesktop={1440}
+                        heightDesktop={900}
+                        widthMobile={640}
+                        heightMobile={200}
+                        client:load
+                    />
+                </div>
+                <div class="do-center">
+                    <p>Next project</p>
+                    <p class="do-text-xxxl" style="text-align: center;">
+                        {nextProject.name}
+                    </p>
+                    <svg
+                        width="80"
+                        height="76"
+                        viewBox="0 0 80 76"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <g clip-path="url(#clip0_1216_17)">
+                            <path
+                                d="M39.8581 21.7021C39.7163 33.9007 49.6454 43.8298 61.9858 43.688H61.4184C49.3617 43.8298 39.7163 53.7589 39.8581 65.8156V65.6738C39.7163 53.617 29.9291 43.9716 18.0142 43.8298H17.8723C29.9291 43.688 39.8581 33.9007 39.8581 21.7021Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M5.39005 41.4186C2.41133 40.993 -0.425552 38.298 -1.97999e-05 34.4682C0.141824 33.0498 0.7092 32.3406 0.992888 30.7803L5.81558 30.9221C2.41133 30.9221 0.567356 32.4824 0.283668 34.4682C-0.141864 37.4469 2.41133 39.1491 5.67374 39.5746C8.93615 40.0001 11.6312 38.8654 12.0567 36.0285C12.3404 34.0427 11.4893 32.1987 9.64537 31.2058C12.0567 32.3406 12.4822 34.6101 12.3404 36.0285C11.9149 39.8583 8.51062 41.7023 5.39005 41.4186Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M13.0496 31.0636C13.4751 29.9288 12.6241 29.5033 8.36876 27.2338C4.11345 24.9643 3.26238 24.5388 2.55316 25.5317L4.11345 22.553C4.11345 23.404 4.82267 23.6877 9.07798 25.9572C12.7659 27.943 14.0425 28.6522 15.0354 26.8083C16.4539 24.1132 14.8936 21.9856 13.3333 20.709L17.0212 23.6877L13.0496 31.0636Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M17.8723 22.837C18.156 22.1278 17.4468 21.5604 13.9007 18.298C10.3546 15.0356 9.7872 14.4682 8.93613 14.8938L11.3475 12.3406C10.6383 13.3335 11.3475 14.0427 14.8936 17.1633C18.4397 20.4257 19.2907 20.9931 20.1418 20.2838L17.8723 22.837Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M17.0212 14.61C15.3191 12.0568 15.6028 8.08516 18.8652 6.09935C20 5.39013 20.9929 5.24828 22.2695 4.53906L25.2482 8.22701C23.1205 5.53197 20.7092 5.24828 19.007 6.24119C16.4539 7.80147 16.8794 10.922 18.5815 13.6171C20.2836 16.3121 22.9787 17.8724 25.39 16.1703C26.9503 15.1774 27.9432 13.3334 27.5177 11.3476C28.2269 13.9008 26.6666 15.7447 25.5319 16.454C22.2695 18.7235 18.7234 17.305 17.0212 14.61Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M29.7872 13.7589C30.922 13.3333 30.7801 12.4823 29.9291 7.65957C29.078 2.83688 28.7943 1.98582 27.6596 1.98582L31.0638 1.41844C30.3546 1.84397 30.4964 2.69503 31.4894 7.37589C32.3404 12.0567 32.6241 13.0496 33.3333 13.0496L29.7872 13.7589ZM37.1631 12.3404C34.0425 9.64539 33.1915 8.79433 31.4894 7.23404C33.0496 4.25532 34.0425 2.83688 35.6028 0.567376L38.4397 0C36.1702 0.567376 34.3262 2.69503 32.4823 5.95745C34.4681 7.80142 35.1773 8.51064 36.7376 9.64539C38.0142 10.6383 40 11.9149 41.844 11.4894L37.1631 12.3404Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M54.8936 16.0281L51.6312 14.7515C52.766 15.0352 53.1915 14.1842 54.8936 9.64516L48.9362 7.37565C47.234 11.9147 46.9503 12.7657 47.9433 13.3331L44.6808 12.0565C45.5319 12.0565 45.6738 11.2054 47.5177 6.66643C49.2199 2.12743 49.5035 1.41821 48.9362 0.85083L52.1986 2.12743C51.0638 1.84374 50.6383 2.6948 49.078 7.09197L55.0355 9.36147C56.7376 4.96431 56.8794 4.11324 55.8865 3.54587L59.1489 4.82246C58.2979 4.82246 58.0142 5.67352 56.3121 10.2125C54.6099 14.7515 54.3262 15.6026 54.8936 16.0281Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M61.1347 13.6171C64.3971 10.071 65.1064 9.3618 64.2553 8.3689L69.9291 13.759L67.9432 16.5958C69.2198 14.61 68.6525 12.9079 67.0922 11.3476L66.2411 10.6384C65.5319 11.2058 64.3971 12.1987 62.4113 14.3263L63.9716 15.8866C64.9645 16.7377 65.9574 16.3122 67.234 15.0356L63.2624 19.2909C64.539 18.0143 64.6808 16.8795 63.8298 16.0285L62.2695 14.4682C59.5745 17.3051 58.8652 18.4398 58.5815 19.0072L59.0071 19.4327C61.4184 21.7022 63.5461 21.8441 65.5319 20.1419L62.4113 22.9788L56.1702 17.1632C57.0213 17.8724 57.7305 17.1632 61.1347 13.6171Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M63.1206 24.1135C63.8298 25.1064 64.6808 24.6808 69.078 22.5532C73.4752 20.4255 74.3262 20 73.9007 18.8652L75.8865 23.1206C77.0213 25.5319 76.3121 27.5177 74.8936 28.2269C73.0496 29.078 70.922 27.9432 70.0709 25.9574C70.6383 27.0922 70.3546 28.6525 69.7872 29.6454C68.0851 32.9078 67.6596 33.1915 68.7943 35.6028L66.6667 31.2057C68.7943 28.5106 70.0709 25.9574 69.3617 24.3972C70.4965 26.5248 72.3404 27.3759 74.3262 26.383C75.6028 25.6737 76.4539 24.2553 75.6028 22.5532C75.3191 22.1276 75.0355 21.7021 74.7518 21.5603C74.3262 21.7021 72.6241 22.4113 71.4894 22.9787L69.7872 23.8298C65.3901 25.9574 64.539 26.5248 65.2482 28.2269L63.1206 24.1135Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M73.4752 34.6101C78.2979 34.1846 79.2908 34.0427 79.2908 32.908L80 40.7094L76.5957 41.5604C78.8652 40.9931 79.5745 39.2909 79.4326 37.0214V35.8867C78.5816 35.7448 77.0213 35.8867 74.0426 36.0285L74.1844 38.298C74.3262 39.5746 75.3191 40.0002 77.1631 39.8583L71.3475 40.4257C73.1915 40.2838 74.0425 39.5746 73.9007 38.4399L73.7589 36.1704C69.7872 36.4541 68.5106 36.8796 68.0851 37.0214V37.5888C68.3688 40.8512 69.9291 42.4115 72.3404 42.5533H68.0851L67.3759 34.0427C67.8014 35.1775 68.7943 35.0356 73.4752 34.6101Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M73.4751 48.5107C69.7872 63.688 56.1702 75.0356 39.8581 75.0356C23.5461 75.0356 9.92903 63.688 6.24109 48.5107H5.53187C9.21981 64.1136 23.2624 75.7448 39.8581 75.7448C56.4539 75.7448 70.4964 64.1136 74.1843 48.5107H73.4751Z"
+                                fill="white"
+                            />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_1216_17">
+                                <rect
+                                    width="80"
+                                    height="75.7447"
+                                    fill="white"
+                                />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+            </a>
+        </section>
+    )
+}
+
+<style lang="scss" scoped>
+    // @import url('./../../assets/styles/variables.scss');
+    @import "./../../assets/styles/mixins.scss";
+
+    .do_project_hero {
+        @include grid(8, 16px, 32px);
+        margin-bottom: 180px;
+        & > div {
+            grid-column: 2 /5;
+        }
+        ul {
+            grid-column: 7/ 9;
+            margin: -4px;
+            & > li {
+                display: block;
+                margin: 8px;
+            }
+        }
+        @include mq(tablet, max) {
+            @include grid(2, 8px, 16px);
+            p,
+            ul {
+                grid-column: initial;
+            }
+            margin-bottom: 90px;
+        }
+    }
+
+    .do_picture-wrapper{
+        position: relative;
+        &>div:nth-child(1){
+            background-color: black;
+            opacity: 40%;
+        }
+        &>div:nth-child(2){
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: white;
+        }
+    }
+</style>
+
+<style lang="scss" is:global>
+    .do_project_content {
+        display: grid;
+        @include grid(16, 16px, 0px);
+        @include mq(tablet, max) {
+            @include grid(8, 8px, 0px);
+        }
+
+        & > h1,
+        & > h2,
+        & > h3,
+        & > h4,
+        & > h5,
+        & > p,
+        & > ul,
+        & > ol {
+            grid-column: 3 / 10;
+            margin-bottom: 32px;
+            @include mq(tablet, max) {
+                grid-column: 1/9;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+    }
+</style>

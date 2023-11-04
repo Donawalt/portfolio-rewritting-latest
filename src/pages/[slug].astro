@@ -1,0 +1,29 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../components/layouts/Layout.astro";
+import SEO from "../components/layouts/utils/SEO.astro";
+import Landing from "../components/templates/Landing.astro";
+import { client } from "../assets/scripts/utils/api/sanityClient";
+import { getAllLandings } from "../assets/scripts/utils/api/api";
+
+export const getStaticPaths = (async () => {
+    const allLandings = await client.fetch(getAllLandings());
+
+    return allLandings.map((page, index)=>{
+        return {
+            params: {slug: page.seoSlug.current},
+            props: {page}
+        }
+    });
+}) satisfies GetStaticPaths;
+
+const {slug, type} = Astro.params;
+const {page} = Astro.props;
+
+---
+
+<SEO lang="en" title={"Donaël Walter Portfolio | Creative Development, Design, Photography"}>
+	<Layout>
+		<Landing type={page.category} title={page.name} subTitle={page.subTitle} cover={page.cover} content="" client:load/>
+	</Layout>
+</SEO>

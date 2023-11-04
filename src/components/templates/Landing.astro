@@ -1,0 +1,153 @@
+---
+const rootDir = process.cwd();
+
+import { PortableText } from "astro-portabletext";
+
+// Tools
+import imageSize from "image-size";
+
+import Heading from "../molecules/Heading";
+
+import Section from "../organisms/Section";
+
+import Button from '../atoms/Button/index.';
+import { SliceMachine } from "../utils/SliceMachine.astro";
+
+const { type, title, subTitle, content, cover } = Astro.props;
+
+---
+
+<Heading>
+    {
+        type === "club" && (
+            <svg
+                width="57"
+                height="62"
+                viewBox="0 0 57 62"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M21.9293 14.2817C21.7878 27.4269 31.6913 38.1264 44 37.9736H43.4341C31.4084 38.1264 21.7878 48.826 21.9293 61.8182V61.6654C21.7878 48.6731 12.0257 38.2793 0.141478 38.1264H0C12.0257 37.9736 21.9293 27.4269 21.9293 14.2817Z"
+                    fill="white"
+                />
+                <path
+                    d="M43.9582 0.264648C43.8746 8.03223 49.7267 14.3547 57 14.2644H56.6656C49.5595 14.3547 43.8746 20.6771 43.9582 28.3544V28.2641C43.8746 20.5868 38.1061 14.445 31.0836 14.3547H31C38.1061 14.2644 43.9582 8.03223 43.9582 0.264648Z"
+                    fill="white"
+                />
+            </svg>
+        )
+    }
+    {
+        type === "classic" && (
+            <svg
+                width="44"
+                height="49"
+                viewBox="0 0 44 49"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M21.9293 0.660645C21.7878 13.8058 31.6913 24.5053 44 24.3525H43.4341C31.4084 24.5053 21.7878 35.2049 21.9293 48.1972V48.0443C21.7878 35.052 12.0257 24.6582 0.141478 24.5053H0C12.0257 24.3525 21.9293 13.8058 21.9293 0.660645Z"
+                    fill="white"
+                />
+            </svg>
+        )
+    }
+    {
+        type === "prospect" && (
+            <svg
+                width="44"
+                height="75"
+                viewBox="0 0 44 75"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M21.9293 0.930664C21.7878 13.8052 31.6913 24.2844 44 24.1347H43.4341C31.4084 24.2844 21.7878 34.7637 21.9293 47.4885V47.3388C21.7878 34.614 12.0257 24.4341 0.141478 24.2844H0C12.0257 24.1347 21.9293 13.8052 21.9293 0.930664Z"
+                    fill="white"
+                />
+                <path
+                    d="M21.9582 47.4888C21.8746 55.0964 27.7267 61.2887 35 61.2003H34.6656C27.5595 61.2887 21.8746 67.481 21.9582 75.0002V74.9117C21.8746 67.3925 16.1061 61.3772 9.0836 61.2887H9C16.1061 61.2003 21.9582 55.0964 21.9582 47.4888Z"
+                    fill="white"
+                />
+            </svg>
+        )
+    }
+    <h1>{title}</h1>
+    <p>{subTitle}</p>
+    {type !== 'prospect' && <div slot="subtitle" data-slot="subtitle"><Button type="link">See prices</Button></div>}
+</Heading>
+
+<!--
+    <Section
+type="media-h-picture"
+images={{
+    mobile: {
+        jpeg: [
+            DemoPictureMobileJPEG,
+            DemoPictureMobileRetinaJPEG,
+        ],
+        webp: [
+            DemoPictureMobileWEBP,
+            DemoPictureMobileRetinaWEBP,
+        ],
+    },
+    desktop: {
+        jpeg: [
+            DemoPictureDesktopJPEG,
+            DemoPictureDesktopRetinaJPEG,
+            DemoPictureDesktopRetinaX2JPEG,
+        ],
+        webp: [
+            DemoPictureDesktopWEBP,
+            DemoPictureDesktopRetinaWEBP,
+            DemoPictureDesktopRetinaX2WEBP,
+        ],
+    },
+}}
+alt="Ceci est le texte alternatif par défaut"
+posterMobile={DemoPictureMobileLazyJPEG}
+posterDesktop={DemoPictureDesktopLazyJPEG}
+widthDesktop={DemoPictureDesktopJPEG_DATA.width}
+heightDesktop={DemoPictureDesktopJPEG_DATA.height}
+widthMobile={DemoPictureMobileJPEG_DATA.width}
+heightMobile={DemoPictureMobileJPEG_DATA.height}
+lazy={true}
+client:load
+/>
+ -->
+
+ <Section
+type="media-h-picture"
+url={cover.asset._ref}
+alt={cover.alt}
+widthDesktop={1376}
+heightDesktop={400}
+widthMobile={640}
+heightMobile={200}
+lazy={false}
+client:load
+/>
+{
+    content && (
+        <section class="do_landing_content">
+            <PortableText value={content} components={SliceMachine} />
+        </section>
+    )
+}
+
+
+<style lang="scss" scoped>
+
+.do_landing_content{
+    @include grid(16, 16px, 32px);
+    @include mq(tablet, max){
+        @include grid(8, 8px, 16px);
+    } 
+
+    &>h1,&>h2,&>h3,&>h4,&>p{
+        grid-column: 2 / 11;
+    }
+}
+</style>
