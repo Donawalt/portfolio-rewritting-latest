@@ -20,10 +20,12 @@ export const getStaticPaths = (async () => {
 const {slug, type} = Astro.params;
 const {page} = Astro.props;
 
+console.log('Page', page)
+
 ---
 
 <SEO lang="en" title={"Donaël Walter Portfolio | Creative Development, Design, Photography"}>
 	<Layout>
-		<Landing type={page.category} title={page.name} subTitle={page.subTitle} cover={page.cover} content="" client:load/>
+		<Landing type={page.category} title={page.name} subTitle={page.subTitle} cover={page.cover} content={page.content} client:load/>
 	</Layout>
 </SEO>
