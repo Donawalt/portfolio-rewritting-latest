@@ -1,6 +1,6 @@
 ---
 import defaultOgImage from '../../../assets/images/layout/og/defaultOgImage.jpg';
-const { title, lang, description, ogTitle, ogDescription, ogImage} = Astro.props;
+const { title, lang, description, ogTitle, ogDescription, ogImage, keywords} = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang={lang}>
@@ -9,6 +9,7 @@ const { title, lang, description, ogTitle, ogDescription, ogImage} = Astro.props
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
     <title>{title}</title>
     <!-- RS -->
     <meta property="og:title" content={ogTitle} />

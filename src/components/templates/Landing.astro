@@ -15,7 +15,8 @@ import { SliceMachine } from "../utils/SliceMachine.astro";
 
 const { type, title, subTitle, content, cover } = Astro.props;
 
-console.log("Landing", content)
+// console.log("Landing", content)
+
 
 ---
 
@@ -23,6 +24,7 @@ console.log("Landing", content)
     {
         type === "club" && (
             <svg
+            class="do_landing_icon"
                 width="57"
                 height="62"
                 viewBox="0 0 57 62"
@@ -43,6 +45,7 @@ console.log("Landing", content)
     {
         type === "classic" && (
             <svg
+            class="do_landing_icon"
                 width="44"
                 height="49"
                 viewBox="0 0 44 49"
@@ -59,6 +62,7 @@ console.log("Landing", content)
     {
         type === "prospect" && (
             <svg
+            class="do_landing_icon"
                 width="44"
                 height="75"
                 viewBox="0 0 44 75"
@@ -77,7 +81,7 @@ console.log("Landing", content)
         )
     }
     <h1>{title}</h1>
-    <p>{subTitle}</p>
+    <p class="do_landing_subtitle">{subTitle}</p>
     {type !== 'prospect' && <div slot="subtitle" data-slot="subtitle"><Button type="link">See prices</Button></div>}
 </Heading>
 
@@ -142,6 +146,23 @@ client:load
 
 <style lang="scss" scoped>
 
+.do_landing_icon {
+    @include interpolate(width, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 30px, 44px );
+}
+h1{
+    max-width: 800px;
+    width: 80vw;
+    margin: auto;
+}
+.do_landing_subtitle {
+    text-transform: uppercase;
+    font-weight: medium;
+    margin: auto;
+    margin-bottom: 62px;
+    max-width: 600px;
+    width: 80vw;
+    @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 32px, 62px );
+}
 .do_landing_content{
     @include grid(16, 16px, 32px);
     @include mq(tablet, max){
@@ -150,6 +171,10 @@ client:load
 
     &>h1,&>h2,&>h3,&>h4,&>p{
         grid-column: 2 / 11;
+    }
+
+    p{
+        margin-top: 16px;
     }
 }
 </style>

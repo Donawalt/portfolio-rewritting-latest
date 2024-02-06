@@ -1,4 +1,6 @@
 ---
+import { client } from '../../assets/scripts/utils/api/sanityClient';
+import { getDocumentById } from '../../assets/scripts/utils/api/api';
 import Citation from "../organisms/Section/slices/Citation";
 import {
     FullPicture,
@@ -9,6 +11,8 @@ import {
 /// LANDING 
 import FAQ from '../organisms/Section/slices/FAQ';
 import Steps from '../organisms/Section/slices/Steps';
+import FeaturedProjects from '../organisms/Section/slices/FeaturedProjects';
+
 let { node } = Astro.props;
 if (node._type === "images" && Object.keys(node).length === 3) {
     node.images = node.images.map((el) => {
@@ -29,6 +33,14 @@ if (node._type === "images" && Object.keys(node).length === 3) {
 
     // console.log(node)
 }
+
+let firstProject;
+let secondProject;
+if(node._type === 'projects_snippet'){
+    firstProject = await client.fetch(getDocumentById(node.project_one._ref));
+    secondProject = await client.fetch(getDocumentById(node.project_two._ref));
+}
+
 ---
 
 <!---Managfe Citation -->{
@@ -129,6 +141,10 @@ if (node._type === "images" && Object.keys(node).length === 3) {
 
 { node._type === "steps" && (
     <Steps steps={node} client:load/>
+)}
+
+{node._type === "projects_snippet" && (
+    <FeaturedProjects project_one={firstProject} project_two={secondProject} client:load />
 )}
 
 <style lang="scss">

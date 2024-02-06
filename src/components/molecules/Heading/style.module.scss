@@ -4,11 +4,10 @@
     text-align: center;
 
     @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 100px, 180px );
-    @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 80px, 120px );
+    @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 0px, 120px );
 
 
     [data-slot="subtitle"], svg{
-        width: fit-content;
         margin: auto;
         display: block;
     }

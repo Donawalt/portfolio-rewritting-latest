@@ -6,7 +6,6 @@ import { PortableText } from "astro-portabletext";
 import Section from "../organisms/Section";
 import { SliceMachine } from "../utils/SliceMachine.astro";
 import Picture from "../atoms/Picture";
-import { loadTSConfig } from "astro/dist/core/config";
 
 const {
     title,
@@ -20,7 +19,7 @@ const {
     slug,
 } = Astro.props;
 
-console.log(nextProject, nextProject?.slug);
+// console.log(nextProject, nextProject?.slug);
 ---
 
 <Heading>
@@ -228,6 +227,10 @@ console.log(nextProject, nextProject?.slug);
                 padding-left: 16px;
                 padding-right: 16px;
             }
+        }
+
+        p{
+            margin-top: 16px;
         }
     }
 </style>

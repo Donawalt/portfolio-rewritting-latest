@@ -11,4 +11,8 @@ export const getAllProjects = (type, data) => {
 export const getAllProducts = (type, data) => {
     return `*[_type == 'products'  && !(_id in path('drafts.**'))]`;
 }
+
+export const getDocumentById = (id) => {
+    return `*[_id == "${id}"][0]`
+}
 ///////////////////////////
