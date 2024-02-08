@@ -10,6 +10,7 @@ import {
 import { ProjectHero } from "./slices/Text";
 import Experiences from "./slices/Experiences";
 import WorkingTogether from "./slices/Forms/WorkingTogether";
+import Commitments from "./slices/Commitments";
 
 const Section = ({
   type,
@@ -33,9 +34,12 @@ const Section = ({
   description,
   tags,
   experiences,
-  title
+  title,
+  deliverables
 }) => {
   switch (type) {
+    case "commitments": 
+      return <Commitments title={title} description={description} deliverables={deliverables} />
     case "experiences":
       return <Experiences title={title} description={description} experiences={experiences} />
     case "media-h-picture":
