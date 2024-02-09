@@ -1,11 +1,17 @@
-.root{
+.root {
     margin-top: 200px;
-    grid-column: 1 / 18; 
-    h2{
-        max-width: 550px;
-        text-transform: uppercase;   
+    grid-column: 1 / 18;
+
+    @include mq("tablet", max) {
+        grid-column: 1 / 9;
     }
-    ul{
+
+    h2 {
+        max-width: 550px;
+        text-transform: uppercase;
+    }
+
+    ul {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 16px;
@@ -13,22 +19,42 @@
         padding-bottom: 60px;
         padding-left: 32px;
         padding-right: 32px;
-   li{
-    padding: 30px;
-    border: #3A3A3A solid 1px;
-    border-radius: 16px;
-    h3{
-        text-align: center;
-        margin-bottom: 32px;
-        text-transform: uppercase;
-    }
 
-    svg{
-        margin: auto;
-        display: block;
-        width: fit-content;
-        margin-bottom: 32px;
-    }
-   }
+        @include mq("tablet", max) {
+            grid-template-columns: repeat(3, calc(100vw - 96px));
+            width: 100%;
+            overflow: auto;
+            padding-left: 0;
+            padding-right: 0;
+            scroll-behavior: smooth;
+            scroll-snap-align: center;
+            scroll-snap-type: x proximity;
+        }
+
+        li {
+            padding: 30px;
+            border: #3A3A3A solid 1px;
+            border-radius: 16px;
+
+            @include mq("tablet", max){
+                width: calc(100vw - 96px);
+                scroll-behavior: smooth;
+                scroll-snap-align: center;
+                scroll-snap-type: x proximity;
+            }
+
+            h3 {
+                text-align: center;
+                margin-bottom: 32px;
+                text-transform: uppercase;
+            }
+
+            svg {
+                margin: auto;
+                display: block;
+                width: fit-content;
+                margin-bottom: 32px;
+            }
+        }
     }
 }

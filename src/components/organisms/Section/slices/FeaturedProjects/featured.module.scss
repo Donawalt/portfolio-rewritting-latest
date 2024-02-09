@@ -1,6 +1,9 @@
 .root{
     margin-top: 200px;
     grid-column: 1 / 18; 
+    @include mq('tablet', max){
+        grid-column: 1 / 9;
+    }
     h2{
         max-width: 550px;
         text-transform: uppercase;
@@ -13,6 +16,7 @@
         grid-template-rows: 1fr 1fr 1fr;
         height: 70vh;
         gap: 16px;
+
         &>:nth-child(1){
             grid-column: 2 / 4;
             grid-row: 1/4;
@@ -21,6 +25,20 @@
             grid-column: 4 / 5;
             grid-row: 2 / 4;
             aspect-ratio: 4 / 3;
+        }
+        @include mq('tablet', max){
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            &>:nth-child(1){
+                display: block;
+                aspect-ratio: initial;
+                margin-bottom: 16px;
+            }
+            &>:nth-child(2){
+                display: block;
+                aspect-ratio: initial;
+            }
         }
     }
 }
