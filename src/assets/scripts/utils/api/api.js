@@ -1,7 +1,13 @@
 /* Blog And repeatable page */ 
 
 export const getAllLandings = (type, data) => {
-    return `*[_type == 'landing'  && !(_id in path('drafts.**'))]`;
+    return `*[_type == 'landing'  && !(_id in path('drafts.**'))]{
+        ..., 
+        content[] {
+            ...,
+            products[]->
+        },
+    }`;
 }
 
 export const getAllProjects = (type, data) => {

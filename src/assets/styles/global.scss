@@ -74,6 +74,7 @@ body{
 
         @include mq('tablet', max){
             font-size: 18px;
+            line-height: normal
         }
         @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 45px );
     }

@@ -12,6 +12,7 @@ import {
 import FAQ from '../organisms/Section/slices/FAQ';
 import Steps from '../organisms/Section/slices/Steps';
 import FeaturedProjects from '../organisms/Section/slices/FeaturedProjects';
+import Prices from '../organisms/Section/slices/Prices';
 
 let { node } = Astro.props;
 if (node._type === "images" && Object.keys(node).length === 3) {
@@ -132,7 +133,11 @@ if(node._type === 'projects_snippet'){
     
     </div>)}
 
-
+{
+    node._type === 'prices' && (
+        <Prices products={node.products}/>
+    )
+}
 {
     node._type === 'faq' && (
         <FAQ  questions={node.questions} client:load/>

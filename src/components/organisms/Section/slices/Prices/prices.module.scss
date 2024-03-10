@@ -1,0 +1,28 @@
+.root {
+    grid-column:  1 / 18;
+    @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 60px, 200px );
+
+    h2{
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        max-width: 504px;
+        margin: auto;
+    }
+    .do_grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding: 46px 32px;
+        align-items: flex-start;
+        gap: 16px;
+        @include mq(tablet, max){
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+
+    @include mq('tablet', max){
+        grid-column: 1/9;
+    }
+}

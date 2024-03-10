@@ -1,9 +1,10 @@
 .root{
-    margin-top: 200px;
     grid-column: 1 / 18; 
     @include mq('tablet', max){
         grid-column: 1 / 9;
     }
+
+    @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 80px, 200px );
     h2{
         max-width: 550px;
         text-transform: uppercase;

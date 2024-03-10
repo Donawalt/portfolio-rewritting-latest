@@ -10,6 +10,8 @@ import Heading from "../molecules/Heading";
 
 import Section from "../organisms/Section";
 
+import Prices from '../organisms/Section/slices/Prices';
+
 import Button from '../atoms/Button/index.';
 import { SliceMachine } from "../utils/SliceMachine.astro";
 
@@ -145,7 +147,6 @@ client:load
     )
 }
 
-
 <style lang="scss" scoped>
 
 .do_landing_icon {
@@ -173,10 +174,20 @@ h1{
 
     &>h1,&>h2,&>h3,&>h4,&>p{
         grid-column: 2 / 11;
+        @include mq(tablet, max){
+            grid-column: 1/ 9;
+        }
     }
 
     p{
         margin-top: 16px;
+    }
+
+    *{
+        grid-column: 1/13;
+        @include mq(tablet, max){
+            grid-column: 1/ 9;
+        }
     }
 }
 </style>
