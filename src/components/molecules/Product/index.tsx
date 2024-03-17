@@ -2,8 +2,18 @@ import Button from '../../atoms/Button/index.';
 import Tag from '../../atoms/Tag/index.';
 import Style from './product.module.scss';
 
-const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' | string, name: string, prices: any, features: any[], cover?: any, quantity: number}) => {
-    const { name, prices, features, cover, type, quantity } = props;
+
+const Custom = ({ tag, content }) => {
+    return <div className={Style["root"] + ` ${Style['do_custom']}`}>
+        <div className={Style["do_tag"]}><Tag type='nj'>2 {tag}</Tag></div>
+        <h3>CUSTOM</h3>
+        <p>{content}</p>
+        <Button type="link" href="https://cal.com/donael-walter/15min" target="_blank">Book a call</Button>
+    </div>
+}
+
+const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' | string, name: string, prices?: any, features?: any[], cover?: any, quantity?: number, content?: string }) => {
+    const { name, prices, features, cover, type, quantity, content } = props;
 
     const tagValue = () => {
         switch (type) {
@@ -17,6 +27,11 @@ const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' |
                 break;
         }
     }
+
+    if (type === 'custom') {
+        return <Custom tag={tagValue()} content={content}/>;
+    }
+
     return (
         <div className={Style["root"]}>
             <div className={Style["do_tag"]}><Tag type='nj'>2 {tagValue()}</Tag></div>
@@ -25,7 +40,7 @@ const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' |
                 <p>{prices.eur} €</p>
                 <p>US$ {prices.usd} </p>
             </div>
-            <Button >Book a call</Button>
+            <Button type="link" href="https://cal.com/donael-walter/15min" target="_blank">Book a call</Button>
             <ul>
                 {features.map(el => <li><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g filter="url(#filter0_f_2034_238)">

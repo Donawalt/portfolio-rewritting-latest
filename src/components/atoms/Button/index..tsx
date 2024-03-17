@@ -3,7 +3,7 @@
 import React from 'react';
 import Style from './style.module.scss';
 
-const Button = (props: { children: any; type: any; href: any; target: any;}) => {
+const Button = (props: { children: any; type: any; href: any; target?: any;}) => {
   const {children, type, href, target} = props;
 
   switch (type) {

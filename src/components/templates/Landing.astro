@@ -1,32 +1,19 @@
 ---
-const rootDir = process.cwd();
-
 import { PortableText } from "astro-portabletext";
-
-// Tools
-import imageSize from "image-size";
-
 import Heading from "../molecules/Heading";
-
 import Section from "../organisms/Section";
-
-import Prices from '../organisms/Section/slices/Prices';
-
-import Button from '../atoms/Button/index.';
+import Button from "../atoms/Button/index.";
 import { SliceMachine } from "../utils/SliceMachine.astro";
-
 const { type, title, subTitle, content, cover } = Astro.props;
 
 // console.log("Landing", content)
-
-
 ---
 
 <Heading>
     {
         type === "club" && (
             <svg
-            class="do_landing_icon"
+                class="do_landing_icon"
                 width="57"
                 height="62"
                 viewBox="0 0 57 62"
@@ -47,7 +34,7 @@ const { type, title, subTitle, content, cover } = Astro.props;
     {
         type === "classic" && (
             <svg
-            class="do_landing_icon"
+                class="do_landing_icon"
                 width="44"
                 height="49"
                 viewBox="0 0 44 49"
@@ -64,7 +51,7 @@ const { type, title, subTitle, content, cover } = Astro.props;
     {
         type === "prospect" && (
             <svg
-            class="do_landing_icon"
+                class="do_landing_icon"
                 width="44"
                 height="75"
                 viewBox="0 0 44 75"
@@ -84,61 +71,40 @@ const { type, title, subTitle, content, cover } = Astro.props;
     }
     <h1>{title}</h1>
     <p class="do_landing_subtitle">{subTitle}</p>
-    {type !== 'prospect' && <div slot="subtitle" data-slot="subtitle"><Button type="link">See prices</Button></div>}
+    {
+        type !== "prospect" && (
+            <div slot="subtitle" data-slot="subtitle">
+                <Button href="#prices" type="link">
+                    See prices
+                </Button>
+            </div>
+        )
+    }
 </Heading>
 
-<!--
-    <Section
-type="media-h-picture"
-images={{
-    mobile: {
-        jpeg: [
-            DemoPictureMobileJPEG,
-            DemoPictureMobileRetinaJPEG,
-        ],
-        webp: [
-            DemoPictureMobileWEBP,
-            DemoPictureMobileRetinaWEBP,
-        ],
-    },
-    desktop: {
-        jpeg: [
-            DemoPictureDesktopJPEG,
-            DemoPictureDesktopRetinaJPEG,
-            DemoPictureDesktopRetinaX2JPEG,
-        ],
-        webp: [
-            DemoPictureDesktopWEBP,
-            DemoPictureDesktopRetinaWEBP,
-            DemoPictureDesktopRetinaX2WEBP,
-        ],
-    },
-}}
-alt="Ceci est le texte alternatif par défaut"
-posterMobile={DemoPictureMobileLazyJPEG}
-posterDesktop={DemoPictureDesktopLazyJPEG}
-widthDesktop={DemoPictureDesktopJPEG_DATA.width}
-heightDesktop={DemoPictureDesktopJPEG_DATA.height}
-widthMobile={DemoPictureMobileJPEG_DATA.width}
-heightMobile={DemoPictureMobileJPEG_DATA.height}
-lazy={true}
-client:load
-/>
- -->
-
- <Section
-type="media-h-picture"
-url={cover.asset._ref}
-alt={cover.alt}
-widthDesktop={1376}
-heightDesktop={400}
-widthMobile={640}
-heightMobile={200}
-lazy={false}
-client:load
+<Section
+    type="media-h-picture"
+    url={cover.asset._ref}
+    alt={cover.alt}
+    widthDesktop={1376}
+    heightDesktop={400}
+    widthMobile={640}
+    heightMobile={200}
+    lazy={false}
+    client:load
 />
 
-<Section type="commitments" title="Clients satisfactions first" description="Whatever the types of projects, we always try to give high-qualities deliverables with the clients goals in mind. " deliverables={["High-Fidelity Front-End", "Custom Back-End", "SEO Friendly Websites", "CMS adapted to you needs"]}/>
+<Section
+    type="commitments"
+    title="Clients satisfactions first"
+    description="Whatever the types of projects, we always try to give high-qualities deliverables with the clients goals in mind. "
+    deliverables={[
+        "High-Fidelity Front-End",
+        "Custom Back-End",
+        "SEO Friendly Websites",
+        "CMS adapted to you needs",
+    ]}
+/>
 {
     content && (
         <section class="do_landing_content">
@@ -148,46 +114,61 @@ client:load
 }
 
 <style lang="scss" scoped>
+    .do_landing_icon {
+        @include interpolate(
+            width,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            30px,
+            44px
+        );
+    }
+    h1 {
+        max-width: 900px;
+        width: 80vw;
+        margin: auto;
+    }
+    .do_landing_subtitle {
+        text-transform: uppercase;
+        font-weight: medium;
+        margin: auto;
+        margin-bottom: 62px;
+        max-width: 600px;
+        width: 80vw;
+        @include interpolate(
+            margin-bottom,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            32px,
+            62px
+        );
+    }
+    .do_landing_content {
+        @include grid(16, 16px, 32px);
+        @include mq(tablet, max) {
+            @include grid(8, 8px, 16px);
+        }
 
-.do_landing_icon {
-    @include interpolate(width, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 30px, 44px );
-}
-h1{
-    max-width: 900px;
-    width: 80vw;
-    margin: auto;
-}
-.do_landing_subtitle {
-    text-transform: uppercase;
-    font-weight: medium;
-    margin: auto;
-    margin-bottom: 62px;
-    max-width: 600px;
-    width: 80vw;
-    @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 32px, 62px );
-}
-.do_landing_content{
-    @include grid(16, 16px, 32px);
-    @include mq(tablet, max){
-        @include grid(8, 8px, 16px);
-    } 
+        & > h1,
+        & > h2,
+        & > h3,
+        & > h4,
+        & > p {
+            grid-column: 2 / 11;
+            @include mq(tablet, max) {
+                grid-column: 1/ 9;
+            }
+        }
 
-    &>h1,&>h2,&>h3,&>h4,&>p{
-        grid-column: 2 / 11;
-        @include mq(tablet, max){
-            grid-column: 1/ 9;
+        p {
+            margin-top: 16px;
+        }
+
+        * {
+            grid-column: 1/13;
+            @include mq(tablet, max) {
+                grid-column: 1/ 9;
+            }
         }
     }
-
-    p{
-        margin-top: 16px;
-    }
-
-    *{
-        grid-column: 1/13;
-        @include mq(tablet, max){
-            grid-column: 1/ 9;
-        }
-    }
-}
 </style>

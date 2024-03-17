@@ -1,4 +1,3 @@
-import React, { experimental_useEffectEvent } from "react";
 import {
   BasicPicture,
   HeroPicture,
@@ -12,31 +11,55 @@ import Experiences from "./slices/Experiences";
 import WorkingTogether from "./slices/Forms/WorkingTogether";
 import Commitments from "./slices/Commitments";
 
-const Section = ({
+const Section = (props: {
   type,
-  images,
-  alt,
-  posterMobile,
-  posterDesktop,
-  widthDesktop,
-  widthMobile,
-  heightMobile,
-  heightDesktop,
-  lazy,
-  url,
-  crop,
-  pictures,
-  poster,
-  width,
-  height,
-  pictureLeft,
-  pictureRight,
-  description,
-  tags,
-  experiences,
-  title,
-  deliverables
+  images?,
+  alt?,
+  posterMobile?,
+  posterDesktop?,
+  widthDesktop?,
+  widthMobile?,
+  heightMobile?,
+  heightDesktop?,
+  lazy?,
+  url?,
+  crop?,
+  pictures?,
+  poster?,
+  width?,
+  height?,
+  pictureLeft?,
+  pictureRight?,
+  description?,
+  tags?,
+  experiences?,
+  title?,
+  deliverables?
 }) => {
+
+  const { type,
+    images,
+    alt,
+    posterMobile,
+    posterDesktop,
+    widthDesktop,
+    widthMobile,
+    heightMobile,
+    heightDesktop,
+    lazy,
+    url,
+    crop,
+    pictures,
+    poster,
+    width,
+    height,
+    pictureLeft,
+    pictureRight,
+    description,
+    tags,
+    experiences,
+    title,
+    deliverables} = props;
   switch (type) {
     case "commitments": 
       return <Commitments title={title} description={description} deliverables={deliverables} />
@@ -94,7 +117,7 @@ const Section = ({
       return <GridPicture pictures={pictures} />;
     case "media-d-picture":
       return (
-        <DoublePicture pictureLeft={pictureLeft} pictureRight={pictureRight} />
+        <DoublePicture pictureLeft={pictureLeft} pictureRight={pictureRight} up={null}/>
       );
     case "media-b-video":
       return (

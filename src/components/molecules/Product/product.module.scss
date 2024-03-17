@@ -20,7 +20,8 @@
             font-style: normal;
             line-height: normal;
         }
-        p:nth-child(2){
+
+        p:nth-child(2) {
             font-size: 30px;
         }
     }
@@ -31,11 +32,37 @@
         margin-top: 16px;
     }
 
-    ul{
-        @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 32px, 48px );
-        li{
+    ul {
+        @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 32px, 48px);
+
+        li {
             display: flex;
             align-items: center;
+        }
+    }
+
+    &.do_custom {
+        justify-content: center;
+        align-items: center;
+
+        button {
+            @include mq('tablet', min) {
+                width: fit-content;
+            }
+
+            margin: auto;
+        }
+
+        &>p {
+            text-align: center;
+
+            @include mq('tablet', min) {
+                max-width: 25vw;
+            }
+        }
+
+        &:nth-child(4) {
+            grid-column: 1 / 4;
         }
     }
 }

@@ -1,11 +1,11 @@
-/* Blog And repeatable page */ 
+/* Blog And repeatable page */
 
 export const getAllLandings = (type, data) => {
     return `*[_type == 'landing'  && !(_id in path('drafts.**'))]{
         ..., 
         content[] {
             ...,
-            products[]->
+            "products": [...(products[_type == "reference"][]->), ...(products[_type != "reference"][])],
         },
     }`;
 }

@@ -1,16 +1,9 @@
 ---
-const rootDir = process.cwd();
-// Tools
-import imageSize from "image-size";
-
 import SEO from "../../components/layouts/utils/SEO.astro";
 import Layout from "../../components/layouts/Layout.astro";
 
 import Section from "../../components/organisms/Section";
 import AboutStyle from "./about.module.scss";
-
-// Import companies and awards logo 
-import { CompaniesLogo } from '../../components/atoms/Logo/index.'
 
 // Import demo assets
 import DemoPictureDesktopJPEG from "../../assets/images/pages/design-system/demo-picture-desktop.jpg";
@@ -28,20 +21,6 @@ import DemoPictureMobileRetinaWEBP from "../../assets/images/pages/design-system
 import DemoPictureMobileLazyJPEG from "../../assets/images/pages/design-system/demo-picture-mobile-lazy.jpg";
 import DemoPictureDesktopLazyJPEG from "../../assets/images/pages/design-system/demo-picture-desktop-lazy.jpg";
 
-let DemoPictureDesktopJPEG_DATA = imageSize(
-    rootDir + "/" + DemoPictureDesktopJPEG
-);
-DemoPictureDesktopJPEG_DATA = {
-    ...DemoPictureDesktopJPEG_DATA,
-    src: DemoPictureDesktopJPEG,
-};
-let DemoPictureMobileJPEG_DATA = imageSize(
-    rootDir + "/" + DemoPictureMobileJPEG
-);
-DemoPictureMobileJPEG_DATA = {
-    ...DemoPictureMobileJPEG_DATA,
-    src: DemoPictureMobileJPEG,
-};
 
 
 ---
@@ -88,10 +67,10 @@ DemoPictureMobileJPEG_DATA = {
                 alt="Ceci est le texte alternatif par défaut"
                 posterMobile={DemoPictureMobileLazyJPEG}
                 posterDesktop={DemoPictureDesktopLazyJPEG}
-                widthDesktop={DemoPictureDesktopJPEG_DATA.width}
-                heightDesktop={DemoPictureDesktopJPEG_DATA.height}
-                widthMobile={DemoPictureMobileJPEG_DATA.width}
-                heightMobile={DemoPictureMobileJPEG_DATA.height}
+                widthDesktop={1026}
+                heightDesktop={577}
+                widthMobile={290}
+                heightMobile={153}
                 lazy={true}
                 client:load
             />
@@ -170,14 +149,14 @@ DemoPictureMobileJPEG_DATA = {
                 alt="Ceci est le texte alternatif par défaut"
                 posterMobile={DemoPictureMobileLazyJPEG}
                 posterDesktop={DemoPictureDesktopLazyJPEG}
-                widthDesktop={DemoPictureDesktopJPEG_DATA.width}
-                heightDesktop={DemoPictureDesktopJPEG_DATA.height}
-                widthMobile={DemoPictureMobileJPEG_DATA.width}
-                heightMobile={DemoPictureMobileJPEG_DATA.height}
+                widthDesktop={1026}
+                heightDesktop={577}
+                widthMobile={290}
+                heightMobile={153}
                 lazy={true}
                 client:load
             />
             <Section type="working-together" client:load/>
-        </main>
+        </main> 
     </Layout>
 </SEO>
