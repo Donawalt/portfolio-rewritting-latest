@@ -1,6 +1,6 @@
-import { ChangeEvent, KeyboardEvent, SetStateAction, useState } from 'react';
+import {useState } from 'react';
 import Style from './style.module.scss'
-const handleChange = (e: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>, setValue: { (value: SetStateAction<string>): void; (value: SetStateAction<string>): void; (arg0: any): void; }) => {
+const handleChange = (e: any | any, setValue: { (value: any): void; (value: any): void; (arg0: any): void; }) => {
     e.preventDefault();
     const { value } = e.target;
     setValue(value)

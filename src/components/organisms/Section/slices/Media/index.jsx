@@ -1,6 +1,5 @@
 import Picture from "../../../../atoms/Picture";
 import Video from "../../../../atoms/Video/index.";
-import React from "react";
 
 import MediaStyle from './media.module.scss';
 

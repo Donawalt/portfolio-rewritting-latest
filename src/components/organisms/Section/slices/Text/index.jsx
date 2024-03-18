@@ -1,4 +1,4 @@
-import React from "react";
+
 import { HeroPicture } from "../Media";
 import Tag from "../../../../atoms/Tag/index.";
 
