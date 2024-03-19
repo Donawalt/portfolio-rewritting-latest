@@ -18,6 +18,11 @@ const pathSrc = path.resolve(__dirname, "./src").replace(/\\/g, "/");
 export default defineConfig({
     integrations: [react()],
     vite:{
+      resolve: {
+        alias: {
+          "@/": `${path.resolve(__dirname, "src")}/`,
+        },
+      },
         css: {
             preprocessorOptions: {
                 scss: {

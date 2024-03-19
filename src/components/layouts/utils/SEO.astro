@@ -1,6 +1,6 @@
 ---
 import defaultOgImage from '../../../assets/images/layout/og/defaultOgImage.jpg';
-const { title, lang, description, ogTitle, ogDescription, ogImage, keywords} = Astro.props;
+const { title, lang, description, ogTitle, ogDescription, ogImage} = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang={lang}>
@@ -10,18 +10,17 @@ const { title, lang, description, ogTitle, ogDescription, ogImage, keywords} = A
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="keywords" content={keywords} />
     <title>{title}</title>
     <!-- RS -->
-    <meta property="og:title" content={ogTitle} />
-    <meta property="og:description" content={ogDescription} />
+    <meta property="og:title" content={ogTitle ? ogTitle : title} />
+    <meta property="og:description" content={ogDescription ? ogDescription : description} />
     <meta
       property="og:image"
       content={ogImage ? ogImage : defaultOgImage.src}
     />
     <meta property="twitter:card" content={ogImage ? ogImage : defaultOgImage.src}>
-    <meta property="twitter:title" content={ogTitle} />
-    <meta property="twitter:description" content={ogDescription} />
+    <meta property="twitter:title" content={ogTitle ? ogTitle : title} />
+    <meta property="twitter:description" content={ogDescription ? ogDescription : description} />
     <meta
       property="twitter:image"
       content={ogImage ? ogImage : defaultOgImage.src}
