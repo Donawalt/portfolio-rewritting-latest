@@ -183,17 +183,27 @@ const {
             ul {
                 grid-column: initial;
             }
+
+            div,
+            p,
+            ul {
+                grid-column: 1/3;
+            }
+
+            div{
+                margin-bottom:16px;
+            }
             margin-bottom: 90px;
         }
     }
 
-    .do_picture-wrapper{
+    .do_picture-wrapper {
         position: relative;
-        &>div:nth-child(1){
+        & > div:nth-child(1) {
             background-color: black;
             opacity: 40%;
         }
-        &>div:nth-child(2){
+        & > div:nth-child(2) {
             position: absolute;
             top: 0;
             left: 0;
@@ -229,7 +239,7 @@ const {
             }
         }
 
-        p{
+        p {
             margin-top: 16px;
         }
     }
