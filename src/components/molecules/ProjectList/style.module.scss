@@ -14,16 +14,21 @@
         list-style: none;
         padding: 0;
         margin: 0;
+        @include mq('tablet', max){
+            max-width: calc(50vw - 32px);
+        }
     }
 
     :nth-child(18n + 4) {
         grid-column: span 2;
         grid-row: span 2;
+        max-width: calc(100vw - 32px);
     }
 
     :nth-child(9n + 16) {
         grid-column: span 2;
         grid-row: span 2;
+        max-width: calc(100vw - 32px);
     }
 
     @include mq("tablet", max){
