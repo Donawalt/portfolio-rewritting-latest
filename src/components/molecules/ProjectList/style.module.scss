@@ -14,6 +14,7 @@
         list-style: none;
         padding: 0;
         margin: 0;
+        opacity: 0;
         @include mq('tablet', max){
             max-width: calc(50vw - 32px);
         }

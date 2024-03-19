@@ -167,6 +167,7 @@ const BlenderScene = (props) => {
     eventBus.on("uRoomVideo", (data) => {
       setRoomVideo(data);
     });
+    gsap.to('.canvas', {opacity: 1, translateY: "16px", delay: "300ms"});
   }, []);
 
   React.useEffect(() => {
@@ -179,8 +180,30 @@ const BlenderScene = (props) => {
 
   React.useEffect(() => {
     eventBus.on("slide-left", () => {
-     /* setBasePlatform((value) => {
-        return value + 120;
+      /* setBasePlatform((value) => {
+         return value + 120;
+       });
+       setRoomVideo((value) => {
+         if (value === 3) {
+           return 1;
+         }
+         return value + 1;
+       });
+       setRoomVideo((value) => {
+         console.log(value);
+         return value;
+       }); */
+      // console.log(table);
+
+      setBasePlatform((value) => {
+        gsap.to(table.current.rotation, {
+          y: degreesToRadians(value + 120), onComplete: () => {
+            setBasePlatform((value) => {
+              return value + 120;
+            });
+          }
+        });
+        return value;
       });
       setRoomVideo((value) => {
         if (value === 3) {
@@ -191,50 +214,32 @@ const BlenderScene = (props) => {
       setRoomVideo((value) => {
         console.log(value);
         return value;
-      }); */
-      console.log(table);
-      
-        setBasePlatform((value) => {
-          gsap.to(table.current.rotation, {y: degreesToRadians(value + 120), onComplete: ()=>{
-            setBasePlatform((value) => {
-              return value + 120;
-            });
-          }});
-          return value;
-        });
-        setRoomVideo((value) => {
-          if (value === 3) {
-            return 1;
-          }
-          return value + 1;
-        });
-        setRoomVideo((value) => {
-          console.log(value);
-          return value;
-        });
+      });
     });
 
     eventBus.on("slide-right", () => {
-     /* setBasePlatform((value) => {
-        return value - 120;
-      });
-      setRoomVideo((value) => {
-        if (value === 1) {
-          return 3;
-        }
-        return value - 1;
-      });
-
-      setRoomVideo((value) => {
-        console.log(value);
-        return value;
-      }); */
+      /* setBasePlatform((value) => {
+         return value - 120;
+       });
+       setRoomVideo((value) => {
+         if (value === 1) {
+           return 3;
+         }
+         return value - 1;
+       });
+ 
+       setRoomVideo((value) => {
+         console.log(value);
+         return value;
+       }); */
       setBasePlatform((value) => {
-        gsap.to(table.current.rotation, {y: degreesToRadians(value - 120), onComplete: ()=>{
-          setBasePlatform((value) => {
-            return value - 120;
-          });
-        }}); 
+        gsap.to(table.current.rotation, {
+          y: degreesToRadians(value - 120), onComplete: () => {
+            setBasePlatform((value) => {
+              return value - 120;
+            });
+          }
+        });
         return value;
       });
       setRoomVideo((value) => {
@@ -250,7 +255,7 @@ const BlenderScene = (props) => {
       });
 
     });
-      console.log(table);
+    //console.log(table);
   }, []);
 
   const moveCamera = ({ location, targetLocation, rotation }) => {
@@ -273,7 +278,7 @@ const BlenderScene = (props) => {
   return (
     <group {...props} dispose={null}>
       <group
-      ref={table}
+        ref={table}
         rotation={
           !props.isMobile ? [0, 0, 0] : [0, degreesToRadians(basePlatform), 0]
         }
@@ -771,8 +776,8 @@ const BlenderScene = (props) => {
                 attach={"map"}
                 args={[
                   (roomVideo === 1 && videoOne) ||
-                    (roomVideo === 2 && videoTwo) ||
-                    (roomVideo === 3 && videoThree),
+                  (roomVideo === 2 && videoTwo) ||
+                  (roomVideo === 3 && videoThree),
                 ]}
                 encoding={THREE.sRGBEncoding}
                 rotation={-1.5708}

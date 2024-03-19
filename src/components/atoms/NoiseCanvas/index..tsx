@@ -1,9 +1,9 @@
 
 
-import React from 'react';
+import {useEffect} from 'react';
 import Style from './style.module.scss';
 const NoiseCanvas = () => {
-    React.useEffect(()=>{
+    useEffect(()=>{
         const noise = () => {
           let canvas: HTMLCanvasElement | null, ctx: CanvasRenderingContext2D;
       

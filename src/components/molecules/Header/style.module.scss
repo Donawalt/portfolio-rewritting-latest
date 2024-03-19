@@ -9,18 +9,44 @@
     left: 0;
     width: 100vw;
     padding-top: 32px;
+    padding-bottom: 32px;
     align-items: center;
     padding-left: 32px;
     padding-right: 32px;
     z-index: map-get($z-indexes, 'header');
+    transition: 300ms background-color;
+
     a{
         justify-self: center;
         color: white;
         text-decoration: none;
         text-align: center;
+        transition: 300ms;
+        &:hover{
+            color: cornflowerblue;
+        }
     }
     ul:nth-child(3){
         justify-self: flex-end;
+    }
+
+    &::before{
+        content: ' ';
+        display: block;
+        width: 100%;
+        height: 0%;
+        position: absolute;
+        top: 0;
+        transition: 300ms;
+        background-color:  map-get($brands-primary, 'background' );
+        z-index: -1;
+    }
+
+    &:hover{
+        //background-color: map-get($brands-primary, 'background' );
+        &::before{
+            height: 100%;
+        }
     }
     @include mq(tablet, max){
         padding-top: 8px;
@@ -29,4 +55,5 @@
         padding-right: 16px;
         background-color: map-get($brands-primary, 'background' );
     }
-}
+
+}   

@@ -16,7 +16,7 @@ let allProjects = await client.fetch(getAllProjects());
 
 <SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation." ogImage={OG_IMAGE}>
 	<Layout>
-		<Heading>
+		<Heading client:load>
             <h1>Projects</h1>
             <p slot="subtitle">An overview of what I make/do</p>
         </Heading>

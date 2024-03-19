@@ -42,7 +42,7 @@ import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_ABOUT.jpg";
 <SEO title="About | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Creative Developer, Brand Designer and Photographer freelance, I help brands shine in the digital world by creating memorable online experiences, refining visual identities, and capturing the essence of each company." ogImage={OG_IMAGE.src}>
     <Layout>
         <main class={AboutStyle.do_about_page}>
-            <section class={AboutStyle.do_about_hero}>
+            <section class={AboutStyle.do_about_hero} data-landing-hero>
                 <h1>
                     <span class="do-text-s">About</span> Donaël Walter
                 </h1>
@@ -189,3 +189,21 @@ import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_ABOUT.jpg";
         </main> 
     </Layout>
 </SEO>
+
+<style lang="scss">
+    [data-landing-hero] > *, main > section:not([data-landing-hero]), :global(main > astro-island > section) {
+        opacity: 0;
+        will-change: transform;
+    }
+</style>
+
+<script>
+    import gsap from 'gsap';
+    import eventBus from '@/assets/scripts/utils/eventBus';
+
+    setTimeout(()=>{
+        gsap.fromTo('[data-landing-hero] > *,  main > section:not([data-landing-hero]), main >astro-island > section ', {opacity:0, translateY: '16px', delay: '500ms'}, {duration: 0.6, opacity:1, stagger: 0.1, translateY: 0, ease: "power3.out", onComplete: ()=>{
+            eventBus.dispatch('scroll');
+    }});
+    }, 500)
+</script>

@@ -19,10 +19,10 @@ const {
     slug,
 } = Astro.props;
 
-// console.log(nextProject, nextProject?.slug);
+//console.log(nextProject, nextProject?.seoSlug);
 ---
 
-<Heading>
+<Heading client:load>
     <p slot="top">{subTitle}</p>
     <h1>{title}</h1>
     {
@@ -33,7 +33,7 @@ const {
         )
     }
 </Heading>
-<Section
+<div data-hero-project-image="true"><Section
     type="media-h-picture"
     url={cover.asset._ref}
     alt={cover.alt}
@@ -41,9 +41,10 @@ const {
     heightDesktop={400}
     widthMobile={640}
     heightMobile={200}
-    lazy={false}
+    lazy={true}
     client:load
-/>
+/></div>
+
 {
     introduction && skills && (
         <section class="do_project_hero">
@@ -71,7 +72,7 @@ const {
 }
 
 {
-    nextProject?.slug && (
+    nextProject?.seoSlug && (
         <section>
             <a href={nextProject.seoSlug.current} class="do_picture-wrapper">
                 <div>
@@ -82,6 +83,7 @@ const {
                         heightDesktop={900}
                         widthMobile={640}
                         heightMobile={200}
+                        lazy={true}
                         client:load
                     />
                 </div>
@@ -163,6 +165,13 @@ const {
     // @import url('./../../assets/styles/variables.scss');
     @import "./../../assets/styles/mixins.scss";
 
+    [data-hero-project-image]{
+        opacity: 0;
+    }
+
+    :global(.do_project_content, .do_project_hero){
+        opacity: 0;
+    }
     .do_project_hero {
         @include grid(8, 16px, 32px);
         margin-bottom: 180px;
@@ -210,6 +219,44 @@ const {
             width: 100%;
             height: 100%;
             color: white;
+
+            svg{
+                animation: floatLoop 300ms ease-out  infinite alternate forwards;
+                g > *{
+                    transition: 400ms;
+                   
+                }
+                g > *:not(:nth-child(1)){
+                    opacity: 0;
+                }
+
+                g, g>:nth-child(1){
+                    transition: 300ms;
+                    transform-origin: center;
+                    transform: rotate(90deg);
+                }
+
+                &:hover{
+                    g > *:not(:nth-child(1)){
+                        opacity: 1;
+                    }
+                    g > :nth-child(1){
+                        transform: rotate(180deg) translate(0px, -10px);
+                    }
+                    g{
+                        transform: rotate(0deg);
+                    }
+                }
+            }
+
+            @keyframes floatLoop {
+                0%{
+                    transform: translateY(0);
+                }
+                100%{
+                    transform: translateY(16px);
+                }
+            }
         }
     }
 </style>

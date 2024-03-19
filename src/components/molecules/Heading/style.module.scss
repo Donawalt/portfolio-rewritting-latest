@@ -11,4 +11,8 @@
         margin: auto;
         display: block;
     }
+
+    &>*, [data-astro-source-file] {
+        opacity: 0;
+    }
 }
