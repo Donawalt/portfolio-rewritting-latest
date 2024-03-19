@@ -99,6 +99,20 @@ const Picture = (props) => {
         "webp"
       )
       : posterDesktop,
+      lazyDesktop: url ? urlImageBuilder(
+        url,
+        20,
+        Math.round(crossProduct(widthDesktop / 100, heightDesktop / 100, 20)),
+        crop,
+        "jpg"
+      ) : posterDesktop, 
+      lazyMobile: url ? urlImageBuilder(
+        url,
+        20,
+        Math.round(crossProduct(widthMobile / 100, heightMobile / 100, 20)),
+        crop,
+        "webp"
+      ): posterMobile
   };
 
   // Get all imgs
@@ -267,7 +281,7 @@ const Picture = (props) => {
         {lazy && (
           <div className="picture-blur">
             <img
-              src={isMobile ? p?.mobile : p?.desktop}
+              src={isMobile ? p?.lazyMobile : p?.lazyDesktop}
               alt={alt}
               width={widthDesktop}
               height={heightDesktop}

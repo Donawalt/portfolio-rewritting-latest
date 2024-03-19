@@ -1,9 +1,18 @@
+import { useEffect } from 'react';
 import Picture from '../../atoms/Picture';
 import Style from './style.module.scss';
+import eventBus from '@/assets/scripts/utils/eventBus';
 
 const ProjectItem = (props: { index, title, picture, link }) => {
     const { index, title, picture, link } = props;
-    console.log('This is list item picture', picture)
+    console.log('This is list item picture', picture);
+
+    useEffect(()=>{
+       
+        setTimeout(()=>{
+            eventBus.dispatch('scroll');
+        }, 100)
+    }, [])
     return (
         <a href={link ? link : "/projects/design"} className={Style.root}>
             <h3 className='do-text-s'>{title ? title : "Lorem ipsum dolor"}</h3>
@@ -12,7 +21,7 @@ const ProjectItem = (props: { index, title, picture, link }) => {
                     heightDesktop={400}
                     widthMobile={640}
                     heightMobile={200}
-                    alt={picture.alt} />}
+                    alt={picture.alt} lazy={true}/>}
                     {!picture && (<picture>
                     <img src="https://source.unsplash.com/random/1920×1080" alt="Image de test" />
                 </picture>)}
