@@ -6,27 +6,38 @@ import Section from "../../components/organisms/Section";
 import AboutStyle from "./about.module.scss";
 
 // Import demo assets
-import DemoPictureDesktopJPEG from "../../assets/images/pages/design-system/demo-picture-desktop.jpg";
-import DemoPictureDesktopWEBP from "../../assets/images/pages/design-system/demo-picture-desktop.webp";
-import DemoPictureDesktopRetinaJPEG from "../../assets/images/pages/design-system/demo-picture-desktop-retina.jpg";
-import DemoPictureDesktopRetinaWEBP from "../../assets/images/pages/design-system/demo-picture-desktop-retina.webp";
-import DemoPictureDesktopRetinaX2JPEG from "../../assets/images/pages/design-system/demo-picture-desktop-retina-x2.jpg";
-import DemoPictureDesktopRetinaX2WEBP from "../../assets/images/pages/design-system/demo-picture-desktop-retina-x2.webp";
+import AboutPortraitDesktopJPEG from "../../assets/images/pages/about/desktop-about-portrait-one.jpg";
+import AboutPortraitDesktopWEBP from "../../assets/images/pages/about/desktop-about-portrait-one.webp";
+import AboutPortraitDesktopRetinaJPEG from "../../assets/images/pages/about/desktop-about-portrait-one-retina.jpg";
+import AboutPortraitDesktopRetinaWEBP from "../../assets/images/pages/about/desktop-about-portrait-one-retina.webp";
+import AboutPortraitDesktopRetinaX2JPEG from  "../../assets/images/pages/about/desktop-about-portrait-one-retina.jpg";
+import AboutPortraitDesktopRetinaX2WEBP from "../../assets/images/pages/about/desktop-about-portrait-one-retina.webp";
 
-import DemoPictureMobileJPEG from "../../assets/images/pages/design-system/demo-picture-mobile.jpg";
-import DemoPictureMobileWEBP from "../../assets/images/pages/design-system/demo-picture-mobile.webp";
-import DemoPictureMobileRetinaJPEG from "../../assets/images/pages/design-system/demo-picture-mobile-retina.jpg";
-import DemoPictureMobileRetinaWEBP from "../../assets/images/pages/design-system/demo-picture-mobile-retina.webp";
+import AboutPortraitMobileJPEG from "../../assets/images/pages/about/mobile-about-portrait-one.jpg";
+import AboutPortraitMobileWEBP from "../../assets/images/pages/about/mobile-about-portrait-one.webp";
+import AboutPortraitMobileRetinaJPEG from "../../assets/images/pages/about/mobile-about-portrait-one-retina.jpg";
+import AboutPortraitMobileRetinaWEBP from "../../assets/images/pages/about/mobile-about-portrait-one-retina.webp";
 
-import DemoPictureMobileLazyJPEG from "../../assets/images/pages/design-system/demo-picture-mobile-lazy.jpg";
-import DemoPictureDesktopLazyJPEG from "../../assets/images/pages/design-system/demo-picture-desktop-lazy.jpg";
+import AboutPortraitMobileLazyJPEG from "../../assets/images/pages/about/mobile-about-portrait-one-lazy.jpg";
+import AboutPortraitDesktopLazyJPEG from "../../assets/images/pages/about/mobile-about-portrait-one-lazy.jpg";
 
+import AboutPortraitTwoDesktopJPEG from "../../assets/images/pages/about/desktop-about-portrait-two.jpg";
+import AboutPortraitTwoDesktopWEBP from "../../assets/images/pages/about/desktop-about-portrait-two.webp";
+import AboutPortraitTwoDesktopRetinaJPEG from "../../assets/images/pages/about/desktop-about-portrait-two-retina.jpg";
+import AboutPortraitTwoDesktopRetinaWEBP from "../../assets/images/pages/about/desktop-about-portrait-two-retina.webp";
+import AboutPortraitTwoDesktopRetinaX2JPEG from "../../assets/images/pages/about/desktop-about-portrait-two-retina.jpg";
+import AboutPortraitTwoDesktopRetinaX2WEBP from "../../assets/images/pages/about/desktop-about-portrait-two-retina.webp";
 
-console.log(DemoPictureDesktopJPEG)
+import AboutPortraitTwoMobileJPEG from "../../assets/images/pages/about/mobile-about-portrait-two.jpg";
+import AboutPortraitTwoMobileWEBP from "../../assets/images/pages/about/mobile-about-portrait-two.webp";
+import AboutPortraitTwoMobileRetinaJPEG from "../../assets/images/pages/about/mobile-about-portrait-two-retina.jpg";
+import AboutPortraitTwoMobileRetinaWEBP from "../../assets/images/pages/about/mobile-about-portrait-two-retina.webp";
 
+import AboutPortraitTwoMobileLazyJPEG from "../../assets/images/pages/about/mobile-about-portrait-two-lazy.jpg";
+import AboutPortraitTwoDesktopLazyJPEG from "../../assets/images/pages/about/mobile-about-portrait-two-lazy.jpg";
 ---
 
-<SEO>
+<SEO title="About | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Creative Developer, Brand Designer and Photographer freelance, I help brands shine in the digital world by creating memorable online experiences, refining visual identities, and capturing the essence of each company.">
     <Layout>
         <main class={AboutStyle.do_about_page}>
             <section class={AboutStyle.do_about_hero}>
@@ -34,9 +45,9 @@ console.log(DemoPictureDesktopJPEG)
                     <span class="do-text-s">About</span> Donaël Walter
                 </h1>
                 <p>
-                    Hey, i’m Creative ( Developper, Designer, Photographer ).
-                    What i love is building strong, high-quality ans
-                    user-friendly experiences, for brand and more .
+                    I am Donaël - a skilled brand designer, web developer, and photographer. 
+                    With my expertise in visual design and technical proficiency, 
+                    I offer comprehensive solutions that are both functional and aesthetically pleasing.
                 </p>
             </section>
             <Section
@@ -44,30 +55,30 @@ console.log(DemoPictureDesktopJPEG)
                 images={{
                     mobile: {
                         jpeg: [
-                            DemoPictureMobileJPEG.src,
-                            DemoPictureMobileRetinaJPEG.src,
+                            AboutPortraitMobileJPEG.src,
+                            AboutPortraitMobileRetinaJPEG.src,
                         ],
                         webp: [
-                            DemoPictureMobileWEBP.src,
-                            DemoPictureMobileRetinaWEBP.src,
+                            AboutPortraitMobileWEBP.src,
+                            AboutPortraitMobileRetinaWEBP.src,
                         ],
                     },
                     desktop: {
                         jpeg: [
-                            DemoPictureDesktopJPEG.src,
-                            DemoPictureDesktopRetinaJPEG.src,
-                            DemoPictureDesktopRetinaX2JPEG.src,
+                            AboutPortraitDesktopJPEG.src,
+                            AboutPortraitDesktopRetinaJPEG.src,
+                            AboutPortraitDesktopRetinaX2JPEG.src,
                         ],
                         webp: [
-                            DemoPictureDesktopWEBP.src,
-                            DemoPictureDesktopRetinaWEBP.src,
-                            DemoPictureDesktopRetinaX2WEBP.src,
+                            AboutPortraitDesktopWEBP.src,
+                            AboutPortraitDesktopRetinaWEBP.src,
+                            AboutPortraitDesktopRetinaX2WEBP.src,
                         ],
                     },
                 }}
                 alt="Ceci est le texte alternatif par défaut"
-                posterMobile={DemoPictureMobileLazyJPEG.src}
-                posterDesktop={DemoPictureDesktopLazyJPEG.src}
+                posterMobile={AboutPortraitMobileLazyJPEG.src}
+                posterDesktop={AboutPortraitDesktopLazyJPEG.src}
                 widthDesktop={1026}
                 heightDesktop={577}
                 widthMobile={290}
@@ -102,6 +113,11 @@ console.log(DemoPictureDesktopJPEG)
                         name: "Opsone",
                         description: "Work-Study position - 2019 - 2020",
                     },
+                    {
+                        icone: 'bihua', 
+                        name: 'Bihua', 
+                        description: "Lead Creative Developer - 2020 - 2023"
+                    }
                 ]}
             />
             <Section
@@ -119,6 +135,16 @@ console.log(DemoPictureDesktopJPEG)
                         name: "Site of the day",
                         description: "Bihua",
                     },
+                    {
+                        icone: "AWWWARDS", 
+                        name: 'Honorable Mention', 
+                        description: "Librairie Expérience"
+                    }, 
+                    {
+                        icone: "AWWWARDS", 
+                        name: "Honorable Mention", 
+                        description: "Menuiserie Perret"
+                    }
                 ]}
             />
             <Section
@@ -126,30 +152,30 @@ console.log(DemoPictureDesktopJPEG)
                 images={{
                     mobile: {
                         jpeg: [
-                            DemoPictureMobileJPEG.src,
-                            DemoPictureMobileRetinaJPEG.src,
+                            AboutPortraitTwoMobileJPEG.src,
+                            AboutPortraitTwoMobileRetinaJPEG.src,
                         ],
                         webp: [
-                            DemoPictureMobileWEBP.src,
-                            DemoPictureMobileRetinaWEBP.src,
+                            AboutPortraitTwoMobileWEBP.src,
+                            AboutPortraitTwoMobileRetinaWEBP.src,
                         ],
                     },
                     desktop: {
                         jpeg: [
-                            DemoPictureDesktopJPEG.src,
-                            DemoPictureDesktopRetinaJPEG.src,
-                            DemoPictureDesktopRetinaX2JPEG.src,
+                            AboutPortraitTwoDesktopJPEG.src,
+                            AboutPortraitTwoDesktopRetinaJPEG.src,
+                            AboutPortraitTwoDesktopRetinaX2JPEG.src,
                         ],
                         webp: [
-                            DemoPictureDesktopWEBP.src,
-                            DemoPictureDesktopRetinaWEBP.src,
-                            DemoPictureDesktopRetinaX2WEBP.src,
+                            AboutPortraitTwoDesktopWEBP.src,
+                            AboutPortraitTwoDesktopRetinaWEBP.src,
+                            AboutPortraitTwoDesktopRetinaX2WEBP.src,
                         ],
                     },
                 }}
                 alt="Ceci est le texte alternatif par défaut"
-                posterMobile={DemoPictureMobileLazyJPEG.src}
-                posterDesktop={DemoPictureDesktopLazyJPEG.src}
+                posterMobile={AboutPortraitTwoMobileLazyJPEG.src}
+                posterDesktop={AboutPortraitTwoDesktopLazyJPEG.src}
                 widthDesktop={1026}
                 heightDesktop={577}
                 widthMobile={290}
