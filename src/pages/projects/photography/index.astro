@@ -10,9 +10,11 @@ import ProjectList from '../../../components/molecules/ProjectList'
 
 let allProjects = await client.fetch(getAllProjects());
 allProjects = allProjects.filter(el => el.category === 'photography')
+
+import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_PHOTOGRAPHY_PROJECTS.jpg";
 ---
 
-<SEO lang="en" title="All photography projects | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Embark on a visual journey. Immerse yourself in a gallery of creativity where each project tells a unique story of photography excellence. Let's collaborate to turn your vision into a masterpiece. Explore, be inspired, and let's create something extraordinary together.">
+<SEO lang="en" title="All photography projects | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Embark on a visual journey. Immerse yourself in a gallery of creativity where each project tells a unique story of photography excellence. Let's collaborate to turn your vision into a masterpiece. Explore, be inspired, and let's create something extraordinary together." ogImage={OG_IMAGE}>
 	<Layout>
 		<Heading>
             <h1>Photography</h1>

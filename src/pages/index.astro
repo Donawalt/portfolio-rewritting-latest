@@ -2,9 +2,11 @@
 import Layout from "../components/layouts/Layout.astro";
 import SEO from "../components/layouts/utils/SEO.astro";
 import Scene from '../components/organisms/Section/slices/Scene/index.jsx';
+
+import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
 ---
 
-<SEO lang="en" title="Donaël Walter Portfolio | Creative Development, Design, Photography" description="I am Donaël - a skilled brand designer, web developer, and photographer. With my expertise in visual design and technical proficiency, I offer comprehensive solutions that are both functional and aesthetically pleasing.">
+<SEO lang="en" title="Donaël Walter Portfolio | Creative Development, Design, Photography" description="I am Donaël - a skilled brand designer, web developer, and photographer. With my expertise in visual design and technical proficiency, I offer comprehensive solutions that are both functional and aesthetically pleasing." ogImage={OG_IMAGE.src}>
 	<Layout>
 		<div class="canvas">
 			<Scene client:load />

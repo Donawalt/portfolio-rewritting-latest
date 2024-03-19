@@ -6,6 +6,7 @@ import SEO from "../../components/layouts/utils/SEO.astro";
 import Heading from '../../components/molecules/Heading';
 
 import ProjectList from '../../components/molecules/ProjectList'
+import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
 
 import { client } from "../../assets/scripts/utils/api/sanityClient";
 import { getAllProjects } from "../../assets/scripts/utils/api/api";
@@ -13,7 +14,7 @@ import { getAllProjects } from "../../assets/scripts/utils/api/api";
 let allProjects = await client.fetch(getAllProjects());
 ---
 
-<SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation.">
+<SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation." ogImage={OG_IMAGE}>
 	<Layout>
 		<Heading>
             <h1>Projects</h1>
