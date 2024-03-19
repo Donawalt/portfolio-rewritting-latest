@@ -17,14 +17,14 @@ const { title, lang, description, ogTitle, ogDescription, ogImage, keywords} = A
     <meta property="og:description" content={ogDescription} />
     <meta
       property="og:image"
-      content={ogImage ? ogImage : defaultOgImage}
+      content={ogImage ? ogImage : defaultOgImage.src}
     />
-    <meta property="twitter:card" content={ogImage ? ogImage : defaultOgImage}>
+    <meta property="twitter:card" content={ogImage ? ogImage : defaultOgImage.src}>
     <meta property="twitter:title" content={ogTitle} />
     <meta property="twitter:description" content={ogDescription} />
     <meta
       property="twitter:image"
-      content={ogImage ? ogImage : defaultOgImage}
+      content={ogImage ? ogImage : defaultOgImage.src}
     />
   </head>
   <slot/>
