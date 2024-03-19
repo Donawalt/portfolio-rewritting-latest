@@ -2,8 +2,48 @@
     display: block;
     width: 100%;
     height: fit-content;
-    & > input{
+    transition: opacity 300ms;
+    position: relative;
+
+    &>input {
         margin-left: auto;
         margin-right: 0px;
+    }
+
+    &:disabled,
+    &[disabled] {
+        opacity: 0.80;
+        pointer-events: none;
+    }
+
+    .message {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 8px;
+        height: fit-content;
+        z-index: 1;
+        &[data-type="success"] {
+            border-radius: 6px;
+            border: 1px solid rgb(0, 255, 26);
+            background: #1a3916;
+        }
+        p:nth-child(1) {
+            margin: 0px;
+        }
+        border-radius: 6px;
+        border: 1px solid #F00;
+        background: #391616;
+
+        animation: messageFadeIn 300ms ease-in-out 0ms  forwards;
+        @keyframes messageFadeIn {
+            0%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
     }
 }
