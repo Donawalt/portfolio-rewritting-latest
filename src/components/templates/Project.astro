@@ -6,6 +6,7 @@ import { PortableText } from "astro-portabletext";
 import Section from "../organisms/Section";
 import { SliceMachine } from "../utils/SliceMachine.astro";
 import Picture from "../atoms/Picture";
+import { splitColor } from "gsap";
 
 const {
     title,
@@ -21,10 +22,21 @@ const {
 
 //console.log(nextProject, nextProject?.seoSlug);
 
-let baseUrl:any = Astro.url.pathname.split('/');
-let popped = baseUrl.pop();
-baseUrl = baseUrl.join('/');
-console.log(Astro.url.pathname, baseUrl)
+let pathname = Astro.url.pathname;
+let baseUrl = (() => {
+    let base = "projects";
+    if (pathname.includes("photography")) {
+        return `${base}/photography`;
+    }
+
+    if (pathname.includes("design")) {
+        return `${base}/design`;
+    }
+
+    if (pathname.includes("development")) {
+        return `${base}/development`;
+    }
+})();
 ---
 
 <Heading client:load>
@@ -81,7 +93,10 @@ console.log(Astro.url.pathname, baseUrl)
 {
     nextProject?.seoSlug && (
         <section>
-            <a href={baseUrl+'/'+nextProject.seoSlug.current} class="do_picture-wrapper">
+            <a
+                href={'/' + baseUrl +"/" + nextProject.seoSlug.current}
+                class="do_picture-wrapper"
+            >
                 <div>
                     <Picture
                         url={nextProject.cover.asset._ref}
@@ -307,8 +322,3 @@ console.log(Astro.url.pathname, baseUrl)
         }
     }
 </style>
-
-<script define:vars={{baseUrl, popped}}>
-    alert(baseUrl);
-    alert(popped);
-</script>
