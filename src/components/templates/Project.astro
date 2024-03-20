@@ -20,6 +20,11 @@ const {
 } = Astro.props;
 
 //console.log(nextProject, nextProject?.seoSlug);
+
+let baseUrl:any = Astro.url.pathname.split('/');
+let popped = baseUrl.pop();
+baseUrl = baseUrl.join('/');
+console.log(Astro.url.pathname, baseUrl)
 ---
 
 <Heading client:load>
@@ -33,17 +38,19 @@ const {
         )
     }
 </Heading>
-<div data-hero-project-image="true"><Section
-    type="media-h-picture"
-    url={cover.asset._ref}
-    alt={cover.alt}
-    widthDesktop={1376}
-    heightDesktop={400}
-    widthMobile={640}
-    heightMobile={200}
-    lazy={true}
-    client:load
-/></div>
+<div data-hero-project-image="true">
+    <Section
+        type="media-h-picture"
+        url={cover.asset._ref}
+        alt={cover.alt}
+        widthDesktop={1376}
+        heightDesktop={400}
+        widthMobile={640}
+        heightMobile={200}
+        lazy={true}
+        client:load
+    />
+</div>
 
 {
     introduction && skills && (
@@ -74,7 +81,7 @@ const {
 {
     nextProject?.seoSlug && (
         <section>
-            <a href={nextProject.seoSlug.current} class="do_picture-wrapper">
+            <a href={baseUrl+'/'+nextProject.seoSlug.current} class="do_picture-wrapper">
                 <div>
                     <Picture
                         url={nextProject.cover.asset._ref}
@@ -165,11 +172,12 @@ const {
     // @import url('./../../assets/styles/variables.scss');
     @import "./../../assets/styles/mixins.scss";
 
-    [data-hero-project-image]{
+    [data-hero-project-image],
+    :global(astro-slot > *) {
         opacity: 0;
     }
 
-    :global(.do_project_content, .do_project_hero){
+    :global(.do_project_content, .do_project_hero) {
         opacity: 0;
     }
     .do_project_hero {
@@ -199,8 +207,8 @@ const {
                 grid-column: 1/3;
             }
 
-            div{
-                margin-bottom:16px;
+            div {
+                margin-bottom: 16px;
             }
             margin-bottom: 90px;
         }
@@ -220,40 +228,40 @@ const {
             height: 100%;
             color: white;
 
-            svg{
-                animation: floatLoop 300ms ease-out  infinite alternate forwards;
-                g > *{
+            svg {
+                animation: floatLoop 300ms ease-out infinite alternate forwards;
+                g > * {
                     transition: 400ms;
-                   
                 }
-                g > *:not(:nth-child(1)){
+                g > *:not(:nth-child(1)) {
                     opacity: 0;
                 }
 
-                g, g>:nth-child(1){
+                g,
+                g > :nth-child(1) {
                     transition: 300ms;
                     transform-origin: center;
                     transform: rotate(90deg);
                 }
 
-                &:hover{
-                    g > *:not(:nth-child(1)){
+                &:hover {
+                    g > *:not(:nth-child(1)) {
                         opacity: 1;
                     }
-                    g > :nth-child(1){
+                    g > :nth-child(1) {
                         transform: rotate(180deg) translate(0px, -10px);
                     }
-                    g{
+                    g {
                         transform: rotate(0deg);
                     }
                 }
             }
 
             @keyframes floatLoop {
-                0%{
+                0% {
                     transform: translateY(0);
                 }
-                100%{
+                100% {
                     transform: translateY(16px);
                 }
             }
@@ -291,3 +299,16 @@ const {
         }
     }
 </style>
+
+<style lang="scss" is:global>
+    [opts="{&quot;name&quot;:&quot;Heading&quot;,&quot;value&quot;:true}"] {
+        section > astro-slot > * {
+            opacity: 0;
+        }
+    }
+</style>
+
+<script define:vars={{baseUrl, popped}}>
+    alert(baseUrl);
+    alert(popped);
+</script>

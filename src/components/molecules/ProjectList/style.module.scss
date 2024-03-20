@@ -36,3 +36,9 @@
         grid-template-columns: 1fr 1fr;
     }
 }
+
+:global(#container > astro-island:nth-child(3) > section > astro-slot > *){
+    opacity: 0;
+}
+
+
