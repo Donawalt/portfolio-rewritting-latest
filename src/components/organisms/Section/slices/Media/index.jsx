@@ -104,7 +104,7 @@ export const FullPicture = ({
 export const GridPicture = ({ pictures }) => {
   return (
     <section className={MediaStyle.grid_picture}>
-      {pictures.map((image) => (
+      {pictures && pictures.map((image, index) => (<li key={image?.url}>
         <Picture
           url={image?.url}
           crop={image?.crop}
@@ -118,6 +118,7 @@ export const GridPicture = ({ pictures }) => {
           heightMobile={image?.heightMobile}
           lazy={image?.lazy}
         />
+      </li>
       ))}
     </section>
   );
