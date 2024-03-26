@@ -8,7 +8,7 @@ import {
   isVisible,
 } from "../../../assets/scripts/utils/dom";
 import { urlImageBuilder } from "../../../assets/scripts/utils/api/urlBuilder.js";
-
+import { getImageDimensions } from "@sanity/asset-utils"; 
 // Import component style
 import "./picture.scss";
 import { crossProduct } from "../../../assets/scripts/utils/math";
@@ -73,62 +73,66 @@ const Picture = (props) => {
     heightDesktop,
     widthMobile,
     heightMobile,
+    localSize, 
     crop,
   } = props;
   // Initialise lazy variables
   const el = React.useRef();
   const [isLazyVisible, setIsLazyVisible] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
+  let originalDimension = null;
+  // if image is sanity 
+  url && (originalDimension = getImageDimensions(url));
   // Define poster;
   const p = {
-    mobile: url
+    mobile: url && originalDimension
       ? urlImageBuilder(
         url,
         10,
-        Math.round(crossProduct(widthMobile, heightMobile, 10)),
+        Math.round(crossProduct( localSize ? widthMobile : originalDimension.width, localSize ? heightMobile : originalDimension.height, 10)),
         crop,
         "webp"
       )
       : posterMobile,
-    desktop: url
+    desktop: url && originalDimension
       ? urlImageBuilder(
         url,
         20,
-        Math.round(crossProduct(widthDesktop, heightDesktop, 20)),
+        Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, 20)),
         crop,
         "webp"
       )
       : posterDesktop,
-      lazyDesktop: url ? urlImageBuilder(
+      lazyDesktop: url && originalDimension ? urlImageBuilder(
         url,
         20,
-        Math.round(crossProduct(widthDesktop / 100, heightDesktop / 100, 20)),
+        Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width / 100, localSize ? heightDesktop: originalDimension.height / 100, 20)),
         crop,
         "jpg"
       ) : posterDesktop, 
-      lazyMobile: url ? urlImageBuilder(
+      lazyMobile: url && originalDimension ? urlImageBuilder(
         url,
         20,
-        Math.round(crossProduct(widthMobile / 100, heightMobile / 100, 20)),
+        Math.round(crossProduct( localSize ? widthMobile: originalDimension.width / 100, localSize ? heightMobile: originalDimension.height / 100, 20)),
         crop,
         "webp"
       ): posterMobile
   };
 
   // Get all imgs
-  let imgs = url
+  let imgs = url && originalDimension
     ? {
       mobile: {
         jpeg: [
-          urlImageBuilder(url, widthMobile, heightMobile, crop),
-          urlImageBuilder(url, widthMobile * 2, heightMobile * 2, crop),
+          urlImageBuilder(url, widthMobile, Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile)), crop),
+          urlImageBuilder(url, widthMobile * 2, Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile * 2)), crop),
         ],
         webp: [
-          urlImageBuilder(url, widthMobile, heightMobile, crop, "webp"),
+          urlImageBuilder(url, widthMobile, Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile)), crop, "webp"),
           urlImageBuilder(
             url,
             widthMobile * 2,
-            heightMobile * 2,
+            Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile * 2)),
             crop,
             "webp"
           ),
@@ -136,23 +140,23 @@ const Picture = (props) => {
       },
       desktop: {
         jpeg: [
-          urlImageBuilder(url, widthDesktop, heightDesktop, crop),
-          urlImageBuilder(url, widthDesktop * 2, heightDesktop * 2, crop),
-          urlImageBuilder(url, widthDesktop * 4, heightDesktop * 4, crop),
+          urlImageBuilder(url, widthDesktop, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop)), crop),
+          urlImageBuilder(url, widthDesktop * 2, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop * 2)), crop),
+          urlImageBuilder(url, widthDesktop * 4, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop * 4)), crop),
         ],
         webp: [
-          urlImageBuilder(url, widthDesktop, heightDesktop, crop, "webp"),
+          urlImageBuilder(url, widthDesktop, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop)), crop, "webp"),
           urlImageBuilder(
             url,
             widthDesktop * 2,
-            heightDesktop * 2,
+            Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop * 2)),
             crop,
             "webp"
           ),
           urlImageBuilder(
             url,
             widthDesktop * 4,
-            heightDesktop * 4,
+            Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop * 4)),
             crop,
             "webp"
           ),

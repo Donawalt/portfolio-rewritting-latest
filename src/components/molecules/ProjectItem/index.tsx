@@ -17,11 +17,11 @@ const ProjectItem = (props: { index, title, picture, link }) => {
         <a href={link ? link : "/projects/design"} className={Style.root}>
             <h3 className='do-text-s'>{title ? title : "Lorem ipsum dolor"}</h3>
             <div>
-                {picture && <Picture url={picture.asset._ref} widthDesktop={1376}
-                    heightDesktop={400}
-                    widthMobile={640}
-                    heightMobile={200}
-                    alt={picture.alt} lazy={true}/>}
+                {picture && <Picture url={picture.asset._ref} widthDesktop={680}
+                    heightDesktop={500}
+                    widthMobile={300}
+                    heightMobile={500}
+                    alt={picture.alt} lazy={true} localSize={true}/>}
                     {!picture && (<picture>
                     <img src="https://source.unsplash.com/random/1920×1080" alt="Image de test" />
                 </picture>)}

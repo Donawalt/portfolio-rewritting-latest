@@ -15,6 +15,7 @@ export const HeroPicture = ({
   lazy,
   url,
   crop,
+  localSize
 }) => {
   return (
     <section className={MediaStyle.hero_picture}>
@@ -30,6 +31,7 @@ export const HeroPicture = ({
         widthMobile={widthMobile}
         heightMobile={heightMobile}
         lazy={lazy}
+        localSize={localSize}
       />
     </section>
   );

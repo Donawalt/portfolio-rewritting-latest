@@ -26,7 +26,7 @@ const {page, nextPage} = Astro.props;
 ---
 <SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography">
 	<Layout>
-        <Project title={page.name} subTitle={page.subtitle} cover={page.cover} tag={page?.tag} introduction={page?.introduction} skills={page?.skills} content={page.content} nextProject={nextPage} slug={slug}/>
+        <Project title={page?.name} subTitle={page?.subtitle} cover={page?.cover} tag={page?.tag} introduction={page?.introduction} skills={page?.skills} content={page?.content} nextProject={nextPage} slug={slug}/>
     </Layout>
 </SEO>
 

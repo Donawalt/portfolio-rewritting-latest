@@ -60,6 +60,7 @@ let baseUrl = (() => {
         widthMobile={640}
         heightMobile={200}
         lazy={true}
+        localSize={true}
         client:load
     />
 </div>
@@ -106,6 +107,7 @@ let baseUrl = (() => {
                         widthMobile={640}
                         heightMobile={200}
                         lazy={true}
+                        localSize={true}
                         client:load
                     />
                 </div>
@@ -231,6 +233,13 @@ let baseUrl = (() => {
 
     .do_picture-wrapper {
         position: relative;
+        display: block;
+        height: 100vh;
+        overflow: hidden;
+        :global(picture, img){
+            height: 100vh;
+            object-fit: cover;
+        }
         & > div:nth-child(1) {
             background-color: black;
             opacity: 40%;

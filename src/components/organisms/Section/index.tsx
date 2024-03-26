@@ -34,7 +34,8 @@ const Section = (props: {
   tags?,
   experiences?,
   title?,
-  deliverables?
+  deliverables?, 
+  localSize?
 }) => {
 
   const { type,
@@ -59,7 +60,7 @@ const Section = (props: {
     tags,
     experiences,
     title,
-    deliverables} = props;
+    deliverables, localSize} = props;
   switch (type) {
     case "commitments": 
       return <Commitments title={title} description={description} deliverables={deliverables} />
@@ -79,6 +80,7 @@ const Section = (props: {
           widthMobile={widthMobile}
           heightMobile={heightMobile}
           lazy={lazy}
+          localSize={localSize}
         />
       );
     case "media-b-picture":
