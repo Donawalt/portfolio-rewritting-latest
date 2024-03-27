@@ -93,7 +93,7 @@ let baseUrl = (() => {
 
 {
     nextProject?.seoSlug && (
-        <section>
+        <section class="do-next-section">
             <a
                 href={'/' + baseUrl +"/" + nextProject.seoSlug.current}
                 class="do_picture-wrapper"
@@ -230,7 +230,9 @@ let baseUrl = (() => {
             margin-bottom: 90px;
         }
     }
-
+    .do-next-section{
+        @include interpolate(padding-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 40px, 160px );
+    }
     .do_picture-wrapper {
         position: relative;
         display: block;

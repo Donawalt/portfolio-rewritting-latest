@@ -6,6 +6,26 @@ html {
 
 }
 
+html.lenis, html.lenis body {
+    height: auto;
+  }
+  
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+
 body{
     padding-top: 81px;
     @include interpolate(padding-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 32px, 81px );
