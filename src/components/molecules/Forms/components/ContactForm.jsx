@@ -96,7 +96,7 @@ const ContactForm = () => {
 
 
     return (
-        <form ref={form} className={Style.root} onSubmit={sendContact} disabled={stateMachine.current !== "empty"} data-netlify={true}>
+        <form ref={form} className={Style.root} onSubmit={sendContact} disabled={stateMachine.current !== "empty"} data-netlify={true} netlify>
             <input type="hidden" name="form-name" value="aboutContact" />
             <Input type='text' name='firstname' label='Firstname' required={true} />
             <Input type='text' name='lastname' label='Lastname' required={true} />
