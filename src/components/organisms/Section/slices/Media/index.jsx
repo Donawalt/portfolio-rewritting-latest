@@ -101,10 +101,11 @@ export const FullPicture = ({
   );
 };
 
-export const GridPicture = ({ pictures }) => {
+export const GridPicture = (props) => {
+  const {pictures} = props; 
   return (
     <section className={MediaStyle.grid_picture}>
-      {pictures && pictures.map((image, index) => (<li key={image?.url}>
+      {pictures && pictures.map((image, index) => (image?.url && <li key={image?.url}>
         <Picture
           url={image?.url}
           crop={image?.crop}

@@ -244,7 +244,7 @@ const Picture = (props) => {
 
   return (
     <>
-      <picture {...props} ref={el} data-scc-component={true}>
+      <picture {...props} ref={el} data-scc-component={true} style={{aspectRatio: !localSize && originalDimension && `${originalDimension.width} / ${originalDimension.height}`}}>
         <source
           type="image/webp"
           media={`(max-width: ${BREAKPOINTS.tablet - 1}px)`}
