@@ -3,7 +3,7 @@ import Style from './style.module.scss';
 
 const Footer = () => {
   return (<footer className={Style.do_footer}>
-    <p className='do-text-xs'>© Donaël Walter 2023</p>
+    <p className='do-text-xs'>© Donaël Walter 2024</p>
     <ul>
     <li><a className='do-text-xs' href='https://cal.com/donael-walter/conversation-rapide?date=2023-09-20&month=2023-09' target='_blank'>Book a 15 min call</a><svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_1216_66)">

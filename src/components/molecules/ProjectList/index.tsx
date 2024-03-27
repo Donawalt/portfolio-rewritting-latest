@@ -12,7 +12,7 @@ const ProjectList = (props: {projects: any[] }) => {
     return (<ul className={Style.root}>
                 {
             projects && projects.map((el, index)=> {
-                return <li key={el.name+index}><ProjectItem index={index} title={el.name + ' - ' + el.category} picture={el.cover} link={'/projects/'+ el.category + '/' + el.seoSlug.current}/></li>
+                return <li key={el.name+index}><ProjectItem index={index} title={el.name + ' ✦ ' + el.category} picture={el.cover} link={'/projects/'+ el.category + '/' + el.seoSlug.current}/></li>
             })
         }
     </ul>)
