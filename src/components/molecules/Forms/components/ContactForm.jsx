@@ -74,21 +74,19 @@ const ContactForm = () => {
         const formData = new FormData(form.current);
         if (formData.get('firstname') && formData.get('lastname') && formData.get('message')) {
             nextStep();
-
-
-            fakeAsyncFunction(formData).then(() => {
-                // if formData success 
-                nextStep();
-
-                // else formData error 
-                // errorStep();
-
-                // reset form 
-                setTimeout(() => {
-                    clearForm();
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
+              })
+                .then(() =>  {
                     nextStep();
-                }, 8000)
-            })
+                    setTimeout(() => {
+                        clearForm();
+                        nextStep();
+                    }, 2000)
+                })
+                .catch((error) => errorStep());
         } else {
             errorStep();
         }
@@ -98,8 +96,8 @@ const ContactForm = () => {
 
 
     return (
-        <form ref={form} className={Style.root} onSubmit={sendContact} disabled={stateMachine.current !== "empty"}>
-            
+        <form ref={form} className={Style.root} onSubmit={sendContact} disabled={stateMachine.current !== "empty"} data-netlify={true}>
+            <input type="hidden" name="form-name" value="aboutContact" />
             <Input type='text' name='firstname' label='Firstname' required={true} />
             <Input type='text' name='lastname' label='Lastname' required={true} />
             <Input type='email' name='email' label='Mail' required={true} />
