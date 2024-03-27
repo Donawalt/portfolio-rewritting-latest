@@ -1,10 +1,45 @@
 ---
 import Layout from "../components/layouts/Layout.astro";
 import SEO from "../components/layouts/utils/SEO.astro";
+import Button from "../components/atoms/Button";
+import {Image} from 'astro:assets'
+import ImagePic from '../assets/images/pages/404/transparentTV.png';
 ---
 
 
 <SEO lang="en" title="Page not found | Donaël Walter Portfolio | Creative Development, Design, Photography" description="I am Donaël - a skilled brand designer, web developer, and photographer. With my expertise in visual design and technical proficiency, I offer comprehensive solutions that are both functional and aesthetically pleasing.">
 	<Layout>
+		<main>			<div>
+				<h1>4<Image src={ImagePic} alt="TV letter"/>4</h1>
+			</div>
+			<Button type="link" href="/" client:load>Back to home</Button>		</main>
+
 	</Layout>
 </SEO>
+
+<style lang="scss">
+	main{
+		min-height: 80vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center; 
+		align-items: center;
+		h1 {
+			@include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 130px, 400px );
+			@include interpolate(line-height, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 130px, 400px );
+			margin: auto;
+			width: fit-content;
+		}
+		:global(img) {
+			@include interpolate(height, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 120px, 293px );
+			width: auto;
+		}
+		:global(main button, main a) {
+			display: block;
+			width: fit-content;
+			margin-left: auto; 
+			margin-right: auto;
+		}
+	}
+
+</style>

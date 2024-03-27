@@ -1,6 +1,6 @@
 import Style from '../style.module.scss';
 import Input from '../../../atoms/Input';
-import Button from '../../../atoms/Button/index.';
+import Button from '../../../atoms/Button/index';
 
 import { useState, useRef } from 'react';
 

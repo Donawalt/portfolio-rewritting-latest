@@ -1,4 +1,4 @@
-import Button from '../../atoms/Button/index.';
+import Button from '../../atoms/Button/index';
 import Tag from '../../atoms/Tag/index.';
 import Style from './product.module.scss';
 

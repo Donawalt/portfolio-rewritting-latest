@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '../../../../../atoms/Button/index.';
+import Button from '../../../../../atoms/Button/index';
 import WorkingStyle from './working.module.scss';
 import ContactForm from '../../../../../molecules/Forms/components/ContactForm';
 
