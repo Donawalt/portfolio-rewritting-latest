@@ -28,3 +28,7 @@ const {page} = Astro.props;
 		<Landing type={page.category} title={page.name} subTitle={page.subtitle} cover={page.cover} content={page.content} comitments={page.comitments}/>
 	</Layout>
 </SEO>
+
+<script define:vars={{page}}>
+    console.log(page);
+</script>
