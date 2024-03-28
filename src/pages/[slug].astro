@@ -5,6 +5,7 @@ import SEO from "../components/layouts/utils/SEO.astro";
 import Landing from "../components/templates/Landing.astro";
 import { client } from "../assets/scripts/utils/api/sanityClient";
 import { getAllLandings } from "../assets/scripts/utils/api/api";
+import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
 
 export const getStaticPaths = (async () => {
     const allLandings = await client.fetch(getAllLandings());
@@ -22,7 +23,7 @@ const {page} = Astro.props;
 
 ---
 
-<SEO lang="en" title={page.seoTitle + " - Donaël Walter Portfolio | Creative Development, Design, Photography"} description={page.seoDescription} ogDescription={page.seoDescription} keywords={page.seoKeywords}>
+<SEO lang="en" title={page.seoTitle + " - Donaël Walter Portfolio | Creative Development, Design, Photography"} description={page.seoDescription} ogDescription={page.seoDescription} keywords={page?.seoKeywords} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref)}}>
 	<Layout>
 		<Landing type={page.category} title={page.name} subTitle={page.subtitle} cover={page.cover} content={page.content} comitments={page.comitments}/>
 	</Layout>
