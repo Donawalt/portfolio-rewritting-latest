@@ -4,7 +4,7 @@ import Heading from "../molecules/Heading";
 import Section from "../organisms/Section";
 import Button from "../atoms/Button/index";
 import { SliceMachine } from "../utils/SliceMachine.astro";
-const { type, title, subTitle, content, cover } = Astro.props;
+const { type, title, subTitle, content, cover, comitments } = Astro.props;
 
 // console.log("Landing", content)
 ---
@@ -82,29 +82,28 @@ const { type, title, subTitle, content, cover } = Astro.props;
     }
 </Heading>
 
-<div data-hero-project-image ><Section
-    type="media-h-picture"
-    url={cover.asset._ref}
-    alt={cover.alt}
-    widthDesktop={1376}
-    heightDesktop={400}
-    widthMobile={640}
-    heightMobile={200}
-    lazy={true}
-    client:load
-/></div>
+<div data-hero-project-image>
+    <Section
+        type="media-h-picture"
+        url={cover.asset._ref}
+        alt={cover.alt}
+        widthDesktop={1376}
+        heightDesktop={400}
+        widthMobile={640}
+        heightMobile={200}
+        lazy={true}
+        client:load
+    />
+</div>
 
-<div data-hero-project-image><Section
-    type="commitments"
-    title="Clients satisfactions first"
-    description="Whatever the types of projects, we always try to give high-qualities deliverables with the clients goals in mind. "
-    deliverables={[
-        "High-Fidelity Front-End",
-        "Custom Back-End",
-        "SEO Friendly Websites",
-        "CMS adapted to you needs",
-    ]}
-/></div>
+<div data-hero-project-image>
+    <Section
+        type="commitments"
+        title={comitments.title}
+        description={comitments.description}
+        deliverables={comitments.deliverables}
+    />
+</div>
 {
     content && (
         <section class="do_landing_content">
@@ -114,12 +113,11 @@ const { type, title, subTitle, content, cover } = Astro.props;
 }
 
 <style lang="scss" scoped>
-
-[data-hero-project-image]{
+    [data-hero-project-image] {
         opacity: 0;
     }
 
-    :global(.do_landing_content){
+    :global(.do_landing_content) {
         opacity: 0;
     }
     .do_landing_icon {

@@ -30,6 +30,7 @@
     @include grid(8, 16px, 32px);
     picture {
       grid-column: 1 / 9;
+      width: 100%;
       border-radius: 16px;
       overflow: hidden;
       display: block;
