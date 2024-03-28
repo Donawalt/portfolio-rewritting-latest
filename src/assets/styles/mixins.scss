@@ -28,6 +28,27 @@
 		}
 	}
 }
+
+
+@mixin interpolateHeight($properties, $min-screen, $max-screen, $min-value, $max-value) {
+	& {
+		@each $property in $properties {
+			#{$property}: $min-value;
+		}
+
+		@media screen and (min-height: $min-screen) {
+			@each $property in $properties {
+				#{$property}: calc-interpolation-height($min-screen, $min-value, $max-screen, $max-value); 
+			}
+		}
+
+		@media screen and (min-height: $max-screen) {
+			@each $property in $properties {
+				#{$property}: $max-value;
+			}
+		}
+	}
+}
 // Requires the calc-interpolation function which can also be used independently
 @function calc-interpolation($min-screen, $min-value, $max-screen, $max-value) {
 	$a: calc(($max-value - $min-value) / ($max-screen - $min-screen));
@@ -41,6 +62,17 @@
 	@return calc(#{$a*100}vw #{$sign} #{$b});
 }
 
+@function calc-interpolation-height($min-screen, $min-value, $max-screen, $max-value) {
+	$a: calc(($max-value - $min-value) / ($max-screen - $min-screen));
+	$b: $min-value - $a * $min-screen; 
+
+	$sign: "+";
+	@if ($b < 0) {
+		$sign: "-";
+		$b: abs($b);
+	}
+	@return calc(#{$a*100}vh #{$sign} #{$b});
+}
 
 /// scalable elements (usually images / background images) that maintain a ratio 
 /*div {

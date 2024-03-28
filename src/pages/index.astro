@@ -40,30 +40,19 @@ import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
 		  overflow: hidden;
 		}
 		.line-1 {
-		  font-size: 80px;
+		  @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 20px, 80px );
 		  opacity: 0;
 		}
 		.line-2 {
-		  font-size: 110px;
+		  @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 30px, 110px );
 		  opacity: 0;
 		}
 		.line-3 {
-		  font-size: 35px;
+		  @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 12px, 35px );
 		  color: rgba(255, 255, 255, 0.7);
 		  text-transform: initial;
 		  font-feature-settings: "ordn" on;
 		  opacity: 0;
-		}
-		@media screen and (max-width: 425px) {
-		  .line-1 {
-			font-size: 20px;
-		  }
-		  .line-2 {
-			font-size: 30px;
-		  }
-		  .line-3 {
-			font-size: 12px;
-		  }
 		}
 	  }
 	  .canvas {
@@ -119,6 +108,7 @@ import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
 	  left: 0;
 	  height: calc(100vh - 57px) !important;
 	  width: 100vw !important;
+	  @include interpolateHeight(top, 700px, 900px, -74px, 0px);
 	}
   </style>
   
