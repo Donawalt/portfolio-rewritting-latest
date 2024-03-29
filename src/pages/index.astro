@@ -39,16 +39,17 @@ import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
 		  display: block;
 		  overflow: hidden;
 		}
+
 		.line-1 {
-		  @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 20px, 80px );
+		  @include interpolateBoth(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"),600px, 800px, 20px, 80px );
 		  opacity: 0;
 		}
 		.line-2 {
-		  @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 30px, 110px );
+		  @include interpolateBoth(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"),600px, 800px, 30px, 110px );
 		  opacity: 0;
 		}
 		.line-3 {
-		  @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 12px, 35px );
+		  @include interpolateBoth(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"),600px, 800px, 12px, 35px );
 		  color: rgba(255, 255, 255, 0.7);
 		  text-transform: initial;
 		  font-feature-settings: "ordn" on;
@@ -108,7 +109,10 @@ import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
 	  left: 0;
 	  height: calc(100vh - 57px) !important;
 	  width: 100vw !important;
-	  @include interpolateHeight(top, 700px, 900px, -74px, 0px);
+
+	  @include mq('tablet', min){
+		@include interpolateHeight(top, 700px, 800px, -74px, 0px);
+	  }
 	}
   </style>
   

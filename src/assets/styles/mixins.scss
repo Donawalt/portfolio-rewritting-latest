@@ -74,6 +74,66 @@
 	@return calc(#{$a*100}vh #{$sign} #{$b});
 }
 
+
+@mixin interpolateBoth($properties, $min-width, $max-width, $min-height, $max-height, $min-value, $max-value) {
+    & {
+      @each $property in $properties {
+        #{$property}: $min-value;
+      }
+      
+      //  Add media query to apply rules only when the viewport is larger than min-width.
+
+      @media screen and (min-width: $min-width) and (min-height: $min-height) {
+        @each $property in $properties {
+          #{$property}: calc-interpolation-both($min-width, $min-height, $min-value, $max-width, $max-height, $max-value);
+        }
+      }
+  
+      @media screen and (min-width: $max-width) and (min-height: $min-height) {
+        @each $property in $properties {
+          #{$property}: calc-interpolation-height($min-width, $min-value, $max-width, $max-value);
+        }
+      }
+  
+      @media screen and (min-height: $max-height) and (min-width: $min-width) {
+        @each $property in $properties {
+          #{$property}: calc-interpolation($min-width, $min-value, $max-width, $max-value);
+        }
+      }
+
+      @media screen and (min-height: $max-height) and (min-width: $max-width) {
+        @each $property in $properties {
+          #{$property}: $max-value;
+        }
+      }
+    }
+  }
+  
+  @function calc-interpolation-both($min-width, $min-height, $min-value, $max-width, $max-height, $max-value) {
+    $a-width: calc(($max-value - $min-value) / ($max-width - $min-width));
+    $a-height: calc(($max-value - $min-value) / ($max-height - $min-height));
+    $b-width: $min-value - $a-width * $min-width;
+    $b-height: $min-value - $a-height * $min-height;
+  
+    $sign-width: "+";
+    $sign-height: "+";
+  
+    @if ($b-width < 0) {
+      $sign-width: "-";
+      $b-width: abs($b-width);
+    }
+  
+    @if ($b-height < 0) {
+      $sign-height: "-";
+      $b-height: abs($b-height);
+    }
+  
+    $width-value: calc(#{$a-width*100}vw #{$sign-width} #{$b-width});
+    $height-value: calc(#{$a-height*100}vh #{$sign-height} #{$b-height});
+  
+    @return min($width-value, $height-value);
+  }
+  
 /// scalable elements (usually images / background images) that maintain a ratio 
 /*div {
     @include responsive-ratio(16,9);
