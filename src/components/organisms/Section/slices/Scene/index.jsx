@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import * as THREE from "three";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader} from "@react-three/fiber";
 import { useGLTF, PerspectiveCamera, Text, Html } from "@react-three/drei";
 import eventBus from "../../../../../assets/scripts/utils/eventBus";
 import animateTitle from "../../../../../assets/scripts/utils/animations/pages/index/title";
@@ -10,6 +10,7 @@ import useMediaQuery from "../../../../../assets/scripts/hooks/useMediaQuery";
 import VideoOne from "../../../../../../public/videos/pages/index/video_one.mp4";
 import VideoTwo from "../../../../../../public/videos/pages/index/video_two.mp4";
 import VideoThree from "../../../../../../public/videos/pages/index/video_three.mp4";
+import RommText from "../../../../../../public/videos/pages/index/empty.png";
 
 const degreesToRadians = (degrees) => {
   var pi = Math.PI;
@@ -141,7 +142,12 @@ const BlenderScene = (props) => {
   );
 
   const [roomVideo, setRoomVideo] = React.useState(0);
-
+  console.log("RommText", RommText);
+  const texture = useLoader(THREE.TextureLoader, RommText.src);
+  texture.flipX = true;
+  texture.center.set(0.185, 0.295);
+  texture.repeat.set(-4, 3);
+  texture.rotation = -degreesToRadians(90);
   const [basePlatform, setBasePlatform] = React.useState(-85);
 
   // Mobile part
@@ -419,7 +425,8 @@ const BlenderScene = (props) => {
             <Tooltip
               text="Photography"
               video={1}
-              targetLocation={[0.02, 0, 0.02]}
+              targetLocation={[0.02, -0, 0.02]}
+             // position={[-1.5, -1, 0]}
               onClick={() => {
                 var getUrl = window.location;
                 var baseUrl =
@@ -789,7 +796,8 @@ const BlenderScene = (props) => {
           </meshBasicMaterial>
         )}
         {!roomVideo && (
-          <meshBasicMaterial toneMapped={false}></meshBasicMaterial>
+          <meshBasicMaterial toneMapped={false} attach="material" map={texture}>
+          </meshBasicMaterial>
         )}
       </mesh>
       <mesh
