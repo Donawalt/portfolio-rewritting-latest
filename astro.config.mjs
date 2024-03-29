@@ -29,6 +29,7 @@ export default defineConfig({
       }
     }
   },
+  site: 'https://www.donaelwalter.com',
   plugins: [
   // Import your global SCSS file here
   {
