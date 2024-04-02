@@ -22,7 +22,6 @@ const Tooltip = (props) => {
   const { position, text, onClick } = props;
 
   useEffect(() => {
-    console.log(tooltip.current);
   }, []);
 
   const onHover = (e) => {
@@ -142,7 +141,6 @@ const BlenderScene = (props) => {
   );
 
   const [roomVideo, setRoomVideo] = React.useState(0);
-  console.log("RommText", RommText);
   const texture = useLoader(THREE.TextureLoader, RommText.src);
   texture.flipX = true;
   texture.center.set(0.185, 0.295);
@@ -820,8 +818,7 @@ const getAspect = () => {
 
 const mouseAnimation = (object, isMobile) => {
   document.addEventListener("mousemove", (event) => {
-    console.log(isMobile);
-    if (window.innerWidth > 425) {
+    if (window.innerWidth > 425 && (object.current)) {
       object.current.position.x =
         0 +
         (event.clientX > window.innerWidth / 2
@@ -969,7 +966,7 @@ const Scene = () => {
                   d="M24.5 1C11.5213 1 0.999997 11.5213 0.999998 24.5C0.999999 37.4787 11.5213 48 24.5 48C37.4787 48 48 37.4787 48 24.5C48 11.5213 37.4787 1 24.5 1Z"
                   fill="black"
                   stroke="white"
-                  stroke-miterlimit="10"
+                  strokeMiterlimit="10"
                 />
                 <path
                   d="M10.5 24.5257C14.9244 24.5772 18.5772 20.9244 18.5257 16.5L18.5257 16.7058C18.5772 21.0788 22.127 24.5772 26.5 24.5257L26.4486 24.5257C22.0756 24.5772 18.5772 28.127 18.5257 32.4486L18.5257 32.5C18.5257 28.0756 14.9244 24.5257 10.5 24.5257Z"
@@ -995,7 +992,7 @@ const Scene = () => {
                   d="M23.5 47C36.4787 47 47 36.4787 47 23.5C47 10.5213 36.4787 0 23.5 0C10.5213 0 0 10.5213 0 23.5C0 36.4787 10.5213 47 23.5 47Z"
                   fill="black"
                   stroke="white"
-                  stroke-miterlimit="10"
+                  strokeMiterlimit="10"
                 />
                 <path
                   d="M37.5 23.4743C33.0756 23.4228 29.4228 27.0756 29.4743 31.5V31.2942C29.4228 26.9212 25.873 23.4228 21.5 23.4743H21.5514C25.9244 23.4228 29.4228 19.873 29.4743 15.5514V15.5C29.4743 19.9244 33.0756 23.4743 37.5 23.4743Z"
