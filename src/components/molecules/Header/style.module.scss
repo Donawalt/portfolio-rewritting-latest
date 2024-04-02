@@ -24,6 +24,7 @@
         transition: 300ms;
         &:hover{
             color: cornflowerblue;
+            filter: url("#filter-2");
         }
     }
     ul:nth-child(3){

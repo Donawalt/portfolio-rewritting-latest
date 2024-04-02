@@ -5,8 +5,8 @@ export const CompaniesLogo = ({ type = '' }) => {
   switch (type) {
     case 'opsone':
       return (<svg
-        width="55"
-        height="42"
+        width="40"
+        height="40"
         viewBox="0 0 55 42"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ export const CompaniesLogo = ({ type = '' }) => {
         )
     case 'CSSDA':
       return (<svg
-        width="55"
+        width="41"
         height="42"
         viewBox="0 0 55 42"
         fill="none"
