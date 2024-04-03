@@ -58,9 +58,11 @@
     @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 100px, 180px );
     position: relative;
     padding: 30px 0px;
+    overflow: hidden;
     picture{
         width: 100%;
         height: auto;
+        overflow: hidden;
         &::after{
             position: absolute;
             bottom: -1px;
