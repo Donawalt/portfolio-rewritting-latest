@@ -27,6 +27,7 @@
             }
             details{
                 transition: 300ms;
+                overflow: hidden;
                 summary{
                     list-style: none;
                     display: grid;
