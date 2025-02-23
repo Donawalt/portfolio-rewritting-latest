@@ -4,10 +4,14 @@ import "../../assets/styles/global.scss";
 import NoiseCanvas from "../atoms/NoiseCanvas/index.";
 import Header from "../molecules/Header/index.";
 import Footer from "../molecules/Footer/index.";
+
+// props page type 
+const {type} = Astro.props;
+
 ---
 
 <body data-barba="wrapper">
-    <Header />
+    <Header type={type ? type : null} client:load/>
     <main data-barba="container" id="container"><slot /></main>
     <Footer />
     <NoiseCanvas client:load />
