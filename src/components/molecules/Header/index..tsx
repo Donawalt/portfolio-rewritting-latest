@@ -63,7 +63,6 @@ const blogMenu = {
   ],
   right: RMenu
 }
-
 const baseMenu = {
   left: [
     {
@@ -74,6 +73,71 @@ const baseMenu = {
   right: RMenu
 }
 
+const mobileMenu = [
+  {
+    name: 'Prices',
+    subField: [
+      {
+        name: "Visual Identity Design",
+        link: '/independent-designer/'
+      },
+      {
+        name: "Web Development",
+        link: '/independent-developer/'
+      },
+      {
+        name: "Photography",
+        link: '/independent-photographer/'
+      }
+    ]
+  },
+  {
+    name: undefined,
+    subField: [
+      // projects , blog , about 
+      {
+        name: "Projects",
+        link: "/projects/"
+      },
+      {
+        name: "Blog",
+        link: "/blog/"
+      },
+      {
+        name: "About",
+        link: "/about"
+      }
+    ]
+  },
+  {
+    name: undefined,
+    subField: [
+
+      {
+        name: "Instagram",
+        link: "https://www.instagram.com/walt_dona/"
+      },
+      {
+        name: "Github",
+        link: "https://github.com/walt-dona"
+      },
+      {
+        name: "Dribble",
+        link: "URL_ADDRESSribbble.com/walt_dona/"
+      },
+      {
+        name: "Behance",
+        link: "https://www.behance.net/walt_dona"
+      },
+      {
+        name: "LinkedIn",
+        link: "https://www.linkedin.com/in/dona%C3%ABl-walter/"
+      },
+
+    ]
+  }
+]
+
 interface MenuItem {
   name: string;
   link?: string;
@@ -81,32 +145,28 @@ interface MenuItem {
 }
 
 const MenuList = ({ list }: { list: MenuItem[] }) => {
- 
+
 
   const SubList = ({ subList }: { subList: MenuItem[] }) => {
     return (
       <ul className={Style.do_submenu} role="menu">
-        {subList.map((el, index) => (
-          <li key={el.name + index} role="menuitem">
-            <a href={el.link} className='do-text-xs'>{el.name}</a>
-          </li>
-        ))}
+       <MenuList list={subList} />
       </ul>
     );
   };
 
   return (
     <>{list.map((el, index) => (
-      <li 
+      <li
         key={el.name + index}
       >
-        
+
         {el.link ? (
-          <a href={el.link} className='do-text-xs'>{el.name}</a>
+          <a href={el.link} target={/** if external link set _tagert else _self*/ el.link.includes("https") ? "_blank" : "_self" } className='do-text-xs'>{el.name}</a>
         ) : (
-          <span className='do-text-xs' 
-          role={el.subField ? 'menuitem' : undefined}
-          aria-haspopup={el.subField ? 'true' : undefined}>
+          <span className='do-text-xs'
+            role={el.subField ? 'menuitem' : undefined}
+            aria-haspopup={el.subField ? 'true' : undefined}>
             {el.name}
             <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <g clipPath="url(#clip0_2536_1014)">
@@ -127,10 +187,26 @@ const MenuList = ({ list }: { list: MenuItem[] }) => {
 
 }
 
+const MobileMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <section className={`${Style.do_mobile_menu} ${isOpen && Style.do_mobile_menu_open}`}>
+      {
+        isOpen ? <div>
+          <MenuList list={mobileMenu} />
+        </div> : null
+      }
+
+      <button onClick={()=>{
+        setIsOpen(!isOpen)
+      }}>{isOpen ? 'Close' : 'Menu'}</button>
+    </section>
+  )
+}
 const Header = ({ type }) => {
 
   return (
-    <header className={Style.do_header}>
+    <>  <header className={Style.do_header}>
       <ul>
         <MenuList list={type === 'blog' ? blogMenu.left : baseMenu.left} />
       </ul>
@@ -139,6 +215,10 @@ const Header = ({ type }) => {
         <MenuList list={type === 'blog' ? blogMenu.right : baseMenu.right} />
       </ul>
     </header>
+      <MobileMenu />
+    </>
+
+
   )
 }
 
