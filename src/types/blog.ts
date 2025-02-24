@@ -10,6 +10,7 @@ export interface Article {
     date: string;
     readingTime: number;
     author: Author;
+    slug: string;
 }
 
 export type Category = "Development" | "Design" | "Photography" | "Thoughts";

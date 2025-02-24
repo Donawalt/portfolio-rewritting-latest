@@ -9,12 +9,28 @@
         display: flex;
         gap: 8px;
         margin-bottom: 50px;
+        overflow-x: auto;
+
+        li{
+            cursor: pointer;
+            transition: 300ms;
+        }
+        li[data-active="true"]{
+            background: darkblue;
+        }
     }
 
     .articles {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
         gap: 32px;
+        a{
+            display: flex;
+            width: 100%;
+            color: inherit;
+            text-decoration: none;
+            height: 100%
+        }
         @include mq(tablet, max){
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));   
         }
