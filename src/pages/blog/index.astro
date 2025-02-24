@@ -4,23 +4,125 @@ import Layout from "../../components/layouts/Layout.astro";
 import SEO from "../../components/layouts/utils/SEO.astro";
 
 //
-import Heading from '../../components/molecules/Heading';
+import Heading from "../../components/molecules/Heading";
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
 
-import {mockCategories, mockArticles} from "@/mock/blog"
+import { mockCategories, mockArticles } from "@/mock/blog";
+import Button from "@/components/atoms/Button";
+
+import Text from "@/components/atoms/Text/index.";
 ---
 
-<SEO lang="en" title="Blog | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation." ogImage={OG_IMAGE.src}>
-	<Layout type="blog">
-		<Heading client:load>
-            <svg width="57" height="57" viewBox="0 0 57 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21.9293 12.8376C21.7878 24.8768 31.6913 34.676 44 34.536H43.4341C31.4084 34.676 21.7878 44.4753 21.9293 56.3744V56.2344C21.7878 44.3353 12.0257 34.816 0.141478 34.676H0C12.0257 34.536 21.9293 24.8768 21.9293 12.8376Z" fill="white"/>
-                <path d="M43.9582 0C43.8746 7.11402 49.7267 12.9045 57 12.8218H56.6656C49.5595 12.9045 43.8746 18.695 43.9582 25.7263V25.6436C43.8746 18.6123 38.1061 12.9872 31.0836 12.9045H31C38.1061 12.8218 43.9582 7.11402 43.9582 0Z" fill="white"/>
+<SEO
+    lang="en"
+    title="Blog | Donaël Walter Portfolio | Creative Development, Design, Photography"
+    description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation."
+    ogImage={OG_IMAGE.src}
+>
+    <Layout type="blog">
+        <Heading client:load>
+            <svg
+                width="57"
+                height="57"
+                viewBox="0 0 57 57"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M21.9293 12.8376C21.7878 24.8768 31.6913 34.676 44 34.536H43.4341C31.4084 34.676 21.7878 44.4753 21.9293 56.3744V56.2344C21.7878 44.3353 12.0257 34.816 0.141478 34.676H0C12.0257 34.536 21.9293 24.8768 21.9293 12.8376Z"
+                    fill="white"></path>
+                <path
+                    d="M43.9582 0C43.8746 7.11402 49.7267 12.9045 57 12.8218H56.6656C49.5595 12.9045 43.8746 18.695 43.9582 25.7263V25.6436C43.8746 18.6123 38.1061 12.9872 31.0836 12.9045H31C38.1061 12.8218 43.9582 7.11402 43.9582 0Z"
+                    fill="white"></path>
             </svg>
             <h1>DONA'S BLOG</h1>
             <p slot="subtitle">ARTICLES , IDEAS & EXPERIMENTATIONS</p>
         </Heading>
-       <BlogList categories={mockCategories} articles={mockArticles} client:load />
-	</Layout>
+        <BlogList
+            categories={mockCategories}
+            articles={mockArticles}
+            client:load
+        />
+        <section class="do-section-cta">
+            <Text type="h2" size="xl">You want to know more on my work ?</Text>
+            <div>
+                <p>
+                    I’m Donaël Walter, a designer and front-end developer
+                    specializing in high-end brand identities and digital
+                    experiences. I combine design, development, and photography
+                    to create tailor-made projects that bring out the full
+                    potential of your brand.
+                </p>
+                <div>
+                    <Button type="link" href="/projects">
+                        See my portfolio
+                    </Button>
+                </div>
+            </div>
+        </section>
+    </Layout>
 </SEO>
+
+<style lang="scss" scoped>
+    .do-section-cta {
+        @include interpolate(
+            margin-top,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            32px,
+            120px
+        );
+        @include interpolate(
+            margin-bottom,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            32px,
+            80px
+        );
+        @include interpolate(
+            padding-left,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            16px,
+            32px
+        );
+        @include interpolate(
+            padding-right,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            16px,
+            32px
+        );
+
+        display: flex;
+        gap: 80px;
+
+        :global(h2) {
+            text-transform: uppercase;
+        }
+
+
+        & > div {
+            display: flex;
+            flex-direction: column;
+            @include interpolate(
+                gap,
+                map-get($breakpoints, "tablet"),
+                map-get($breakpoints, "desktop"),
+                16px,
+                32px
+            );
+
+            @include mq(tablet, min) {
+                & > div {
+                    width: fit-content;
+                }
+            }
+        }
+        @include mq(tablet, max) {
+            flex-direction: column;
+            gap: 32px;
+        }
+    }
+</style>
