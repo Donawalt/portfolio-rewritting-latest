@@ -15,5 +15,8 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
         gap: 32px;
+        @include mq(tablet, max){
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));   
+        }
     }
 }
