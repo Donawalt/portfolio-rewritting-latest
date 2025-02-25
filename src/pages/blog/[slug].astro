@@ -1,0 +1,59 @@
+---
+import Layout from "../../components/layouts/Layout.astro";
+import Heading from "@/components/molecules/Heading";
+import SEO from "../../components/layouts/utils/SEO.astro";
+
+import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
+import { mockArticles } from "@/mock/blog";
+
+export const getStaticPaths = async () => {
+    // get all articles
+    return mockArticles.map((article, index) => {
+        return {
+            params: {
+                slug: article.slug,
+            },
+            props: { article }, 
+        };
+    });
+};
+
+const { slug } = Astro.params;
+const { article } = Astro.props;
+---
+
+<SEO
+    lang="en"
+    title="Blog | Donaël Walter Portfolio | Creative Development, Design, Photography"
+    description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation."
+    ogImage={OG_IMAGE.src}
+>
+    <Layout type="blog">
+        <Heading client:load>
+            <svg
+                width="57"
+                height="57"
+                viewBox="0 0 57 57"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M21.9293 12.8376C21.7878 24.8768 31.6913 34.676 44 34.536H43.4341C31.4084 34.676 21.7878 44.4753 21.9293 56.3744V56.2344C21.7878 44.3353 12.0257 34.816 0.141478 34.676H0C12.0257 34.536 21.9293 24.8768 21.9293 12.8376Z"
+                    fill="white"></path>
+                <path
+                    d="M43.9582 0C43.8746 7.11402 49.7267 12.9045 57 12.8218H56.6656C49.5595 12.9045 43.8746 18.695 43.9582 25.7263V25.6436C43.8746 18.6123 38.1061 12.9872 31.0836 12.9045H31C38.1061 12.8218 43.9582 7.11402 43.9582 0Z"
+                    fill="white"></path>
+            </svg>
+            <br />
+            <h1 class="do-text-xl" style={{
+                maxWidth: "800px",
+                margin: "0 auto",
+            }}>{article.title}</h1>
+            <br />
+            <div>
+                <img src={article.author.picture} alt="author" /><br/>
+                <p>{article.author.name}</p>
+            </div>
+        </Heading>
+    </Layout>
+</SEO>

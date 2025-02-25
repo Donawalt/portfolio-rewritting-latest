@@ -20,7 +20,6 @@ export const getStaticPaths = (async () => {
 
 const {slug, type} = Astro.params;
 const {page}:{page: any} = Astro.props;
-
 ---
 
 <SEO lang="en" title={page.seoTitle + " - Donaël Walter Portfolio | Creative Development, Design, Photography"} description={page.seoDescription} ogDescription={page.seoDescription} keywords={page?.seoKeywords} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref)}}>
