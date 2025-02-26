@@ -1,31 +1,38 @@
 ---
 import Layout from "../../components/layouts/Layout.astro";
 import Heading from "@/components/molecules/Heading";
+import Picture from "@/components/atoms/Picture";
 import SEO from "../../components/layouts/utils/SEO.astro";
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
-import { mockArticles } from "@/mock/blog";
+import { client } from "@/assets/scripts/utils/api/sanityClient";
+import { getAllArticles } from "@/assets/scripts/utils/api/api";
+import { PortableText } from "astro-portabletext";
 
 export const getStaticPaths = async () => {
+    // get all articles from sanity
+    const articles = await client.fetch(getAllArticles());
     // get all articles
-    return mockArticles.map((article, index) => {
+    return articles.map((article, index) => {
+        const nextArticle = articles[index + 1] || articles[0];
         return {
             params: {
-                slug: article.slug,
+                slug: article?.seoSlug?.current,
             },
-            props: { article }, 
+            props: { article, nextArticle },
         };
     });
 };
 
 const { slug } = Astro.params;
-const { article } = Astro.props;
+const { article, nextArticle }: { article: any; nextArticle: any } =
+    Astro.props;
 ---
 
 <SEO
     lang="en"
-    title="Blog | Donaël Walter Portfolio | Creative Development, Design, Photography"
-    description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation."
+    title={article?.seoTitle}
+    description={article?.seoDescription}
     ogImage={OG_IMAGE.src}
 >
     <Layout type="blog">
@@ -45,15 +52,113 @@ const { article } = Astro.props;
                     fill="white"></path>
             </svg>
             <br />
-            <h1 class="do-text-xl" style={{
-                maxWidth: "800px",
-                margin: "0 auto",
-            }}>{article.title}</h1>
+            <h1
+                class="do-text-xl"
+                style={{
+                    maxWidth: "800px",
+                    margin: "0 auto",
+                }}
+            >
+                {article?.title}
+            </h1>
             <br />
-            <div>
-                <img src={article.author.picture} alt="author" /><br/>
+            <div class="do-author-wrapper">
+                <div
+                    style={{
+                        height: "48px",
+                        width: "48px",
+                    }}
+                >
+                    <Picture
+                        client:load
+                        url={article?.author?.picture?.asset?._ref}
+                        widthDesktop={120}
+                        heightDesktop={120}
+                        widthMobile={48}
+                        heightMobile={48}
+                    />
+                </div>
+
                 <p>{article.author.name}</p>
             </div>
         </Heading>
+        <div class="do-content">
+            <PortableText value={article?.content} />
+        </div>
+        <div class="do-blog-footer">
+            <a href={`/blog/${nextArticle.seoSlug.current}`}>            <h4>Next </h4>
+            <p>{nextArticle.title}</p></a>
+
+        </div>
     </Layout>
 </SEO>
+
+<style lang="scss" scoped>
+    .do-author-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+
+        & > div {
+            border-radius: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        picture {
+            height: 48px;
+            width: 48px;
+            img {
+                object-fit: cover;
+            }
+        }
+    }
+    .do-content {
+        @include interpolate(
+            padding,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            16px,
+            64px
+        );
+        max-width: 1028px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        :global(p) {
+            @include interpolate(
+                font-size,
+                map-get($breakpoints, "tablet"),
+                map-get($breakpoints, "desktop"),
+                14px,
+                18px
+            );
+        }
+    }
+
+    .do-blog-footer{
+        display: flex;
+        justify-content: flex-end;
+     
+        max-width: 1028px;
+        margin: auto;
+        a{
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            gap: 8px;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        @include interpolate(
+            padding,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            16px,
+            64px
+        );
+    }
+</style>

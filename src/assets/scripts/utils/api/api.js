@@ -10,6 +10,11 @@ export const getAllLandings = (type, data) => {
     }`;
 }
 
+
+export const getAllArticles = (type, data) => {
+    return `*[_type == 'article' && !(_id in path('drafts.**'))]`
+};
+
 export const getAllProjects = (type, data) => {
     return `*[_type == 'project'  && !(_id in path('drafts.**'))]`;
 }
