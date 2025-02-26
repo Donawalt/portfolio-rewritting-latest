@@ -12,6 +12,11 @@ import { mockCategories, mockArticles } from "@/mock/blog";
 import Button from "@/components/atoms/Button";
 
 import Text from "@/components/atoms/Text/index.";
+import { client } from "@/assets/scripts/utils/api/sanityClient";
+import { getAllArticles } from "@/assets/scripts/utils/api/api";
+
+let allArticles = await client.fetch(getAllArticles()); 
+
 ---
 
 <SEO
@@ -41,7 +46,7 @@ import Text from "@/components/atoms/Text/index.";
         </Heading>
         <BlogList
             categories={mockCategories}
-            articles={mockArticles}
+            articles={allArticles}
             client:load
         />
         <section class="do-section-cta">

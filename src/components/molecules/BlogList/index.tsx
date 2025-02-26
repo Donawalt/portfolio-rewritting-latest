@@ -4,6 +4,7 @@ import BlogItem from "../BlogItem"
 import Tag from '@/components/atoms/Tag/index.';
 import type { Article } from '@/types/blog';
 import { useState } from 'react';
+import Button from '@/components/atoms/Button';
 
 type BlogListProps = {
     categories: string[],
@@ -41,12 +42,20 @@ const BlogList = ({
                 }
             </ul>
             <div>
+                {
+                    filteredArticles.length === 0 && <p style={{
+                        textAlign: "center",
+                    }}>No articles found 😢, you can still visit my <br/> <br/><span style={{
+                        width: "fit-content", 
+                        display: "inline-block"
+                    }}><Button type="link" href="/projects">Projects</Button></span></p>
+                }
                 <ul className={`${Style.articles}`}>
                     {
                         filteredArticles.map((el, index) => {
                             return <li key={el.title + index}>
-                                <a href={`/blog/${el.slug}/`}>
-                                    <BlogItem {...el} />
+                                <a href={`/blog/${el.slug || el?.seoSlug?.current}/`}>
+                                    <BlogItem  {...el} date={el?._createdAt} description={el?.seoDescription}/>
                                 </a>
                             </li>
                         })

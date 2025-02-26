@@ -56,10 +56,6 @@ const blogMenu = {
       name: 'All articles',
       link: '/blog'
     },
-    {
-      name: 'Categories',
-      link: '/blog/categories'
-    }
   ],
   right: RMenu
 }

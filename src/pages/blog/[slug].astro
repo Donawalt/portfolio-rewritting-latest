@@ -129,6 +129,9 @@ const { article, nextArticle }: { article: any; nextArticle: any } =
         flex-direction: column;
         gap: 32px;
         :global(p) {
+            :global(strong){
+                font-weight: bold;
+            }
             @include interpolate(
                 font-size,
                 map-get($breakpoints, "tablet"),
