@@ -12,7 +12,7 @@
         display: block;
     }
 
-    &>*, [data-astro-source-file] {
+    &>*, &>astro-slot>*, [data-astro-source-file] {
         opacity: 0;
     }
 }
