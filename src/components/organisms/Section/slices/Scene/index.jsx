@@ -151,14 +151,11 @@ const BlenderScene = (props) => {
   // Mobile part
   const table = React.useRef();
   const objects = [{}, {}, {}];
-  const radius = 10;
-  const step = (2 * Math.PI) / objects.length;
-  let angle = 0;
 
-  for (const object of objects) {
-    object.position = [radius * Math.cos(angle), 0, radius * Math.sin(angle)];
-    object.angle = angle;
-    angle += step;
+  for (let i = 0; i < objects.length; i++) {
+    // superposer chaque télé 
+    const object = objects[i];
+    object.position = [0, i*2, 0];
   }
 
   React.useEffect(() => {
@@ -183,84 +180,49 @@ const BlenderScene = (props) => {
   }, [props.isMobile]);
 
   React.useEffect(() => {
-    eventBus.on("slide-left", () => {
-      /* setBasePlatform((value) => {
-         return value + 120;
-       });
-       setRoomVideo((value) => {
-         if (value === 3) {
-           return 1;
-         }
-         return value + 1;
-       });
-       setRoomVideo((value) => {
-         console.log(value);
-         return value;
-       }); */
-      // console.log(table);
-
-      setBasePlatform((value) => {
-        gsap.to(table.current.rotation, {
-          y: degreesToRadians(value + 120), onComplete: () => {
+    const leftFunc = () => {
+        let final = basePlatform + 120;
+        gsap.fromTo(table.current.rotation,{
+          y: degreesToRadians(basePlatform)
+        }, {
+          y: degreesToRadians(final), onComplete: () => {
             setBasePlatform((value) => {
-              return value + 120;
+              return final;
             });
           }
         });
-        return value;
-      });
-      setRoomVideo((value) => {
-        if (value === 3) {
-          return 1;
-        }
-        return value + 1;
-      });
-      setRoomVideo((value) => {
-        console.log(value);
-        return value;
-      });
-    });
-
-    eventBus.on("slide-right", () => {
-      /* setBasePlatform((value) => {
-         return value - 120;
-       });
-       setRoomVideo((value) => {
-         if (value === 1) {
-           return 3;
-         }
-         return value - 1;
-       });
- 
-       setRoomVideo((value) => {
-         console.log(value);
-         return value;
-       }); */
-      setBasePlatform((value) => {
-        gsap.to(table.current.rotation, {
-          y: degreesToRadians(value - 120), onComplete: () => {
-            setBasePlatform((value) => {
-              return value - 120;
-            });
+        setRoomVideo((value) => {
+          console.log("pre", value);
+          return value === 3 ? 1 : value + 1;
+        });
+    };
+    const rightFunc =  () => {  
+        let final = basePlatform - 120;
+        gsap.fromTo(table.current.rotation, {
+          y: degreesToRadians(basePlatform)
+        },{
+          y: degreesToRadians(final), onComplete: () => {
+            setBasePlatform(final);
           }
         });
-        return value;
-      });
-      setRoomVideo((value) => {
-        if (value === 1) {
-          return 3;
-        }
-        return value - 1;
-      });
 
-      setRoomVideo((value) => {
-        console.log(value);
-        return value;
-      });
+      setRoomVideo((value) => value === 1 ? 3 : value - 1);
+    };
+    eventBus.remove("slide-left", leftFunc);
+    eventBus.remove("slide-right", rightFunc);
+    
+    eventBus.on("slide-left", leftFunc);
+    eventBus.on("slide-right",rightFunc);
+   
+    return () => {
+      eventBus.remove("slide-left", leftFunc);
+      eventBus.remove("slide-right", rightFunc);
+    }
+  }, [basePlatform]);
 
-    });
-    //console.log(table);
-  }, []);
+  useEffect(()=>{
+    console.log("This is roomVideo", roomVideo);
+  }, [roomVideo])
 
   const moveCamera = ({ location, targetLocation, rotation }) => {
     const animation = (camera) => {
@@ -286,7 +248,26 @@ const BlenderScene = (props) => {
         rotation={
           !props.isMobile ? [0, 0, 0] : [0, degreesToRadians(basePlatform), 0]
         }
-        position={!props.isMobile ? [0, 0, 0] : [-0.8, 0, 0]}
+        position={!props.isMobile ? [0, 0, 0] : [0, -2, 0]}
+
+        onClick={() => {
+          if (roomVideo > 0 && props.isMobile) {
+            var getUrl = window.location;
+            var baseUrl =
+              getUrl.protocol +
+              "//" +
+              getUrl.host +
+              "/" +
+              getUrl.pathname.split("/")[1] + "projects/";
+
+            moveCamera({
+              location: () => {
+                window.location.href = baseUrl + `${roomVideo === 1 ? 'photography' :''}${roomVideo === 2 ? 'development' : ''}${roomVideo === 3 ? 'design' : ''}/`;
+              },
+              targetLocation: objects[roomVideo - 1].position,
+              rotation: null,
+            });
+          }}}
       >
         <group
           name="TV"
@@ -420,7 +401,7 @@ const BlenderScene = (props) => {
             position={[1.26, 1, 0.92]}
           />
           {
-            <Tooltip
+            !props.isMobile && <Tooltip
               text="Photography"
               video={1}
               targetLocation={[0.02, -0, 0.02]}
@@ -579,7 +560,7 @@ const BlenderScene = (props) => {
             position={[0.84, 1, 1.49]}
           />
           {
-            <Tooltip
+            !props.isMobile && <Tooltip
               text="Development"
               video={2}
               targetLocation={[0.03, 0, 0.19]}
@@ -737,7 +718,7 @@ const BlenderScene = (props) => {
             position={[1.52, 1, 0.32]}
           />
           {
-            <Tooltip
+            !props.isMobile && <Tooltip
               text="Design"
               video={3}
               targetLocation={[0, 0, 0.11]}
@@ -803,7 +784,7 @@ const BlenderScene = (props) => {
         castShadow
         receiveShadow
         geometry={nodes.Plane.geometry}
-        position={[0, -1.18, 0]}
+        position={!props.isMobile ? [0, -1.18, 0] : [0, -4, 0]}
         scale={100}
       >
         <meshBasicMaterial attach="material" color="black" />
@@ -839,63 +820,6 @@ const Scene = () => {
   const camera = React.useRef();
   const track = React.useRef();
 
-  // drag stuffs
-  const [navigable, setNavigable] = React.useState(false);
-  const [dragStart, setDragStart] = React.useState();
-  const [isDrag, setIsDrag] = React.useState(false);
-  const [dragActivity, setDragActivity] = React.useState();
-
-  const startDrag = (el, event) => {
-    // Get the drag start value
-    setDragStart(event.clientX);
-    // Set isDrag to true for initialisation
-    setIsDrag(true);
-  };
-
-  const onDrag = (el, event) => {
-    if (isDrag && event) {
-      setDragActivity(event.clientX);
-      eventBus.dispatch("slide-position", {
-        position: dragStart - event.clientX,
-      });
-    }
-  };
-
-  const endDrag = (el, event) => {
-    if (dragStart - dragActivity > 70) {
-      // go to left
-      eventBus.dispatch("slide-left");
-    } else if (dragStart - dragActivity < -70) {
-      // go to right
-      eventBus.dispatch("slide-right");
-    }
-
-    setIsDrag(false);
-  };
-
-  const handleDrag = (event, step) => {
-    if (navigable != "blocked") {
-      let trackDOM = track.current;
-      if (!event.touches && typeof event.stopPropagation === "function") {
-        event.stopPropagation();
-      }
-      event = event.touches ? event.touches[0] : event;
-      switch (step) {
-        case "start":
-          startDrag(trackDOM, event);
-          break;
-        case "on":
-          onDrag(trackDOM, event);
-          break;
-        case "end":
-          endDrag(trackDOM, event);
-          break;
-        default:
-          startDrag(trackDOM, event);
-          break;
-      }
-    }
-  };
 
   useEffect(() => {
     console.log(getAspect());
@@ -913,9 +837,6 @@ const Scene = () => {
     animateTitle();
   }, []);
 
-  useEffect(() => {
-    console.log("Current drag start", dragStart - dragActivity);
-  }, [dragActivity]);
 
   return (
     <>
