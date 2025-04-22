@@ -8,6 +8,8 @@ import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
 import { client } from "@/assets/scripts/utils/api/sanityClient";
 import { getAllArticles } from "@/assets/scripts/utils/api/api";
 import { PortableText } from "astro-portabletext";
+import urlBuilder from "@sanity/image-url";
+import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
 
 export const getStaticPaths = async () => {
     // get all articles from sanity
@@ -15,6 +17,7 @@ export const getStaticPaths = async () => {
     // get all articles
     return articles.map((article, index) => {
         const nextArticle = articles[index + 1] || articles[0];
+        article.seoImage = urlImageBuilder(article?.seoImage?.asset?._ref);
         return {
             params: {
                 slug: article?.seoSlug?.current,
@@ -33,7 +36,7 @@ const { article, nextArticle }: { article: any; nextArticle: any } =
     lang="en"
     title={article?.seoTitle}
     description={article?.seoDescription}
-    ogImage={OG_IMAGE.src}
+    ogImage={article?.seoImage}
 >
     <Layout type="blog">
         <Heading client:load>
