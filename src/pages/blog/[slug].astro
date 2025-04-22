@@ -93,7 +93,7 @@ const { article, nextArticle }: { article: any; nextArticle: any } =
     </Layout>
 </SEO>
 
-<style lang="scss" scoped>
+<style lang="scss">
     .do-author-wrapper {
         display: flex;
         justify-content: center;
@@ -128,7 +128,16 @@ const { article, nextArticle }: { article: any; nextArticle: any } =
         display: flex;
         flex-direction: column;
         gap: 32px;
-        :global(p) {
+        
+        :global(h2){
+            padding-top: 3.2rem;
+        }
+        :global(ul){
+            padding-left: 16px;
+            list-style: disc;
+        }
+        :global(p), :global(a) {
+           color: white;
             :global(strong){
                 font-weight: bold;
             }
@@ -140,6 +149,10 @@ const { article, nextArticle }: { article: any; nextArticle: any } =
                 18px
             );
         }
+
+       
+
+        
     }
 
     .do-blog-footer{
