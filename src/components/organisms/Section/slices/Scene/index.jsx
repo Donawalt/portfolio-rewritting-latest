@@ -157,6 +157,7 @@ const BlenderScene = React.memo((props) => {
 
   // Mobile part
   const table = React.useRef();
+  const isAnimatingRef = React.useRef(false); // Use ref to avoid re-renders
 
   // Memoize objects array to prevent recalculation on every render
   const objects = useMemo(
@@ -193,6 +194,10 @@ const BlenderScene = React.memo((props) => {
 
   React.useEffect(() => {
     const leftFunc = () => {
+      // Simple animation lock using ref (no re-renders)
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+
       // Update video immediately for instant feedback
       setRoomVideo((value) => {
         const newVideo = value === 3 ? 1 : value + 1;
@@ -209,6 +214,7 @@ const BlenderScene = React.memo((props) => {
             ease: "power2.inOut",
             onComplete: () => {
               setBasePlatform(final);
+              isAnimatingRef.current = false; // Unlock
             },
           }
         );
@@ -218,6 +224,10 @@ const BlenderScene = React.memo((props) => {
     };
 
     const rightFunc = () => {
+      // Simple animation lock using ref (no re-renders)
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+
       // Update video immediately for instant feedback
       setRoomVideo((value) => {
         const newVideo = value === 1 ? 3 : value - 1;
@@ -234,6 +244,7 @@ const BlenderScene = React.memo((props) => {
             ease: "power2.inOut",
             onComplete: () => {
               setBasePlatform(final);
+              isAnimatingRef.current = false; // Unlock
             },
           }
         );
