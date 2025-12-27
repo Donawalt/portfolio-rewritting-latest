@@ -3,6 +3,17 @@ html {
     background-color: map-get($brands-primary, 'background');
     color: map-get($brands-primary, 'text');
     font-family: "Jost*";
+    
+    /* Chromium font rendering optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1;
+    font-kerning: normal;
+    
+    /* Fix specific letter rendering (ligatures can cause thick strokes) */
+    font-variant-ligatures: none;
+    -webkit-font-variant-ligatures: none;
 
 }
 
