@@ -193,42 +193,53 @@ const BlenderScene = React.memo((props) => {
 
   React.useEffect(() => {
     const leftFunc = () => {
-      let final = basePlatform + 120;
-      gsap.fromTo(
-        table.current.rotation,
-        {
-          y: degreesToRadians(basePlatform),
-        },
-        {
-          y: degreesToRadians(final),
-          onComplete: () => {
-            setBasePlatform((value) => {
-              return final;
-            });
-          },
-        }
-      );
+      // Update video immediately for instant feedback
       setRoomVideo((value) => {
-        console.log("pre", value);
-        return value === 3 ? 1 : value + 1;
+        const newVideo = value === 3 ? 1 : value + 1;
+        let final = basePlatform + 120;
+
+        gsap.fromTo(
+          table.current.rotation,
+          {
+            y: degreesToRadians(basePlatform),
+          },
+          {
+            y: degreesToRadians(final),
+            duration: 0.6,
+            ease: "power2.inOut",
+            onComplete: () => {
+              setBasePlatform(final);
+            },
+          }
+        );
+
+        return newVideo;
       });
     };
-    const rightFunc = () => {
-      let final = basePlatform - 120;
-      gsap.fromTo(
-        table.current.rotation,
-        {
-          y: degreesToRadians(basePlatform),
-        },
-        {
-          y: degreesToRadians(final),
-          onComplete: () => {
-            setBasePlatform(final);
-          },
-        }
-      );
 
-      setRoomVideo((value) => (value === 1 ? 3 : value - 1));
+    const rightFunc = () => {
+      // Update video immediately for instant feedback
+      setRoomVideo((value) => {
+        const newVideo = value === 1 ? 3 : value - 1;
+        let final = basePlatform - 120;
+
+        gsap.fromTo(
+          table.current.rotation,
+          {
+            y: degreesToRadians(basePlatform),
+          },
+          {
+            y: degreesToRadians(final),
+            duration: 0.6,
+            ease: "power2.inOut",
+            onComplete: () => {
+              setBasePlatform(final);
+            },
+          }
+        );
+
+        return newVideo;
+      });
     };
     eventBus.remove("slide-left", leftFunc);
     eventBus.remove("slide-right", rightFunc);
@@ -887,8 +898,37 @@ const Scene = () => {
           position={!isMobile ? [0, 10, 40] : [0, 0, 25]}
           aspect={cameraAspect}
         />
-        <ambientLight color={"0x404040"} intensity={16} />
-        <pointLight position={[0, 10, 10]} />
+        <ambientLight color={"0x404040"} intensity={isMobile ? 12 : 16} />
+        <pointLight position={[0, 10, 10]} intensity={isMobile ? 0 : 1} />
+
+        {/* Mobile-specific lighting: Three lights around the screen */}
+        {isMobile && (
+          <>
+            {/* Front light - illuminates the current screen */}
+            <pointLight
+              position={[0, 2, 15]}
+              intensity={20}
+              color="#ffffff"
+              distance={30}
+            />
+
+            {/* Left rim light */}
+            <pointLight
+              position={[-10, 3, 10]}
+              intensity={15}
+              color="#88aaff"
+              distance={25}
+            />
+
+            {/* Right rim light */}
+            <pointLight
+              position={[10, 3, 10]}
+              intensity={15}
+              color="#ffaa88"
+              distance={25}
+            />
+          </>
+        )}
         <BlenderScene isMobile={isMobile} />
         <Html
           className="bi-mobile-nav"
