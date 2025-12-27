@@ -8,180 +8,178 @@ import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
 import { client } from "@/assets/scripts/utils/api/sanityClient";
 import { getAllArticles } from "@/assets/scripts/utils/api/api";
 import { PortableText } from "astro-portabletext";
-import urlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
 
 export const getStaticPaths = async () => {
-    // get all articles from sanity
-    const articles = await client.fetch(getAllArticles());
-    // get all articles
-    return articles.map((article, index) => {
-        const nextArticle = articles[index + 1] || articles[0];
-        article.seoImage = urlImageBuilder(article?.seoImage?.asset?._ref);
-        return {
-            params: {
-                slug: article?.seoSlug?.current,
-            },
-            props: { article, nextArticle },
-        };
-    });
+  // get all articles from sanity
+  const articles = await client.fetch(getAllArticles());
+  // get all articles
+  return articles.map((article, index) => {
+    const nextArticle = articles[index + 1] || articles[0];
+    article.seoImage = urlImageBuilder(article?.seoImage?.asset?._ref);
+    return {
+      params: {
+        slug: article?.seoSlug?.current,
+      },
+      props: { article, nextArticle },
+    };
+  });
 };
 
 const { slug } = Astro.params;
 const { article, nextArticle }: { article: any; nextArticle: any } =
-    Astro.props;
+  Astro.props;
 ---
 
 <SEO
-    lang="en"
-    title={article?.seoTitle}
-    description={article?.seoDescription}
-    ogImage={article?.seoImage}
+  lang="en"
+  title={article?.seoTitle}
+  description={article?.seoDescription}
+  ogImage={article?.seoImage}
 >
-    <Layout type="blog">
-        <Heading client:load>
-            <svg
-                width="57"
-                height="57"
-                viewBox="0 0 57 57"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M21.9293 12.8376C21.7878 24.8768 31.6913 34.676 44 34.536H43.4341C31.4084 34.676 21.7878 44.4753 21.9293 56.3744V56.2344C21.7878 44.3353 12.0257 34.816 0.141478 34.676H0C12.0257 34.536 21.9293 24.8768 21.9293 12.8376Z"
-                    fill="white"></path>
-                <path
-                    d="M43.9582 0C43.8746 7.11402 49.7267 12.9045 57 12.8218H56.6656C49.5595 12.9045 43.8746 18.695 43.9582 25.7263V25.6436C43.8746 18.6123 38.1061 12.9872 31.0836 12.9045H31C38.1061 12.8218 43.9582 7.11402 43.9582 0Z"
-                    fill="white"></path>
-            </svg>
-            <br />
-            <h1
-                class="do-text-xl"
-                style={{
-                    maxWidth: "800px",
-                    margin: "0 auto",
-                }}
-            >
-                {article?.title}
-            </h1>
-            <br />
-            <div class="do-author-wrapper">
-                <div
-                    style={{
-                        height: "48px",
-                        width: "48px",
-                    }}
-                >
-                    <Picture
-                        client:load
-                        url={article?.author?.picture?.asset?._ref}
-                        widthDesktop={120}
-                        heightDesktop={120}
-                        widthMobile={48}
-                        heightMobile={48}
-                    />
-                </div>
-
-                <p>{article.author.name}</p>
-            </div>
-        </Heading>
-        <div class="do-content">
-            <PortableText value={article?.content} />
+  <Layout type="blog">
+    <Heading client:load>
+      <svg
+        width="57"
+        height="57"
+        viewBox="0 0 57 57"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M21.9293 12.8376C21.7878 24.8768 31.6913 34.676 44 34.536H43.4341C31.4084 34.676 21.7878 44.4753 21.9293 56.3744V56.2344C21.7878 44.3353 12.0257 34.816 0.141478 34.676H0C12.0257 34.536 21.9293 24.8768 21.9293 12.8376Z"
+          fill="white"></path>
+        <path
+          d="M43.9582 0C43.8746 7.11402 49.7267 12.9045 57 12.8218H56.6656C49.5595 12.9045 43.8746 18.695 43.9582 25.7263V25.6436C43.8746 18.6123 38.1061 12.9872 31.0836 12.9045H31C38.1061 12.8218 43.9582 7.11402 43.9582 0Z"
+          fill="white"></path>
+      </svg>
+      <br />
+      <h1
+        class="do-text-xl"
+        style={{
+          maxWidth: "800px",
+          margin: "0 auto",
+        }}
+      >
+        {article?.title}
+      </h1>
+      <br />
+      <div class="do-author-wrapper">
+        <div
+          style={{
+            height: "48px",
+            width: "48px",
+          }}
+        >
+          <Picture
+            client:load
+            url={article?.author?.picture?.asset?._ref}
+            widthDesktop={120}
+            heightDesktop={120}
+            widthMobile={48}
+            heightMobile={48}
+          />
         </div>
-        <div class="do-blog-footer">
-            <a href={`/blog/${nextArticle.seoSlug.current}`}>            <h4>Next </h4>
-            <p>{nextArticle.title}</p></a>
 
-        </div>
-    </Layout>
+        <p>{article.author.name}</p>
+      </div>
+    </Heading>
+    <div class="do-content">
+      <PortableText value={article?.content} />
+    </div>
+    <div class="do-blog-footer">
+      <a href={`/blog/${nextArticle.seoSlug.current}`}>
+        <h4>Next</h4>
+        <p>{nextArticle.title}</p></a
+      >
+    </div>
+  </Layout>
 </SEO>
 
 <style lang="scss">
-    .do-author-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
+  .do-author-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
 
-        & > div {
-            border-radius: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        picture {
-            height: 48px;
-            width: 48px;
-            img {
-                object-fit: cover;
-            }
-        }
+    & > div {
+      border-radius: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
-    .do-content {
-        @include interpolate(
-            padding,
-            map-get($breakpoints, "tablet"),
-            map-get($breakpoints, "desktop"),
-            16px,
-            64px
-        );
-        max-width: 1028px;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-        
-        :global(h2, h3){
-            padding-top: 3.2rem;
-        }
+    picture {
+      height: 48px;
+      width: 48px;
+      img {
+        object-fit: cover;
+      }
+    }
+  }
+  .do-content {
+    @include interpolate(
+      padding,
+      map-get($breakpoints, "tablet"),
+      map-get($breakpoints, "desktop"),
+      16px,
+      64px
+    );
+    max-width: 1028px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 
-        :global(h4){
-            text-align: left;
-        }
-        :global(ul){
-            padding-left: 16px;
-            list-style: disc;
-        }
-        :global(p), :global(a) {
-           color: white;
-            :global(strong){
-                font-weight: bold;
-            }
-            @include interpolate(
-                font-size,
-                map-get($breakpoints, "tablet"),
-                map-get($breakpoints, "desktop"),
-                14px,
-                18px
-            );
-        }
-
-       
-
-        
+    :global(h2, h3) {
+      padding-top: 3.2rem;
     }
 
-    .do-blog-footer{
-        display: flex;
-        justify-content: flex-end;
-     
-        max-width: 1028px;
-        margin: auto;
-        a{
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            gap: 8px;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        @include interpolate(
-            padding,
-            map-get($breakpoints, "tablet"),
-            map-get($breakpoints, "desktop"),
-            16px,
-            64px
-        );
+    :global(h4) {
+      text-align: left;
     }
+    :global(ul) {
+      padding-left: 16px;
+      list-style: disc;
+    }
+    :global(p),
+    :global(a) {
+      color: white;
+      :global(strong) {
+        font-weight: bold;
+      }
+      @include interpolate(
+        font-size,
+        map-get($breakpoints, "tablet"),
+        map-get($breakpoints, "desktop"),
+        14px,
+        18px
+      );
+    }
+  }
+
+  .do-blog-footer {
+    display: flex;
+    justify-content: flex-end;
+
+    max-width: 1028px;
+    margin: auto;
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    @include interpolate(
+      padding,
+      map-get($breakpoints, "tablet"),
+      map-get($breakpoints, "desktop"),
+      16px,
+      64px
+    );
+  }
 </style>

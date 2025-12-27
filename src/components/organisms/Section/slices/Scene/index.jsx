@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import * as THREE from "three";
-import { Canvas, useFrame, useLoader} from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { useGLTF, PerspectiveCamera, Text, Html } from "@react-three/drei";
 import eventBus from "../../../../../assets/scripts/utils/eventBus";
 import animateTitle from "../../../../../assets/scripts/utils/animations/pages/index/title";
@@ -21,8 +21,7 @@ const Tooltip = (props) => {
   const tooltip = useRef();
   const { position, text, onClick } = props;
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const onHover = (e) => {
     eventBus.dispatch("uRoomVideo", props.video);
@@ -153,9 +152,9 @@ const BlenderScene = (props) => {
   const objects = [{}, {}, {}];
 
   for (let i = 0; i < objects.length; i++) {
-    // superposer chaque télé 
+    // superposer chaque télé
     const object = objects[i];
-    object.position = [0, i*2, 0];
+    object.position = [0, i * 2, 0];
   }
 
   React.useEffect(() => {
@@ -168,7 +167,7 @@ const BlenderScene = (props) => {
     eventBus.on("uRoomVideo", (data) => {
       setRoomVideo(data);
     });
-    gsap.to('.canvas', {opacity: 1, translateY: "16px", delay: "300ms"});
+    gsap.to(".canvas", { opacity: 1, translateY: "16px", delay: "300ms" });
   }, []);
 
   React.useEffect(() => {
@@ -181,48 +180,58 @@ const BlenderScene = (props) => {
 
   React.useEffect(() => {
     const leftFunc = () => {
-        let final = basePlatform + 120;
-        gsap.fromTo(table.current.rotation,{
-          y: degreesToRadians(basePlatform)
-        }, {
-          y: degreesToRadians(final), onComplete: () => {
+      let final = basePlatform + 120;
+      gsap.fromTo(
+        table.current.rotation,
+        {
+          y: degreesToRadians(basePlatform),
+        },
+        {
+          y: degreesToRadians(final),
+          onComplete: () => {
             setBasePlatform((value) => {
               return final;
             });
-          }
-        });
-        setRoomVideo((value) => {
-          console.log("pre", value);
-          return value === 3 ? 1 : value + 1;
-        });
+          },
+        }
+      );
+      setRoomVideo((value) => {
+        console.log("pre", value);
+        return value === 3 ? 1 : value + 1;
+      });
     };
-    const rightFunc =  () => {  
-        let final = basePlatform - 120;
-        gsap.fromTo(table.current.rotation, {
-          y: degreesToRadians(basePlatform)
-        },{
-          y: degreesToRadians(final), onComplete: () => {
+    const rightFunc = () => {
+      let final = basePlatform - 120;
+      gsap.fromTo(
+        table.current.rotation,
+        {
+          y: degreesToRadians(basePlatform),
+        },
+        {
+          y: degreesToRadians(final),
+          onComplete: () => {
             setBasePlatform(final);
-          }
-        });
+          },
+        }
+      );
 
-      setRoomVideo((value) => value === 1 ? 3 : value - 1);
+      setRoomVideo((value) => (value === 1 ? 3 : value - 1));
     };
     eventBus.remove("slide-left", leftFunc);
     eventBus.remove("slide-right", rightFunc);
-    
+
     eventBus.on("slide-left", leftFunc);
-    eventBus.on("slide-right",rightFunc);
-   
+    eventBus.on("slide-right", rightFunc);
+
     return () => {
       eventBus.remove("slide-left", leftFunc);
       eventBus.remove("slide-right", rightFunc);
-    }
+    };
   }, [basePlatform]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("This is roomVideo", roomVideo);
-  }, [roomVideo])
+  }, [roomVideo]);
 
   const moveCamera = ({ location, targetLocation, rotation }) => {
     const animation = (camera) => {
@@ -249,7 +258,6 @@ const BlenderScene = (props) => {
           !props.isMobile ? [0, 0, 0] : [0, degreesToRadians(basePlatform), 0]
         }
         position={!props.isMobile ? [0, 0, 0] : [0, -2, 0]}
-
         onClick={() => {
           if (roomVideo > 0 && props.isMobile) {
             var getUrl = window.location;
@@ -258,16 +266,22 @@ const BlenderScene = (props) => {
               "//" +
               getUrl.host +
               "/" +
-              getUrl.pathname.split("/")[1] + "projects/";
+              getUrl.pathname.split("/")[1] +
+              "projects/";
 
             moveCamera({
               location: () => {
-                window.location.href = baseUrl + `${roomVideo === 1 ? 'photography' :''}${roomVideo === 2 ? 'development' : ''}${roomVideo === 3 ? 'design' : ''}/`;
+                window.location.href =
+                  baseUrl +
+                  `${roomVideo === 1 ? "photography" : ""}${
+                    roomVideo === 2 ? "development" : ""
+                  }${roomVideo === 3 ? "design" : ""}/`;
               },
               targetLocation: objects[roomVideo - 1].position,
               rotation: null,
             });
-          }}}
+          }
+        }}
       >
         <group
           name="TV"
@@ -384,7 +398,7 @@ const BlenderScene = (props) => {
               <videoTexture
                 attach={"map"}
                 args={[videoOne]}
-                encoding={THREE.sRGBEncoding}
+                colorSpace={THREE.SRGBColorSpace}
                 rotation={-1.5708}
                 repeat={[-2.5, 2.5]}
                 offset={[1.025, -0]}
@@ -400,12 +414,12 @@ const BlenderScene = (props) => {
             material={materials["mainBrand.001"]}
             position={[1.26, 1, 0.92]}
           />
-          {
-            !props.isMobile && <Tooltip
+          {!props.isMobile && (
+            <Tooltip
               text="Photography"
               video={1}
               targetLocation={[0.02, -0, 0.02]}
-             // position={[-1.5, -1, 0]}
+              // position={[-1.5, -1, 0]}
               onClick={() => {
                 var getUrl = window.location;
                 var baseUrl =
@@ -413,7 +427,8 @@ const BlenderScene = (props) => {
                   "//" +
                   getUrl.host +
                   "/" +
-                  getUrl.pathname.split("/")[1] + "projects/";
+                  getUrl.pathname.split("/")[1] +
+                  "projects/";
 
                 moveCamera({
                   location: () => {
@@ -424,7 +439,7 @@ const BlenderScene = (props) => {
                 });
               }}
             />
-          }
+          )}
         </group>
         <group
           name="TV001"
@@ -543,7 +558,7 @@ const BlenderScene = (props) => {
               <videoTexture
                 attach={"map"}
                 args={[videoTwo]}
-                encoding={THREE.sRGBEncoding}
+                colorSpace={THREE.SRGBColorSpace}
                 rotation={-1.5708}
                 repeat={[-2.5, 2.5]}
                 offset={[1.025, -0]}
@@ -559,8 +574,8 @@ const BlenderScene = (props) => {
             material={materials["mainBrand.001"]}
             position={[0.84, 1, 1.49]}
           />
-          {
-            !props.isMobile && <Tooltip
+          {!props.isMobile && (
+            <Tooltip
               text="Development"
               video={2}
               targetLocation={[0.03, 0, 0.19]}
@@ -571,7 +586,8 @@ const BlenderScene = (props) => {
                   "//" +
                   getUrl.host +
                   "/" +
-                  getUrl.pathname.split("/")[1] + "projects/";
+                  getUrl.pathname.split("/")[1] +
+                  "projects/";
 
                 moveCamera({
                   location: () => {
@@ -582,7 +598,7 @@ const BlenderScene = (props) => {
                 });
               }}
             />
-          }
+          )}
         </group>
         <group
           name="TV002"
@@ -701,7 +717,7 @@ const BlenderScene = (props) => {
               <videoTexture
                 attach={"map"}
                 args={[videoThree]}
-                encoding={THREE.sRGBEncoding}
+                colorSpace={THREE.SRGBColorSpace}
                 rotation={-1.5708}
                 repeat={[-2.5, 2.5]}
                 offset={[1.025, -0]}
@@ -717,8 +733,8 @@ const BlenderScene = (props) => {
             material={materials["mainBrand.001"]}
             position={[1.52, 1, 0.32]}
           />
-          {
-            !props.isMobile && <Tooltip
+          {!props.isMobile && (
+            <Tooltip
               text="Design"
               video={3}
               targetLocation={[0, 0, 0.11]}
@@ -729,7 +745,8 @@ const BlenderScene = (props) => {
                   "//" +
                   getUrl.host +
                   "/" +
-                  getUrl.pathname.split("/")[1] + "projects/";
+                  getUrl.pathname.split("/")[1] +
+                  "projects/";
 
                 moveCamera({
                   location: () => {
@@ -740,7 +757,7 @@ const BlenderScene = (props) => {
                 });
               }}
             />
-          }
+          )}
         </group>
       </group>
 
@@ -762,10 +779,10 @@ const BlenderScene = (props) => {
                 attach={"map"}
                 args={[
                   (roomVideo === 1 && videoOne) ||
-                  (roomVideo === 2 && videoTwo) ||
-                  (roomVideo === 3 && videoThree),
+                    (roomVideo === 2 && videoTwo) ||
+                    (roomVideo === 3 && videoThree),
                 ]}
-                encoding={THREE.sRGBEncoding}
+                colorSpace={THREE.SRGBColorSpace}
                 rotation={-1.5708}
                 repeat={[-3.5, 2.5]}
                 offset={[0.45, 0.625]}
@@ -775,8 +792,11 @@ const BlenderScene = (props) => {
           </meshBasicMaterial>
         )}
         {!roomVideo && (
-          <meshBasicMaterial toneMapped={false} attach="material" map={texture}>
-          </meshBasicMaterial>
+          <meshBasicMaterial
+            toneMapped={false}
+            attach="material"
+            map={texture}
+          ></meshBasicMaterial>
         )}
       </mesh>
       <mesh
@@ -799,7 +819,7 @@ const getAspect = () => {
 
 const mouseAnimation = (object, isMobile) => {
   document.addEventListener("mousemove", (event) => {
-    if (window.innerWidth > 425 && (object.current)) {
+    if (window.innerWidth > 425 && object.current) {
       object.current.position.x =
         0 +
         (event.clientX > window.innerWidth / 2
@@ -820,7 +840,6 @@ const Scene = () => {
   const camera = React.useRef();
   const track = React.useRef();
 
-
   useEffect(() => {
     console.log(getAspect());
     setCameraAspect(getAspect());
@@ -837,14 +856,9 @@ const Scene = () => {
     animateTitle();
   }, []);
 
-
   return (
     <>
-      <Canvas
-        camera={{ position: [0, 2.5, 0] }}
-        id="webGlWrapper"
-        ref={track}
-      >
+      <Canvas camera={{ position: [0, 2.5, 0] }} id="webGlWrapper" ref={track}>
         <PerspectiveCamera
           ref={camera}
           makeDefault

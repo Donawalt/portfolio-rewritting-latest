@@ -5,10 +5,10 @@
 // @param {height} height - the height of the image
 // @param {rect} rect - the rect of the image
 
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import { getImageDimensions } from "@sanity/asset-utils";
 // Get a pre-configured url-builder from your sanity client
-const builder = imageUrlBuilder({ dataset: 'production', projectId: '6mijc31d'});
+const builder = createImageUrlBuilder({ dataset: 'production', projectId: '6mijc31d'});
 
 // Then we like to make a simple function like this that gives the
 // builder an image and returns the builder for you to specify additional

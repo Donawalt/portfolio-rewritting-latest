@@ -5,92 +5,97 @@ import NoiseCanvas from "../atoms/NoiseCanvas/index.";
 import Header from "../molecules/Header/index.";
 import Footer from "../molecules/Footer/index.";
 
-// props page type 
-const {type} = Astro.props;
-
+// props page type
+const { type } = Astro.props;
 ---
 
 <body data-barba="wrapper">
-    <Header type={type ? type : null} client:load/>
-    <main data-barba="container" id="container"><slot /></main>
-    <Footer />
-    <NoiseCanvas client:load />
-    <svg
-        class="hidden"
-        style={{
-            visibility: "hidden",
-            display: "none",
-        }}
-    >
-        <defs>
-            <filter id="filter-2">
-                <feTurbulence
-                    type="fractalNoise"
-                    baseFrequency="0.01"
-                    numOctaves="20"
-                    result="warp"></feTurbulence>
-                <feOffset dx="0" dy="1" result="warpOffset"></feOffset>
-                <feDisplacementMap
-                    xChannelSelector="R"
-                    yChannelSelector="G"
-                    scale="200"
-                    in="SourceGraphic"
-                    in2="warpOffset"></feDisplacementMap>
-            </filter>
-            <filter id="filter-3">
-                <feTurbulence
-                    type="fractalNoise"
-                    baseFrequency="1"
-                    numOctaves="20"
-                    result="warp">
-                    <animate attributeName="baseFrequency" from="0.8" to="1" dur="0.125s" repeatCount="indefinite"></animate>
-                </feTurbulence>
+  <Header type={type ? type : null} client:load />
+  <main data-barba="container" id="container"><slot /></main>
+  <Footer />
+  <NoiseCanvas client:load />
+  <svg
+    class="hidden"
+    style={{
+      visibility: "hidden",
+      display: "none",
+    }}
+  >
+    <defs>
+      <filter id="filter-2">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.01"
+          numOctaves="20"
+          result="warp"></feTurbulence>
+        <feOffset dx="0" dy="1" result="warpOffset"></feOffset>
+        <feDisplacementMap
+          xChannelSelector="R"
+          yChannelSelector="G"
+          scale="200"
+          in="SourceGraphic"
+          in2="warpOffset"></feDisplacementMap>
+      </filter>
+      <filter id="filter-3">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="1"
+          numOctaves="20"
+          result="warp"
+        >
+          <animate
+            attributeName="baseFrequency"
+            from="0.8"
+            to="1"
+            dur="0.125s"
+            repeatCount="indefinite"></animate>
+        </feTurbulence>
 
-                <feOffset dx="0" dy="1" result="warpOffset"></feOffset>
-                <feDisplacementMap
-                    xChannelSelector="R"
-                    yChannelSelector="G"
-                    scale="200"
-                    in="SourceGraphic"
-                    in2="warpOffset"></feDisplacementMap>
-                <feMorphology operator="dilate" radius="1" />
-            </filter>
-        </defs>
-    </svg>
+        <feOffset dx="0" dy="1" result="warpOffset"></feOffset>
+        <feDisplacementMap
+          xChannelSelector="R"
+          yChannelSelector="G"
+          scale="200"
+          in="SourceGraphic"
+          in2="warpOffset"></feDisplacementMap>
+        <feMorphology operator="dilate" radius="1"></feMorphology>
+      </filter>
+    </defs>
+  </svg>
 </body>
 
 <script>
-    import Lenis from "@studio-freight/lenis";
-    import gsap from "gsap";
-    const lenis = new Lenis();
+  import Lenis from "lenis";
+  import gsap from "gsap";
+  const lenis = new Lenis();
 
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-
+  function raf(time) {
+    lenis.raf(time);
     requestAnimationFrame(raf);
+  }
 
-    // on hover on all links, animate the svg filter
-    document.querySelectorAll("a").forEach((el) => {
-        const noise = () => {
-            let tl = gsap.timeline();
-            tl.fromTo(
-                "#filter-2 feTurbulence",
-                { attr: { baseFrequency: 0 } },
-                { attr: { baseFrequency: 1 }, duration: 0.125 },
-            );
-            tl.fromTo(
-                "#filter-2 feTurbulence",
-                { attr: { baseFrequency: 1 } },
-                { attr: { baseFrequency: 0 }, duration: 0.125 },
-            );
-        };
-        el.addEventListener("mouseover", () => {
-            noise();
-        });
-        el.addEventListener("mouseout", () => {
-            noise();
-        });
+  requestAnimationFrame(raf);
+
+  // on hover on all links, animate the svg filter
+  document.querySelectorAll("a").forEach((el) => {
+    const noise = () => {
+      let tl = gsap.timeline();
+      tl.fromTo(
+        "#filter-2 feTurbulence",
+        { attr: { baseFrequency: 0 } },
+        { attr: { baseFrequency: 1 }, duration: 0.125 }
+      );
+      tl.fromTo(
+        "#filter-2 feTurbulence",
+        { attr: { baseFrequency: 1 } },
+        { attr: { baseFrequency: 0 }, duration: 0.125 }
+      );
+    };
+    el.addEventListener("mouseover", () => {
+      noise();
     });
+    el.addEventListener("mouseout", () => {
+      noise();
+    });
+  });
 </script>

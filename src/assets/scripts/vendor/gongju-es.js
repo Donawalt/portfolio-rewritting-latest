@@ -1,4 +1,4 @@
-import $747425b437e121da$import$b4d109667193a62e$2e2bcd8739ae039 from "@studio-freight/lenis";
+import $747425b437e121da$import$b4d109667193a62e$2e2bcd8739ae039 from "lenis";
 import $im0Rw$react, {useState as $im0Rw$useState, useEffect as $im0Rw$useEffect} from "react";
 
 const $a3e4bd7b8405d372$export$c32a249941905394 = (element)=>{

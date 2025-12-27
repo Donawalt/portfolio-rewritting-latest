@@ -1,6 +1,6 @@
 import React from "react";
-import Lenis from "@studio-freight/lenis";
-import eventBus from "../utils/eventBus"
+import Lenis from "lenis";
+import eventBus from "../utils/eventBus";
 function useSmoothScroll() {
   const [lenis, setLenis] = React.useState(null);
 
@@ -9,8 +9,8 @@ function useSmoothScroll() {
     const l = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-      direction: 'vertical',
-      gestureDirection: 'vertical',
+      direction: "vertical",
+      gestureDirection: "vertical",
       smooth: true,
       smoothTouch: false,
       touchMultiplier: 2,
@@ -24,11 +24,10 @@ function useSmoothScroll() {
       requestAnimationFrame(scrollFn);
     };
 
-
     requestAnimationFrame(scrollFn);
 
     window.lenis = l;
-    eventBus.dispatch("lenisLoaded", {isLoaded: true})
+    eventBus.dispatch("lenisLoaded", { isLoaded: true });
     l?.stop();
     return lenis?.destroy();
   }, []);
