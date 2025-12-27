@@ -1,4 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import gsap from "gsap";
 import * as THREE from "three";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
@@ -108,11 +114,13 @@ const Tooltip = (props) => {
   );
 };
 
-const BlenderScene = (props) => {
+const BlenderScene = React.memo((props) => {
   const { nodes, materials } = useGLTF("3d/models/blenderScene.glb");
 
   const videoScreen = React.useRef();
-  const [videoOne, setVideoOne] = React.useState(() =>
+
+  // Use refs for videos instead of state to prevent re-renders
+  const videoOne = React.useRef(
     Object.assign(document.createElement("video"), {
       src: VideoOne,
       loop: true,
@@ -121,7 +129,7 @@ const BlenderScene = (props) => {
     })
   );
 
-  const [videoTwo, setVideoTwo] = React.useState(() =>
+  const videoTwo = React.useRef(
     Object.assign(document.createElement("video"), {
       src: VideoTwo,
       loop: true,
@@ -130,7 +138,7 @@ const BlenderScene = (props) => {
     })
   );
 
-  const [videoThree, setVideoThree] = React.useState(() =>
+  const videoThree = React.useRef(
     Object.assign(document.createElement("video"), {
       src: VideoThree,
       loop: true,
@@ -149,25 +157,30 @@ const BlenderScene = (props) => {
 
   // Mobile part
   const table = React.useRef();
-  const objects = [{}, {}, {}];
 
-  for (let i = 0; i < objects.length; i++) {
-    // superposer chaque télé
-    const object = objects[i];
-    object.position = [0, i * 2, 0];
-  }
-
-  React.useEffect(() => {
-    videoOne.play();
-    videoTwo.play();
-    videoThree.play();
-  }, [videoOne, videoTwo, videoThree]);
+  // Memoize objects array to prevent recalculation on every render
+  const objects = useMemo(
+    () => Array.from({ length: 3 }, (_, i) => ({ position: [0, i * 2, 0] })),
+    []
+  );
 
   React.useEffect(() => {
-    eventBus.on("uRoomVideo", (data) => {
+    videoOne.current.play();
+    videoTwo.current.play();
+    videoThree.current.play();
+  }, []);
+
+  React.useEffect(() => {
+    const handleRoomVideo = (data) => {
       setRoomVideo(data);
-    });
+    };
+
+    eventBus.on("uRoomVideo", handleRoomVideo);
     gsap.to(".canvas", { opacity: 1, translateY: "16px", delay: "300ms" });
+
+    return () => {
+      eventBus.remove("uRoomVideo", handleRoomVideo);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -229,13 +242,10 @@ const BlenderScene = (props) => {
     };
   }, [basePlatform]);
 
-  useEffect(() => {
-    console.log("This is roomVideo", roomVideo);
-  }, [roomVideo]);
+  // Removed console.log for performance
 
-  const moveCamera = ({ location, targetLocation, rotation }) => {
+  const moveCamera = useCallback(({ location, targetLocation, rotation }) => {
     const animation = (camera) => {
-      console.log(camera);
       gsap.to(camera.position, {
         x: targetLocation[0],
         y: targetLocation[1],
@@ -248,7 +258,7 @@ const BlenderScene = (props) => {
       gsap.to("main", { opacity: 0, delay: 0.2 });
     };
     eventBus.dispatch("animCamera", animation);
-  };
+  }, []);
 
   return (
     <group {...props} dispose={null}>
@@ -397,7 +407,7 @@ const BlenderScene = (props) => {
             <meshBasicMaterial toneMapped={false}>
               <videoTexture
                 attach={"map"}
-                args={[videoOne]}
+                args={[videoOne.current]}
                 colorSpace={THREE.SRGBColorSpace}
                 rotation={-1.5708}
                 repeat={[-2.5, 2.5]}
@@ -557,7 +567,7 @@ const BlenderScene = (props) => {
             <meshBasicMaterial toneMapped={false}>
               <videoTexture
                 attach={"map"}
-                args={[videoTwo]}
+                args={[videoTwo.current]}
                 colorSpace={THREE.SRGBColorSpace}
                 rotation={-1.5708}
                 repeat={[-2.5, 2.5]}
@@ -716,7 +726,7 @@ const BlenderScene = (props) => {
             <meshBasicMaterial toneMapped={false}>
               <videoTexture
                 attach={"map"}
-                args={[videoThree]}
+                args={[videoThree.current]}
                 colorSpace={THREE.SRGBColorSpace}
                 rotation={-1.5708}
                 repeat={[-2.5, 2.5]}
@@ -778,9 +788,9 @@ const BlenderScene = (props) => {
               <videoTexture
                 attach={"map"}
                 args={[
-                  (roomVideo === 1 && videoOne) ||
-                    (roomVideo === 2 && videoTwo) ||
-                    (roomVideo === 3 && videoThree),
+                  (roomVideo === 1 && videoOne.current) ||
+                    (roomVideo === 2 && videoTwo.current) ||
+                    (roomVideo === 3 && videoThree.current),
                 ]}
                 colorSpace={THREE.SRGBColorSpace}
                 rotation={-1.5708}
@@ -811,7 +821,7 @@ const BlenderScene = (props) => {
       </mesh>
     </group>
   );
-};
+});
 
 const getAspect = () => {
   return window.innerWidth / window.innerHeight;
@@ -841,20 +851,31 @@ const Scene = () => {
   const track = React.useRef();
 
   useEffect(() => {
-    console.log(getAspect());
     setCameraAspect(getAspect());
-    window.onresize = () => {
+
+    // Proper resize handler with cleanup
+    const handleResize = () => {
       setCameraAspect(getAspect());
     };
 
+    window.addEventListener("resize", handleResize);
+
     mouseAnimation(camera, isMobile);
 
-    eventBus.on("animCamera", (data) => {
+    const handleAnimCamera = (data) => {
       data(camera.current);
-    });
+    };
+
+    eventBus.on("animCamera", handleAnimCamera);
 
     animateTitle();
-  }, []);
+
+    // Cleanup all event listeners
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      eventBus.remove("animCamera", handleAnimCamera);
+    };
+  }, [isMobile]);
 
   return (
     <>
