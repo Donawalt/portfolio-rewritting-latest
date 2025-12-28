@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import gsap from "gsap";
+import { Draggable } from "gsap/Draggable";
 import * as THREE from "three";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { useGLTF, PerspectiveCamera, Text, Html } from "@react-three/drei";
@@ -896,6 +897,77 @@ const Scene = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
       eventBus.remove("animCamera", handleAnimCamera);
+    };
+  }, [isMobile]);
+
+  // Mobile drag interaction setup
+  useEffect(() => {
+    if (!isMobile) return;
+
+    gsap.registerPlugin(Draggable);
+
+    const dragTarget = document.createElement("div");
+    dragTarget.style.position = "fixed";
+    dragTarget.style.top = "0";
+    dragTarget.style.left = "0";
+    dragTarget.style.width = "100vw";
+    dragTarget.style.height = "100vh";
+    dragTarget.style.zIndex = "10";
+    dragTarget.style.touchAction = "none";
+    dragTarget.id = "drag-target";
+    document.body.appendChild(dragTarget);
+
+    const dragInstance = Draggable.create(dragTarget, {
+      type: "x",
+      dragResistance: 0.6,
+      onDrag: function () {
+        // Subtle camera displacement based on drag
+        if (camera.current && !isAnimatingRef.current) {
+          const dragAmount = this.x;
+          const cameraOffset = dragAmount * 0.01; // Small camera movement
+          gsap.to(camera.current.position, {
+            x: cameraOffset,
+            duration: 0.1,
+            ease: "none",
+          });
+        }
+      },
+      onDragEnd: function () {
+        // Reset camera position
+        if (camera.current) {
+          gsap.to(camera.current.position, {
+            x: 0,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
+
+        const dragDistance = this.x;
+        const threshold = 50; // Minimum drag distance to trigger
+
+        // Trigger rotation based on drag direction
+        if (Math.abs(dragDistance) > threshold) {
+          if (dragDistance > 0) {
+            // Dragged right - go to previous (slide right)
+            eventBus.dispatch("slide-right");
+          } else {
+            // Dragged left - go to next (slide left)
+            eventBus.dispatch("slide-left");
+          }
+        }
+
+        // Reset drag position
+        gsap.set(dragTarget, { x: 0 });
+      },
+    });
+
+    return () => {
+      if (dragInstance[0]) {
+        dragInstance[0].kill();
+      }
+      if (dragTarget.parentNode) {
+        dragTarget.parentNode.removeChild(dragTarget);
+      }
     };
   }, [isMobile]);
 
