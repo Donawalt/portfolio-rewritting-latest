@@ -158,6 +158,7 @@ const BlenderScene = React.memo((props) => {
 
   // Mobile part
   const table = React.useRef();
+  const dragTargetRef = React.useRef(); // Ref for the drag overlay
   const isAnimatingRef = React.useRef(false); // Use ref to avoid re-renders
 
   // Memoize objects array to prevent recalculation on every render
@@ -267,24 +268,14 @@ const BlenderScene = React.memo((props) => {
 
   // Mobile drag interaction - only on mobile
   React.useEffect(() => {
-    if (!props.isMobile) return;
+    if (!props.isMobile && !dragTargetRef.current) return;
 
     gsap.registerPlugin(Draggable);
 
-    const dragTarget = document.createElement("div");
-    dragTarget.style.position = "fixed";
-    dragTarget.style.top = "0";
-    dragTarget.style.left = "0";
-    dragTarget.style.width = "100vw";
-    dragTarget.style.height = "100vh";
-    dragTarget.style.zIndex = "10";
-    dragTarget.style.touchAction = "none";
-    dragTarget.id = "drag-target-mobile";
-    document.body.appendChild(dragTarget);
-
-    const dragInstance = Draggable.create(dragTarget, {
+    const dragInstance = Draggable.create(dragTargetRef.current, {
       type: "x",
       dragResistance: 0.6,
+      zIndexBoost: false,
       onDrag: function () {
         if (isAnimatingRef.current) return;
 
@@ -331,11 +322,8 @@ const BlenderScene = React.memo((props) => {
       if (dragInstance[0]) {
         dragInstance[0].kill();
       }
-      if (dragTarget.parentNode) {
-        dragTarget.parentNode.removeChild(dragTarget);
-      }
     };
-  }, [props.isMobile, basePlatform]);
+  }, [props.isMobile, basePlatform, dragTargetRef]);
 
   // Removed console.log for performance
 
@@ -914,6 +902,28 @@ const BlenderScene = React.memo((props) => {
       >
         <meshBasicMaterial attach="material" color="black" />
       </mesh>
+
+      {/* Mobile-specific drag target - controlled via ref */}
+      {props.isMobile && (
+        <Html
+          style={{
+            left: 0,
+            zIndex: 2000,
+          }}
+        >
+          <div
+            ref={dragTargetRef}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              zIndex: 10,
+            }}
+          />
+        </Html>
+      )}
     </group>
   );
 });
@@ -1020,6 +1030,7 @@ const Scene = () => {
             left: 0,
             top: "calc(50vh - 160px)",
             transform: "translate(-50%, -50%)",
+            zIndex: 2000, // Very high to be above GSAP high z-index
           }}
         >
           <nav
@@ -1027,10 +1038,13 @@ const Scene = () => {
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               columnGap: "24px",
+              pointerEvents: "auto", // Ensure buttons receive events
             }}
           >
             <div
+              style={{ cursor: "pointer", pointerEvents: "auto" }}
               onTouchStart={(event) => {
+                event.stopPropagation();
                 eventBus.dispatch("slide-left");
               }}
             >
@@ -1056,7 +1070,9 @@ const Scene = () => {
               </svg>
             </div>
             <div
+              style={{ cursor: "pointer", pointerEvents: "auto" }}
               onTouchStart={(event) => {
+                event.stopPropagation();
                 eventBus.dispatch("slide-right");
               }}
             >
