@@ -15,7 +15,7 @@ const allProjects = await client.fetch(getAllProjects());
 
 const mainProjects = allProjects
   .filter(p => p.category === 'design' || p.category === 'development')
-  .slice(0, 10);
+  .slice(0, 9);
 
 const photoProjects = allProjects
   .filter(p => p.category === 'photography')
@@ -46,7 +46,6 @@ const whyCards = [
 					<h1>
 						<span class={HomeStyles.line_1}>Creative</span>
 						<span class={HomeStyles.line_2}>Developer</span>
-						<span class={HomeStyles.line_3}>& Designer</span>
 					</h1>
 				</div>
 				<p class={HomeStyles.description}>
