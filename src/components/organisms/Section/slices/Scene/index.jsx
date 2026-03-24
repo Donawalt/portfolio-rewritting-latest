@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import gsap from "gsap";
-import { Draggable } from "gsap/draggable";
+import { Draggable } from "gsap/dist/Draggable";
 import * as THREE from "three";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { useGLTF, PerspectiveCamera, Text, Html } from "@react-three/drei";
