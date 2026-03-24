@@ -1,27 +1,33 @@
 .root {
     display: flex;
-    padding: 16px 24px;
+    padding: 12px 32px;
     justify-content: center;
     align-items: center;
     gap: 10px;
     align-self: stretch;
-
-    border-radius: 49px;
-    border: 1px solid #FFF;
-
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     background-color: transparent;
     color: white;
-
     font-family: 'Jost*';
-
-    transition: 300ms;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
-    &:hover{
-        background-color: white;
-        color: black;
+
+    &:hover {
+        background-color: cornflowerblue;
+        border-color: cornflowerblue;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(100, 149, 237, 0.3);
         cursor: pointer;
     }
 
-    @include interpolate((padding-left, padding-right), map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 22px, 44px );
-    @include interpolate((padding-top, padding-bottom), map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 8px, 16px );
+    &:focus {
+        outline: 2px solid cornflowerblue;
+        outline-offset: 2px;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
 }

@@ -42,6 +42,10 @@ const RMenu = [
     ]
   },
   {
+    name: 'Craft',
+    link: '/craft/'
+  },
+  {
     name: 'Blog',
     link: '/blog/'
   },
@@ -94,6 +98,10 @@ const mobileMenu = [
       {
         name: "Projects",
         link: "/projects/"
+      },
+      {
+        name: "Craft",
+        link: "/craft/"
       },
       {
         name: "Blog",

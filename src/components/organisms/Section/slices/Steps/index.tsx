@@ -1,9 +1,9 @@
 import Style from './steps.module.scss';
 
-const Steps = (props: { steps: { step_one, step_two, step_three, title: string } }) => {
+const Steps = (props: { steps: { step_one, step_two, step_three, title?: string | undefined } }) => {
     const { step_one, step_two, step_three, title } = props.steps;
     return (<section className={Style.root}>
-        <h2 className='do-text-xl'>{title}</h2>
+        {title && (<h2 className='do-text-xl'>{title}</h2>)}
         <ul>
             <li>
                 <svg width="82" height="54" viewBox="0 0 82 54" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -3,18 +3,25 @@ import Picture from '../../atoms/Picture';
 import Style from './style.module.scss';
 import eventBus from '@/assets/scripts/utils/eventBus';
 
-const ProjectItem = (props: { index, title, picture, link }) => {
-    const { index, title, picture, link } = props;
-    console.log('This is list item picture', picture);
+interface ProjectItemProps {
+    index: number;
+    title: string;
+    picture: any;
+    link: string;
+    variant?: 'default' | 'light';
+}
+
+const ProjectItem = ({ index, title, picture, link, variant = 'default' }: ProjectItemProps) => {
+    const rootClass = variant === 'light' ? `${Style.root} ${Style.light}` : Style.root;
 
     useEffect(()=>{
-       
         setTimeout(()=>{
             eventBus.dispatch('scroll');
         }, 100)
-    }, [])
+    }, []);
+
     return (
-        <a href={link ? link : "/projects/design"} className={Style.root}>
+        <a href={link ? link : "/projects/design"} className={rootClass}>
             <h3 className='do-text-s'>{title ? title : "Lorem ipsum dolor"}</h3>
             <div>
                 {picture && <Picture url={picture.asset._ref} widthDesktop={680}

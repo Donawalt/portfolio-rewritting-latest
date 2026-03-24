@@ -1,0 +1,136 @@
+---
+import Layout from "../components/layouts/Layout.astro";
+import SEO from "../components/layouts/utils/SEO.astro";
+import Scene from '../components/organisms/Section/slices/Scene/index.jsx';
+
+import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
+---
+
+<SEO lang="en" title="Craft | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Explore the technical craft behind Donaël Walter's work — WebGL, Three.js, animations, and experiments." ogImage={OG_IMAGE.src}>
+	<Layout>
+		<main class="craft">
+			<header class="hero">
+				<h1>
+					<span class="line-1">Craft</span>
+				</h1>
+				<p class="tagline">Experiments · WebGL · Three.js</p>
+			</header>
+			
+			<section class="scene-container">
+				<div class="canvas">
+					<Scene client:load />
+				</div>
+			</section>
+			
+			<section class="info">
+				<p>This portfolio is built with Astro, React, Three.js, and GSAP — a custom tech stack that lets me create immersive, performant web experiences.</p>
+				<div class="tech-stack">
+					<span class="tech">Astro</span>
+					<span class="tech">React</span>
+					<span class="tech">Three.js</span>
+					<span class="tech">GSAP</span>
+					<span class="tech">Sanity</span>
+				</div>
+			</section>
+		</main>
+	</Layout>
+</SEO>
+
+<style lang="scss" is:global>
+	.craft {
+		min-height: 100vh;
+	}
+	
+	.hero {
+		padding: 80px 32px 40px;
+		text-align: center;
+		
+		@media (max-width: 768px) {
+			padding: 48px 16px 32px;
+		}
+	}
+	
+	h1 {
+		margin: 0 0 16px;
+		color: white;
+		text-align: center;
+		text-transform: uppercase;
+		
+		.line-1 {
+			font-family: 'scillaregular', 'Times New Roman', serif;
+			@include interpolateBoth(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 600px, 800px, 48px, 120px);
+			line-height: 1;
+		}
+	}
+	
+	.tagline {
+		font-family: 'Jost*';
+		font-weight: 300;
+		font-size: 14px;
+		color: rgba(255, 255, 255, 0.4);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		margin: 0;
+	}
+	
+	.scene-container {
+		padding: 0 32px;
+		margin-top: 40px;
+		
+		@media (max-width: 768px) {
+			padding: 0 16px;
+		}
+	}
+	
+	.canvas {
+		position: relative;
+		height: 60vh;
+		min-height: 400px;
+		border-radius: 16px;
+		overflow: hidden;
+	}
+	
+	.info {
+		max-width: 600px;
+		margin: 80px auto;
+		padding: 0 32px;
+		text-align: center;
+		
+		p {
+			font-family: 'Jost*';
+			font-weight: 300;
+			font-size: 18px;
+			line-height: 1.7;
+			color: rgba(255, 255, 255, 0.7);
+			margin: 0 0 32px;
+		}
+	}
+	
+	.tech-stack {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
+	}
+	
+	.tech {
+		font-family: 'Jost*';
+		font-weight: 500;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		padding: 8px 16px;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 24px;
+		color: rgba(255, 255, 255, 0.6);
+	}
+	
+	#webGlWrapper {
+		position: relative;
+		top: 0;
+		left: 0;
+		height: 100% !important;
+		width: 100% !important;
+	}
+</style>
