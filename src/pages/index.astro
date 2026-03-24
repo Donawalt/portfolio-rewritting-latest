@@ -1,118 +1,74 @@
 ---
 import Layout from "../components/layouts/Layout.astro";
 import SEO from "../components/layouts/utils/SEO.astro";
-import Scene from '../components/organisms/Section/slices/Scene/index.jsx';
+import ProjectList from '../components/molecules/ProjectList';
+import Button from '../components/atoms/Button/index';
+import Steps from '../components/organisms/Section/slices/Steps';
+import HomeStyles from "./index.module.scss";
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
+
+import { client } from "../assets/scripts/utils/api/sanityClient";
+import { getAllProjects } from "../assets/scripts/utils/api/api";
+
+const allProjects = await client.fetch(getAllProjects());
+
+const mainProjects = allProjects
+  .filter(p => p.category === 'design' || p.category === 'development')
+  .slice(0, 9);
+
+const photoProjects = allProjects
+  .filter(p => p.category === 'photography')
+  .slice(0, 3);
+
+const whyCards = [
+  {
+    title: "Multidisciplinary",
+    description: "Brand design, UI/UX, 3D, motion, and development. I bring multiple perspectives to solve problems others might miss."
+  },
+  {
+    title: "Unique Vision",
+    description: "Through diverse skills and experience, I offer tailor-made solutions that make brands unforgettable."
+  },
+  {
+    title: "Full-Stack Builder",
+    description: "I don't just design — I build. Custom code, animations, and interactions that bring ideas to life."
+  }
+];
 ---
 
 <SEO lang="en" title="Donaël Walter Portfolio | Creative Development, Design, Photography" description="I am Donaël - a skilled brand designer, web developer, and photographer. With my expertise in visual design and technical proficiency, I offer comprehensive solutions that are both functional and aesthetically pleasing." ogImage={OG_IMAGE.src}>
 	<Layout>
-		<div class="canvas">
-			<Scene client:load />
-		  </div>
-		  <h1>
-			<span class="line-1" id="creative">Creative</span>
-			<span class="line-2" id="developper">Developer</span>
-			<span class="line-3" id="and">& Enthusiast Designer</span>
-		  </h1>
+		<main class={HomeStyles.home_page}>
+			<header class={HomeStyles.hero} data-hero>
+				<span class={HomeStyles.label}>Freelance</span>
+				<div class={HomeStyles.hero_title}>
+					<h1>
+						<span class={HomeStyles.line_1}>Creative</span>
+						<span class={HomeStyles.line_2}>Developer</span>
+					</h1>
+				</div>
+				<p class={HomeStyles.description}>
+					I help brands shine through design, development, and photography.
+					Crafting memorable digital experiences that are both functional and beautiful.
+				</p>
+				<div class={HomeStyles.cta_group}>
+					<Button type="link" href="/projects">View Projects</Button>
+					<Button type="link" href="https://cal.com/donael-walter/15min" target="_blank">Book a Call</Button>
+				</div>
+			</header>
+
+			<section>
+				<div class={HomeStyles.section_title}>
+					<h2>Selected Work</h2>
+					<div class={HomeStyles.line}></div>
+				</div>
+				<ProjectList client:load projects={mainProjects} />
+			</section>
+		</main>
 	</Layout>
 </SEO>
 
-<style lang="scss" is:global>
-	main {
-	  min-height: calc(100vh - 200px);
-	  @media screen and (max-width: 1000px) {
-		min-height: calc(100vh - 150px);
-	  }
-	  height: fit-content;
-	  padding: 1px;
-	  position: relative;
-	  overflow: hidden;
-	  h1 {
-		margin-top: 12vh !important;
-		color: white;
-		text-align: center;
-		text-transform: uppercase;
-		font-feature-settings: "ordn" on, "swsh" on, "ornm" on;
-		span {
-		  display: block;
-		  overflow: hidden;
-		}
 
-		.line-1 {
-		  @include interpolateBoth(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"),600px, 800px, 20px, 80px );
-		  opacity: 0;
-		}
-		.line-2 {
-		  @include interpolateBoth(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"),600px, 800px, 30px, 110px );
-		  opacity: 0;
-		}
-		.line-3 {
-		  @include interpolateBoth(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"),600px, 800px, 12px, 35px );
-		  color: rgba(255, 255, 255, 0.7);
-		  text-transform: initial;
-		  font-feature-settings: "ordn" on;
-		  opacity: 0;
-		}
-	  }
-	  .canvas {
-		position: absolute;
-		top: 0px;
-		height: 100%;
-		opacity: 0;
-	  }
-	  footer {
-		position: absolute;
-		bottom: 32px;
-		color: white;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		width: 100%;
-		a {
-		  text-decoration: none;
-		}
-		ul {
-		  display: flex;
-		  list-style: none;
-		  padding: 0px;
-		  margin: 0px;
-		  margin-left: 32px;
-		  span {
-			margin-left: 8px;
-			margin-right: 8px;
-		  }
-		  li {
-			text-decoration: none;
-		  }
-		}
-		.contact {
-		  text-align: right;
-		  margin-right: 32px;
-		}
-		@media screen and (max-width: 425px) {
-		  grid-template-rows: auto auto;
-		  grid-template-columns: initial;
-		  .contact,
-		  ul {
-			justify-content: center;
-			align-items: center;
-			text-align: center;
-			margin: 0;
-		  }
-		}
-	  }
-	}
-	#webGlWrapper {
-	  position: relative;
-	  top: 0;
-	  left: 0;
-	  height: calc(100vh - 57px) !important;
-	  width: 100vw !important;
 
-	  @include mq('tablet', min){
-		@include interpolateHeight(top, 700px, 800px, -74px, 0px);
-	  }
-	}
-  </style>
-  
+

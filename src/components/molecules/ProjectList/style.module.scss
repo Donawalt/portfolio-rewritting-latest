@@ -42,4 +42,22 @@
     opacity: 0;
 }
 
+.light {
+    grid-auto-rows: 200px;
+    grid-gap: 12px;
+    row-gap: 24px;
+    
+    :nth-child(18n + 4) {
+        grid-column: span 1;
+        grid-row: span 1;
+        max-width: none;
+    }
+
+    :nth-child(9n + 16) {
+        grid-column: span 1;
+        grid-row: span 1;
+        max-width: none;
+    }
+}
+
 
