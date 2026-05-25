@@ -10,9 +10,9 @@ const WorkingTogether = (props) => {
         <h2>{title && title} {!title && (<>Start working <br/> together</>)}</h2>
         <div>
             <div>
-                <h3>Make a call</h3>
-                <p>Let's discuss your project in 15 minutes</p>
-                <Button type="link" href="https://cal.com/donael-walter/15min" target="_blank">Book a call</Button>
+                <h3>Send an email</h3>
+                <p>Share your project idea and let's discuss it</p>
+                <Button type="link" href="mailto:contact@donaelwalter.com">Get in Touch</Button>
             </div>
             <ContactForm />
         </div>

@@ -8,7 +8,7 @@ const Custom = ({ tag, content }) => {
         <div className={Style["do_tag"]}><Tag type='nj'>2 {tag}</Tag></div>
         <h3>CUSTOM</h3>
         <p>{content}</p>
-        <Button type="link" href="https://cal.com/donael-walter/15min" target="_blank">Book a call</Button>
+        <Button type="link" href="mailto:contact@donaelwalter.com">Get in Touch</Button>
     </div>
 }
 
@@ -40,7 +40,7 @@ const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' |
                 <p>{prices.eur} €</p>
                 <p>US$ {prices.usd} </p>
             </div>
-            <Button type="link" href="https://cal.com/donael-walter/15min" target="_blank">Book a call</Button>
+            <Button type="link" href="mailto:contact@donaelwalter.com">Get in Touch</Button>
             <ul>
                 {features.map(el => <li><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g filter="url(#filter0_f_2034_238)">
