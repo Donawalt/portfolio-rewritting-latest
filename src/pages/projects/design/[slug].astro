@@ -24,8 +24,40 @@ export const getStaticPaths = (async () => {
 
 const {slug, type} = Astro.params;
 const {page, nextPage} = Astro.props;
+
+const canonicalUrl = `https://donaelwalter.com/projects/design/${page?.seoSlug?.current}`;
+const projectJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://donaelwalter.com/#person",
+      "name": "Donaël Walter",
+      "url": "https://donaelwalter.com",
+      "jobTitle": ["Brand Designer", "Creative Developer", "Front-End Engineer"],
+      "knowsAbout": ["Branding", "UX Design", "UI Design", "Front-End Development", "Web Development"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://donaelwalter.com/#website",
+      "url": "https://donaelwalter.com",
+      "name": "Donaël Walter",
+      "description": "Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.",
+      "publisher": { "@id": "https://donaelwalter.com/#person" }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": canonicalUrl,
+      "name": page?.seoTitle,
+      "description": page?.seoDescription,
+      "author": { "@id": "https://donaelwalter.com/#person" },
+      "publisher": { "@id": "https://donaelwalter.com/#person" },
+      "isPartOf": { "@id": "https://donaelwalter.com/projects" }
+    }
+  ]
+};
 ---
-<SEO lang="en" title={page?.seoTitle + " | Donaël Walter Portfolio | Creative Development, Design, Photography"} description={page?.seoDescription} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref)}>
+<SEO lang="en" title={page?.seoTitle + " | Donaël Walter"} description={page?.seoDescription} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref)} canonical={canonicalUrl} jsonLd={projectJsonLd}>
 	<Layout>
         <Project title={page.name} subTitle={page.subtitle} cover={page.cover} tag={page?.tag} introduction={page?.introduction} skills={page?.skills} content={page.content} nextProject={nextPage} slug={slug}/>
     </Layout>

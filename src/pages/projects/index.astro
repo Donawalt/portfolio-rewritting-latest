@@ -14,7 +14,7 @@ import { getAllProjects } from "../../assets/scripts/utils/api/api";
 let allProjects = await client.fetch(getAllProjects());
 ---
 
-<SEO lang="en" title="All projects | Donaël Walter Portfolio | Creative Development, Design, Photography" description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation." ogImage={OG_IMAGE.src}>
+<SEO lang="en" title="Projects — Branding, Design & Development | Donaël Walter" description="Explore a curated selection of branding, UI/UX design, and front-end development projects by Donaël Walter. From visual identity to polished web experiences." ogImage={OG_IMAGE.src} canonical="https://donaelwalter.com/projects" jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}},{"@type":"CollectionPage","@id":"https://donaelwalter.com/projects","name":"Projects — Branding, Design & Development","isPartOf":{"@id":"https://donaelwalter.com/#website"}}]}}>
 	<Layout>
 		<Heading client:load>
             <h1>Projects</h1>

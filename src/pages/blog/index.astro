@@ -21,9 +21,11 @@ let allArticles = await client.fetch(getAllArticles());
 
 <SEO
     lang="en"
-    title="Blog | Donaël Walter Portfolio | Creative Development, Design, Photography"
-    description="Step into my world of creativity and innovation. Explore a tapestry of my passion for design, development, and photography woven into each project. Let's connect and bring your vision to life together. Dive in and be inspired by the stories behind each creation."
+    title="Blog — Ideas, Articles & Experiments | Donaël Walter"
+    description="Articles on branding, design, front-end development, and the creative process — written by Donaël Walter."
     ogImage={OG_IMAGE.src}
+    canonical="https://donaelwalter.com/blog"
+    jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}},{"@type":"Blog","@id":"https://donaelwalter.com/blog","name":"Blog — Ideas, Articles & Experiments","description":"Articles on branding, design, front-end development, and the creative process.","isPartOf":{"@id":"https://donaelwalter.com/#website"},"publisher":{"@id":"https://donaelwalter.com/#person"}}]}}
 >
     <Layout type="blog">
         <Heading client:load>
@@ -53,11 +55,10 @@ let allArticles = await client.fetch(getAllArticles());
             <Text type="h2" size="xl">You want to know more on my work ?</Text>
             <div>
                 <p>
-                    I’m Donaël Walter, a designer and front-end developer
-                    specializing in high-end brand identities and digital
-                    experiences. I combine design, development, and photography
-                    to create tailor-made projects that bring out the full
-                    potential of your brand.
+                    I'm Donaël Walter — a brand designer and creative developer
+                    blending branding, design, and code into one workflow.
+                    I help startups, agencies, and premium brands turn their
+                    goals into polished, modern web experiences.
                 </p>
                 <div>
                     <Button type="link" href="/projects">

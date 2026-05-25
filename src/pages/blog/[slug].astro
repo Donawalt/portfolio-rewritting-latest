@@ -30,6 +30,38 @@ export const getStaticPaths = async () => {
 const { slug } = Astro.params;
 const { article, nextArticle }: { article: any; nextArticle: any } =
   Astro.props;
+
+const canonicalUrl = `https://donaelwalter.com/blog/${article?.seoSlug?.current}`;
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://donaelwalter.com/#person",
+      "name": "Donaël Walter",
+      "url": "https://donaelwalter.com",
+      "jobTitle": ["Brand Designer", "Creative Developer", "Front-End Engineer"],
+      "knowsAbout": ["Branding", "UX Design", "UI Design", "Front-End Development", "Web Development"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://donaelwalter.com/#website",
+      "url": "https://donaelwalter.com",
+      "name": "Donaël Walter",
+      "description": "Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.",
+      "publisher": { "@id": "https://donaelwalter.com/#person" }
+    },
+    {
+      "@type": "Article",
+      "@id": canonicalUrl,
+      "headline": article?.seoTitle,
+      "description": article?.seoDescription,
+      "author": { "@id": "https://donaelwalter.com/#person" },
+      "publisher": { "@id": "https://donaelwalter.com/#person" },
+      "isPartOf": { "@id": "https://donaelwalter.com/blog" }
+    }
+  ]
+};
 ---
 
 <SEO
@@ -37,6 +69,8 @@ const { article, nextArticle }: { article: any; nextArticle: any } =
   title={article?.seoTitle}
   description={article?.seoDescription}
   ogImage={article?.seoImage}
+  canonical={canonicalUrl}
+  jsonLd={articleJsonLd}
 >
   <Layout type="blog">
     <Heading client:load>
