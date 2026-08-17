@@ -35,13 +35,13 @@ const {
     <meta property="og:locale" content={locale} />
     <meta property="og:title" content={ogTitle ? ogTitle : title} />
     <meta property="og:description" content={ogDescription ? ogDescription : description} />
-    <meta property="og:image" content={ogImage ? ogImage : defaultOgImage.src} />
+    <meta property="og:image" content={new URL(ogImage || defaultOgImage.src, Astro.site).href} />
     <meta property="og:type" content="website" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={ogTitle ? ogTitle : title} />
     <meta name="twitter:description" content={ogDescription ? ogDescription : description} />
-    <meta name="twitter:image" content={ogImage ? ogImage : defaultOgImage.src} />
+    <meta name="twitter:image" content={new URL(ogImage || defaultOgImage.src, Astro.site).href} />
 
     {
       jsonLd && (

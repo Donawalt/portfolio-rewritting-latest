@@ -69,7 +69,7 @@ const { type } = Astro.props;
   import gsap from "gsap";
   const lenis = new Lenis();
 
-  function raf(time) {
+  function raf(time: number) {
     lenis.raf(time);
     requestAnimationFrame(raf);
   }
