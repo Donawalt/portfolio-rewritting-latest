@@ -23,9 +23,6 @@ pnpm-debug.log*
 # local tooling
 .convert-jpg-webp.py
 
-#package
-package-lock.json
-
 # Local Netlify folder
 .netlify
 .agents/*
