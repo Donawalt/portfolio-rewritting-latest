@@ -11,11 +11,10 @@ import { getAllArticles } from "@/assets/scripts/utils/api/api";
 import { PortableText } from "astro-portabletext";
 import { createImageUrlBuilder } from "@sanity/image-url";
 import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
+import ReadingProgress from "@/components/atoms/ReadingProgress";
 
 export const getStaticPaths = async () => {
-  // get all articles from sanity
   const articles = await client.fetch(getAllArticles());
-  // get all articles
   return articles.map((article, index) => {
     const nextArticle = articles[index + 1] || articles[0];
     article.seoImage = urlImageBuilder(article?.seoImage?.asset?._ref);
@@ -34,6 +33,17 @@ const { article, nextArticle }: { article: any; nextArticle: any } =
 
 const canonicalUrl = canonical(`/blog/${article?.seoSlug?.current}`);
 const articleLastMod = article?._updatedAt || article?._createdAt;
+
+const formattedDate = new Date(article?._createdAt).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const readingTimeMinutes = article?.readingTime
+  ? Math.ceil(article.readingTime / 60)
+  : null;
+
 const articleJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -58,6 +68,11 @@ const articleJsonLd = {
     }
   ]
 };
+
+let coverImageUrl: string | null = null;
+if (article?.seoImage?.asset?._ref) {
+  coverImageUrl = urlImageBuilder(article.seoImage.asset._ref);
+}
 ---
 
 <SEO
@@ -69,6 +84,7 @@ const articleJsonLd = {
   jsonLd={articleJsonLd}
 >
   <Layout type="blog">
+   <!-- <ReadingProgress client:load /> --> 
     <Heading client:load>
       <svg
         width="57"
@@ -76,13 +92,14 @@ const articleJsonLd = {
         viewBox="0 0 57 57"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        class="do-sparkle"
       >
         <path
           d="M21.9293 12.8376C21.7878 24.8768 31.6913 34.676 44 34.536H43.4341C31.4084 34.676 21.7878 44.4753 21.9293 56.3744V56.2344C21.7878 44.3353 12.0257 34.816 0.141478 34.676H0C12.0257 34.536 21.9293 24.8768 21.9293 12.8376Z"
-          fill="white"></path>
+          fill="var(--accent-color, #dc143c)"></path>
         <path
           d="M43.9582 0C43.8746 7.11402 49.7267 12.9045 57 12.8218H56.6656C49.5595 12.9045 43.8746 18.695 43.9582 25.7263V25.6436C43.8746 18.6123 38.1061 12.9872 31.0836 12.9045H31C38.1061 12.8218 43.9582 7.11402 43.9582 0Z"
-          fill="white"></path>
+          fill="var(--accent-color, #dc143c)"></path>
       </svg>
       <br />
       <h1
@@ -94,12 +111,28 @@ const articleJsonLd = {
       >
         {article?.title}
       </h1>
-      <br />
+
+      <div class="do-article-meta">
+        {article?.category && (
+          <span class="do-category-tag">{article.category}</span>
+        )}
+        <div class="do-meta-separator"></div>
+        {formattedDate && (
+          <time datetime={article?._createdAt}>{formattedDate}</time>
+        )}
+        {readingTimeMinutes && (
+          <>
+            <div class="do-meta-separator"></div>
+            <span>{readingTimeMinutes} min read</span>
+          </>
+        )}
+      </div>
+
       <div class="do-author-wrapper">
         <div
           style={{
-            height: "48px",
-            width: "48px",
+            height: "56px",
+            width: "56px",
           }}
         >
           <Picture
@@ -107,32 +140,94 @@ const articleJsonLd = {
             url={article?.author?.picture?.asset?._ref}
             widthDesktop={120}
             heightDesktop={120}
-            widthMobile={48}
-            heightMobile={48}
+            widthMobile={56}
+            heightMobile={56}
           />
         </div>
 
         <p>{article.author.name}</p>
       </div>
     </Heading>
+
+    {coverImageUrl && (
+      <figure class="do-cover-image">
+        <Picture
+          client:load
+          url={article.seoImage.asset._ref}
+          widthDesktop={1200}
+          heightDesktop={630}
+          widthMobile={640}
+          heightMobile={336}
+        />
+      </figure>
+    )}
+
     <div class="do-content">
       <PortableText value={article?.content} />
     </div>
-    <div class="do-blog-footer">
-      <a href={`/blog/${nextArticle.seoSlug.current}`}>
-        <h4>Next</h4>
-        <p>{nextArticle.title}</p></a
-      >
-    </div>
+
+    <a href={`/blog/${nextArticle.seoSlug.current}`} class="do-next-article">
+      <span class="do-next-label">Next article</span>
+      <span class="do-next-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <h4>{nextArticle.title}</h4>
+      {nextArticle.category && (
+        <span class="do-next-category">{nextArticle.category}</span>
+      )}
+    </a>
   </Layout>
 </SEO>
 
 <style lang="scss">
+  .do-sparkle {
+    --accent-color: #dc143c;
+  }
+
+  .do-article-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+
+    time, span {
+      font-family: "Jost*";
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.02em;
+    }
+  }
+
+  .do-category-tag {
+    font-family: "Jost*";
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.08em !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  .do-meta-separator {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
   .do-author-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
+    margin-top: 28px;
 
     & > div {
       border-radius: 300px;
@@ -140,15 +235,44 @@ const articleJsonLd = {
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
     picture {
-      height: 48px;
-      width: 48px;
+      height: 56px;
+      width: 56px;
       img {
         object-fit: cover;
       }
     }
+    p {
+      font-family: "Jost*";
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+    }
   }
+
+  .do-cover-image {
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+    padding: 0 16px;
+
+    @include interpolate(
+      margin-bottom,
+      map-get($breakpoints, "tablet"),
+      map-get($breakpoints, "desktop"),
+      2rem,
+      3.5rem
+    );
+
+    :global(img) {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+  }
+
   .do-content {
     @include interpolate(
       padding,
@@ -157,24 +281,30 @@ const articleJsonLd = {
       16px,
       64px
     );
-    max-width: 700px;
+    max-width: 720px;
     margin: auto;
     display: flex;
     flex-direction: column;
 
-    // Headings hierarchy
+    // Remove top margin from first element after cover image
+    :global(> :first-child) {
+      margin-top: 0;
+    }
+
+    // Headings hierarchy — cap h1 below page title
     :global(h1) {
       @include interpolate(
         font-size,
         map-get($breakpoints, "tablet"),
         map-get($breakpoints, "desktop"),
-        32px,
-        48px
+        28px,
+        36px
       );
       font-weight: 700;
-      line-height: 1.2;
-      margin-top: 4.8rem;
-      margin-bottom: 1rem;
+      line-height: 1.3;
+      margin-top: 4rem;
+      margin-bottom: 1.5rem;
+      font-family: "Jost*";
     }
 
     :global(h2) {
@@ -182,13 +312,14 @@ const articleJsonLd = {
         font-size,
         map-get($breakpoints, "tablet"),
         map-get($breakpoints, "desktop"),
-        28px,
-        40px
+        24px,
+        32px
       );
       font-weight: 700;
       line-height: 1.3;
       margin-top: 4rem;
-      margin-bottom: 0.8rem;
+      margin-bottom: 1.25rem;
+      font-family: "Jost*";
     }
 
     :global(h3) {
@@ -196,13 +327,13 @@ const articleJsonLd = {
         font-size,
         map-get($breakpoints, "tablet"),
         map-get($breakpoints, "desktop"),
-        24px,
-        32px
+        20px,
+        26px
       );
       font-weight: 600;
       line-height: 1.4;
       margin-top: 3.2rem;
-      margin-bottom: 0.6rem;
+      margin-bottom: 1rem;
       font-family: "Jost*";
     }
 
@@ -211,33 +342,17 @@ const articleJsonLd = {
         font-size,
         map-get($breakpoints, "tablet"),
         map-get($breakpoints, "desktop"),
-        20px,
-        24px
+        18px,
+        22px
       );
       font-weight: 600;
       line-height: 1.5;
       margin-top: 2.4rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       font-family: "Jost*";
-      text-align: left;
     }
 
     :global(h5) {
-      @include interpolate(
-        font-size,
-        map-get($breakpoints, "tablet"),
-        map-get($breakpoints, "desktop"),
-        18px,
-        20px
-      );
-      font-weight: 600;
-      line-height: 1.5;
-      margin-top: 2rem;
-      margin-bottom: 0.4rem;
-      font-family: "Jost*";
-    }
-
-    :global(h6) {
       @include interpolate(
         font-size,
         map-get($breakpoints, "tablet"),
@@ -247,8 +362,23 @@ const articleJsonLd = {
       );
       font-weight: 600;
       line-height: 1.5;
+      margin-top: 2rem;
+      margin-bottom: 0.625rem;
+      font-family: "Jost*";
+    }
+
+    :global(h6) {
+      @include interpolate(
+        font-size,
+        map-get($breakpoints, "tablet"),
+        map-get($breakpoints, "desktop"),
+        14px,
+        16px
+      );
+      font-weight: 600;
+      line-height: 1.5;
       margin-top: 1.6rem;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       font-family: "Jost*";
     }
 
@@ -256,10 +386,10 @@ const articleJsonLd = {
     :global(ul, ol) {
       padding-left: 24px;
       margin-top: 0;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.75rem;
 
       :global(li) {
-        margin-bottom: 0.8rem;
+        margin-bottom: 0.5rem;
         @include interpolate(
           font-size,
           map-get($breakpoints, "tablet"),
@@ -267,13 +397,13 @@ const articleJsonLd = {
           16px,
           18px
         );
-        line-height: 1.6;
+        line-height: 1.7;
       }
     }
 
     :global(ul) {
       list-style: disc;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.75rem;
     }
 
     :global(ol) {
@@ -282,9 +412,9 @@ const articleJsonLd = {
 
     // Paragraphs and links
     :global(p) {
-      color: white;
-      line-height: 1.7;
-      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.8;
+      margin-bottom: 1.75rem;
       @include interpolate(
         font-size,
         map-get($breakpoints, "tablet"),
@@ -294,7 +424,8 @@ const articleJsonLd = {
       );
 
       :global(strong) {
-        font-weight: 700;
+        font-weight: 600;
+        color: white;
       }
 
       :global(em) {
@@ -304,33 +435,42 @@ const articleJsonLd = {
 
     :global(a) {
       font-size: inherit;
-      font-weight: 600;
+      font-weight: 500;
       font-family: inherit;
       color: white;
       text-decoration: underline;
-      text-underline-offset: 2px;
-      transition: opacity 0.2s ease;
+      text-decoration-color: rgba(255, 255, 255, 0.3);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s ease, opacity 0.2s ease;
 
       &:hover {
-        opacity: 0.7;
+        text-decoration-color: white;
+        opacity: 0.9;
       }
     }
 
     // Code blocks and inline code
     :global(code) {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.2rem 0.4rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.2rem 0.5rem;
       border-radius: 4px;
-      font-size: 0.9em;
+      font-size: 0.88em;
       font-family: "Monaco", "Courier New", monospace;
+      color: rgba(255, 255, 255, 0.9);
     }
 
     :global(pre) {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 1.6rem;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow-x: auto;
       margin: 2rem 0;
+
+      @include mq('tablet', max) {
+        padding: 1rem;
+        border-radius: 8px;
+      }
 
       :global(code) {
         background: none;
@@ -340,42 +480,99 @@ const articleJsonLd = {
 
     // Blockquotes
     :global(blockquote) {
-      border-left: 4px solid rgba(255, 255, 255, 0.3);
+      border-left: 3px solid #dc143c;
       padding-left: 1.6rem;
-      margin: 3.2rem 0;
+      margin: 3.2rem 0 2rem;
       font-style: italic;
-      opacity: 0.9;
+      color: rgba(255, 255, 255, 0.7);
     }
 
     // Images
     :global(img) {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
+      border-radius: 12px;
       margin: 2.4rem 0;
     }
   }
 
-  .do-blog-footer {
+  .do-next-article {
     display: flex;
-    justify-content: flex-end;
-
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
     max-width: 720px;
-    margin: auto;
-    a {
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      gap: 8px;
-      flex-direction: column;
-      align-items: flex-end;
-    }
+    margin: 0 auto;
+    padding: 40px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background 0.3s ease;
+
     @include interpolate(
-      padding,
+      padding-top,
       map-get($breakpoints, "tablet"),
       map-get($breakpoints, "desktop"),
-      16px,
+      40px,
       64px
     );
+
+    @include interpolate(
+      padding-bottom,
+      map-get($breakpoints, "tablet"),
+      map-get($breakpoints, "desktop"),
+      40px,
+      64px
+    );
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.02);
+
+      .do-next-arrow {
+        transform: translateX(4px);
+        opacity: 1;
+      }
+    }
+
+    .do-next-label {
+      font-family: "Jost*";
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .do-next-arrow {
+      margin-bottom: 16px;
+      color: #dc143c;
+      opacity: 0.6;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    h4 {
+      @include interpolate(
+        font-size,
+        map-get($breakpoints, "tablet"),
+        map-get($breakpoints, "desktop"),
+        20px,
+        28px
+      );
+      font-weight: 400;
+      font-family: 'scillaregular', 'Times New Roman', Times, serif;
+      line-height: 1.3;
+      max-width: 600px;
+      margin-bottom: 12px;
+    }
+
+    .do-next-category {
+      font-family: "Jost*";
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.35);
+    }
   }
 </style>

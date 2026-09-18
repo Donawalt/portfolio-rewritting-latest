@@ -118,11 +118,11 @@ body{
         font-style: normal;
         font-weight: 300;
         font-size: 22px;
-        line-height: initial;
+        line-height: 1.6;
 
         @include mq('tablet', max){
             font-size: 14px;
-            line-height: initial;
+            line-height: 1.6;
         };
         @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 14px, 22px );
         
