@@ -2,6 +2,8 @@
 import SEO from "../../components/layouts/utils/SEO.astro";
 import Layout from "../../components/layouts/Layout.astro";
 
+import { SITE, canonical, pageTitle, personWebsiteGraph } from "@/config/site";
+
 import Section from "../../components/organisms/Section";
 import AboutStyle from "./about.module.scss";
 
@@ -37,9 +39,25 @@ import AboutPortraitTwoMobileLazyJPEG from "../../assets/images/pages/about/mobi
 import AboutPortraitTwoDesktopLazyJPEG from "../../assets/images/pages/about/mobile-about-portrait-two-lazy.jpg";
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_ABOUT.jpg";
+
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ...personWebsiteGraph(),
+    {
+      "@type": "AboutPage",
+      "@id": canonical("/about"),
+      name: "About Donaël Walter",
+      description: SITE.description,
+      url: canonical("/about"),
+      isPartOf: { "@id": `${SITE.url}/#website` },
+      about: { "@id": `${SITE.url}/#person` },
+    },
+  ],
+};
 ---
 
-<SEO lang="en" title="About Donaël Walter — Branding, Design & Development Portfolio" description="Brand designer and creative developer — blending branding, UX, UI, and front-end development into seamless digital experiences for startups, agencies, and premium brands." ogImage={OG_IMAGE.src} canonical="https://donaelwalter.com/about" jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}},{"@type":"AboutPage","@id":"https://donaelwalter.com/about","name":"About Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into seamless digital experiences.","isPartOf":{"@id":"https://donaelwalter.com/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://donaelwalter.com/about"},"about":{"@id":"https://donaelwalter.com/#person"}}]}}>
+<SEO lang="en" title={pageTitle("About")} description={SITE.statement} ogImage={OG_IMAGE.src} canonical={canonical("/about")} jsonLd={aboutJsonLd}>
     <Layout>
         <main class={AboutStyle.do_about_page}>
             <section class={AboutStyle.do_about_hero} data-landing-hero>

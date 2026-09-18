@@ -11,9 +11,26 @@ import ProjectList from '../../../components/molecules/ProjectList'
 let allProjects = await client.fetch(getAllProjects());
 allProjects = allProjects.filter(el => el.category === 'development')
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_DEVELOPMENT_PROJECTS.jpg";
+
+import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
+
+const developmentJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ...personWebsiteGraph(),
+    {
+      "@type": "CollectionPage",
+      "@id": canonical("/projects/development"),
+      name: "Development — Front-End & Web Dev",
+      description: "Front-end development, web apps, and interactive experiences built by Donaël Walter.",
+      url: canonical("/projects/development"),
+      isPartOf: { "@id": `${canonical()}#website` },
+    },
+  ],
+};
 ---
 
-<SEO lang="en" title="Development — Front-End & Web Dev | Donaël Walter" description="Browse front-end development, web apps, and interactive experiences built by Donaël Walter — from concept to deployment." ogImage={OG_IMAGE.src} canonical="https://donaelwalter.com/projects/development" jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}},{"@type":"CollectionPage","@id":"https://donaelwalter.com/projects/development","name":"Development — Front-End & Web Dev","isPartOf":{"@id":"https://donaelwalter.com/#website"}}]}}>
+<SEO lang="en" title={pageTitle("Development — Front-End & Web Dev")} description="Browse front-end development, web apps, and interactive experiences built by Donaël Walter — from concept to deployment." ogImage={OG_IMAGE.src} canonical={canonical("/projects/development")} jsonLd={developmentJsonLd}>
 	<Layout>
 		<Heading client:load>
             <h1>Development</h1>

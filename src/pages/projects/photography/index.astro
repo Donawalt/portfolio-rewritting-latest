@@ -12,9 +12,26 @@ let allProjects = await client.fetch(getAllProjects());
 allProjects = allProjects.filter(el => el.category === 'photography')
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_PHOTOGRAPHY_PROJECTS.jpg";
+
+import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
+
+const photographyJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ...personWebsiteGraph(),
+    {
+      "@type": "CollectionPage",
+      "@id": canonical("/projects/photography"),
+      name: "Photography — Visual Stories & Portfolios",
+      description: "Donaël Walter's photography — portraits, landscapes, and creative visual stories.",
+      url: canonical("/projects/photography"),
+      isPartOf: { "@id": `${canonical()}#website` },
+    },
+  ],
+};
 ---
 
-<SEO lang="en" title="Photography — Visual Stories & Portfolios | Donaël Walter" description="Browse Donaël Walter's photography — portraits, landscapes, and creative visual stories." ogImage={OG_IMAGE.src} canonical="https://donaelwalter.com/projects/photography" jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}},{"@type":"CollectionPage","@id":"https://donaelwalter.com/projects/photography","name":"Photography — Visual Stories & Portfolios","isPartOf":{"@id":"https://donaelwalter.com/#website"}}]}}>
+<SEO lang="en" title={pageTitle("Photography — Visual Stories & Portfolios")} description="Browse Donaël Walter's photography — portraits, landscapes, and creative visual stories." ogImage={OG_IMAGE.src} canonical={canonical("/projects/photography")} jsonLd={photographyJsonLd}>
 	<Layout>
 		<Heading client:load>
             <h1>Photography</h1>

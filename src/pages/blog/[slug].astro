@@ -5,6 +5,7 @@ import Picture from "@/components/atoms/Picture";
 import SEO from "../../components/layouts/utils/SEO.astro";
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
+import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 import { client } from "@/assets/scripts/utils/api/sanityClient";
 import { getAllArticles } from "@/assets/scripts/utils/api/api";
 import { PortableText } from "astro-portabletext";
@@ -31,34 +32,29 @@ const { slug } = Astro.params;
 const { article, nextArticle }: { article: any; nextArticle: any } =
   Astro.props;
 
-const canonicalUrl = `https://donaelwalter.com/blog/${article?.seoSlug?.current}`;
+const canonicalUrl = canonical(`/blog/${article?.seoSlug?.current}`);
+const articleLastMod = article?._updatedAt || article?._createdAt;
 const articleJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://donaelwalter.com/#person",
-      "name": "Donaël Walter",
-      "url": "https://donaelwalter.com",
-      "jobTitle": ["Brand Designer", "Creative Developer", "Front-End Engineer"],
-      "knowsAbout": ["Branding", "UX Design", "UI Design", "Front-End Development", "Web Development"]
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://donaelwalter.com/#website",
-      "url": "https://donaelwalter.com",
-      "name": "Donaël Walter",
-      "description": "Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.",
-      "publisher": { "@id": "https://donaelwalter.com/#person" }
-    },
+    ...personWebsiteGraph(),
     {
       "@type": "Article",
       "@id": canonicalUrl,
-      "headline": article?.seoTitle,
-      "description": article?.seoDescription,
-      "author": { "@id": "https://donaelwalter.com/#person" },
-      "publisher": { "@id": "https://donaelwalter.com/#person" },
-      "isPartOf": { "@id": "https://donaelwalter.com/blog" }
+      headline: article?.seoTitle,
+      description: article?.seoDescription,
+      datePublished: article?._createdAt,
+      dateModified: articleLastMod,
+      mainEntityOfPage: canonicalUrl,
+      image: article?.seoImage,
+      "author": {
+        "@type": "Person",
+        "@id": `${canonical()}#person`,
+        name: "Donaël Walter",
+        url: canonical(),
+      },
+      publisher: { "@id": `${canonical()}#person` },
+      isPartOf: { "@id": canonical("/blog") }
     }
   ]
 };
@@ -66,7 +62,7 @@ const articleJsonLd = {
 
 <SEO
   lang="en"
-  title={article?.seoTitle}
+  title={pageTitle(article?.seoTitle)}
   description={article?.seoDescription}
   ogImage={article?.seoImage}
   canonical={canonicalUrl}

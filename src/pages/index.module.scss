@@ -186,3 +186,111 @@
         color: cornflowerblue;
     }
 }
+
+.info_list {
+    @include grid(8, 16px, 32px);
+    list-style: none;
+    margin: 0 0 72px;
+    padding: 0;
+    
+    @include mq(tablet, max){
+        @include grid(2, 8px, 16px);
+        margin-bottom: 48px;
+    }
+    
+    li {
+        grid-column: 2 / 5;
+        
+        @include mq(tablet, max){
+            grid-column: 1 / 3;
+        }
+        
+        h3 {
+            font-family: 'scillaregular', 'Times New Roman', serif;
+            font-size: 20px;
+            font-weight: 400;
+            text-transform: uppercase;
+            color: #fff;
+            margin: 0 0 8px;
+        }
+        
+        p {
+            font-family: 'Jost*';
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0 0 32px;
+        }
+    }
+}
+
+.cta {
+    @include interpolate(
+        margin-top,
+        map-get($breakpoints, "tablet"),
+        map-get($breakpoints, "desktop"),
+        32px,
+        120px
+    );
+    @include interpolate(
+        margin-bottom,
+        map-get($breakpoints, "tablet"),
+        map-get($breakpoints, "desktop"),
+        32px,
+        80px
+    );
+    @include interpolate(
+        padding-left,
+        map-get($breakpoints, "tablet"),
+        map-get($breakpoints, "desktop"),
+        16px,
+        32px
+    );
+    @include interpolate(
+        padding-right,
+        map-get($breakpoints, "tablet"),
+        map-get($breakpoints, "desktop"),
+        16px,
+        32px
+    );
+
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    margin: auto;
+    max-width: 1440px;
+    text-align: center;
+
+    :global(h2) {
+        text-transform: uppercase;
+    }
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 900px;
+        text-align: left;
+        @include interpolate(
+            gap,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            16px,
+            32px
+        );
+       
+            & > div {
+                margin: auto;
+                width: fit-content;
+            }
+        
+    }
+    @include mq(tablet, max) {
+        flex-direction: column;
+        gap: 32px;
+    }
+}

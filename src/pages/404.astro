@@ -2,12 +2,13 @@
 import Layout from "../components/layouts/Layout.astro";
 import SEO from "../components/layouts/utils/SEO.astro";
 import Button from "../components/atoms/Button";
+import { pageTitle } from "@/config/site";
 import {Image} from 'astro:assets'
 import ImagePic from '../assets/images/pages/404/transparentTV.png';
 ---
 
 
-<SEO lang="en" title="Page Not Found | Donaël Walter — Brand Designer & Creative Developer" description="The page you're looking for doesn't exist. Head back to Donaël Walter's portfolio.">
+<SEO lang="en" title={pageTitle("Page Not Found")} description="The page you're looking for doesn't exist. Head back to Donaël Walter's portfolio.">
 	<Layout>
 		<main>			<div>
 				<h1>4<Image src={ImagePic} alt="TV letter"/>4</h1>

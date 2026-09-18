@@ -4,6 +4,7 @@
 import Style from './style.module.scss';
 import Logo from '../../atoms/Logo/index.';
 import { useState } from 'react';
+import { SOCIALS } from '../../../config/site';
 
 const RMenu = [
   // set Prices , Portfolio , Blog , About , 
@@ -107,30 +108,10 @@ const mobileMenu = [
   },
   {
     name: undefined,
-    subField: [
-
-      {
-        name: "Instagram",
-        link: "https://www.instagram.com/walt_dona/"
-      },
-      {
-        name: "Github",
-        link: "https://github.com/walt-dona"
-      },
-      {
-        name: "Dribble",
-        link: "URL_ADDRESSribbble.com/walt_dona/"
-      },
-      {
-        name: "Behance",
-        link: "https://www.behance.net/walt_dona"
-      },
-      {
-        name: "LinkedIn",
-        link: "https://www.linkedin.com/in/dona%C3%ABl-walter/"
-      },
-
-    ]
+    subField: SOCIALS.map(({ name, url }) => ({
+      name,
+      link: url,
+    })),
   }
 ]
 

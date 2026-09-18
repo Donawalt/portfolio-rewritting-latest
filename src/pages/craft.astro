@@ -3,10 +3,27 @@ import Layout from "../components/layouts/Layout.astro";
 import SEO from "../components/layouts/utils/SEO.astro";
 import Scene from '../components/organisms/Section/slices/Scene/index.jsx';
 
+import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
+
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
+
+const craftJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ...personWebsiteGraph(),
+    {
+      "@type": "WebPage",
+      "@id": canonical("/craft"),
+      name: "Craft — WebGL, Three.js & Interactive Experiments",
+      description: "Explore WebGL, Three.js, and interactive front-end experiments — the technical craft behind Donaël Walter's creative development work.",
+      url: canonical("/craft"),
+      isPartOf: { "@id": `${canonical()}#website` },
+    },
+  ],
+};
 ---
 
-<SEO lang="en" title="Craft — WebGL, Three.js & Interactive Experiments | Donaël Walter" description="Explore WebGL, Three.js, and interactive front-end experiments — the technical craft behind Donaël Walter's creative development work." ogImage={OG_IMAGE.src} canonical="https://donaelwalter.com/craft" jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}},{"@type":"WebPage","@id":"https://donaelwalter.com/craft","name":"Craft — WebGL, Three.js & Interactive Experiments","isPartOf":{"@id":"https://donaelwalter.com/#website"}}]}}>
+<SEO lang="en" title={pageTitle("Craft — WebGL, Three.js & Interactive Experiments")} description="Explore WebGL, Three.js, and interactive front-end experiments — the technical craft behind Donaël Walter's creative development work." ogImage={OG_IMAGE.src} canonical={canonical("/craft")} jsonLd={craftJsonLd}>
 	<Layout>
 		<main class="craft">
 			<header class="hero">

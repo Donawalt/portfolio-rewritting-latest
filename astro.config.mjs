@@ -14,7 +14,11 @@ const pathSrc = path.resolve(__dirname, "./src").replace(/\\/g, "/");
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), sitemap()],
+  integrations: [react(), sitemap({
+    lastmod: new Date(),
+    changefreq: "weekly",
+    priority: 0.7,
+  })],
   vite: {
     resolve: {
       alias: {

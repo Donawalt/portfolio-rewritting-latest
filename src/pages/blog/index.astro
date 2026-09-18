@@ -8,6 +8,8 @@ import Heading from "../../components/molecules/Heading";
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
 
+import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
+
 import { mockCategories, mockArticles } from "@/mock/blog";
 import Button from "@/components/atoms/Button";
 
@@ -17,15 +19,31 @@ import { getAllArticles } from "@/assets/scripts/utils/api/api";
 
 let allArticles = await client.fetch(getAllArticles()); 
 
+const blogJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ...personWebsiteGraph(),
+    {
+      "@type": "Blog",
+      "@id": canonical("/blog"),
+      name: "Blog — Articles, Ideas & Experiments",
+      description: "Articles on branding, design, front-end development, and the creative process.",
+      url: canonical("/blog"),
+      isPartOf: { "@id": `${canonical()}#website` },
+      publisher: { "@id": `${canonical()}#person` },
+    },
+  ],
+};
+
 ---
 
 <SEO
     lang="en"
-    title="Blog — Ideas, Articles & Experiments | Donaël Walter"
+    title={pageTitle("Blog — Articles, Ideas & Experiments")}
     description="Articles on branding, design, front-end development, and the creative process — written by Donaël Walter."
     ogImage={OG_IMAGE.src}
-    canonical="https://donaelwalter.com/blog"
-    jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}},{"@type":"Blog","@id":"https://donaelwalter.com/blog","name":"Blog — Ideas, Articles & Experiments","description":"Articles on branding, design, front-end development, and the creative process.","isPartOf":{"@id":"https://donaelwalter.com/#website"},"publisher":{"@id":"https://donaelwalter.com/#person"}}]}}
+    canonical={canonical("/blog")}
+    jsonLd={blogJsonLd}
 >
     <Layout type="blog">
         <Heading client:load>

@@ -8,13 +8,30 @@ import Heading from '../../components/molecules/Heading';
 import ProjectList from '../../components/molecules/ProjectList'
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
 
+import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
+
 import { client } from "../../assets/scripts/utils/api/sanityClient";
 import { getAllProjects } from "../../assets/scripts/utils/api/api";
 
 let allProjects = await client.fetch(getAllProjects());
+
+const projectsJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ...personWebsiteGraph(),
+    {
+      "@type": "CollectionPage",
+      "@id": canonical("/projects"),
+      name: "Projects — Branding, Design & Development",
+      description: "A curated selection of branding, UI/UX design, and front-end development projects by Donaël Walter.",
+      url: canonical("/projects"),
+      isPartOf: { "@id": `${canonical()}#website` },
+    },
+  ],
+};
 ---
 
-<SEO lang="en" title="Projects — Branding, Design & Development | Donaël Walter" description="Explore a curated selection of branding, UI/UX design, and front-end development projects by Donaël Walter. From visual identity to polished web experiences." ogImage={OG_IMAGE.src} canonical="https://donaelwalter.com/projects" jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}},{"@type":"CollectionPage","@id":"https://donaelwalter.com/projects","name":"Projects — Branding, Design & Development","isPartOf":{"@id":"https://donaelwalter.com/#website"}}]}}>
+<SEO lang="en" title={pageTitle("Projects — Branding, Design & Development")} description="Explore a curated selection of branding, UI/UX design, and front-end development projects by Donaël Walter. From visual identity to polished web experiences." ogImage={OG_IMAGE.src} canonical={canonical("/projects")} jsonLd={projectsJsonLd}>
 	<Layout>
 		<Heading client:load>
             <h1>Projects</h1>

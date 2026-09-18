@@ -3,8 +3,11 @@ import Layout from "../components/layouts/Layout.astro";
 import SEO from "../components/layouts/utils/SEO.astro";
 import ProjectList from '../components/molecules/ProjectList';
 import Button from '../components/atoms/Button/index';
+import Text from "@/components/atoms/Text/index.";
 
 import HomeStyles from "./index.module.scss";
+
+import { SITE, BOOKING_URI, BOOKING_SUBJECT, canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
 
@@ -17,9 +20,24 @@ const mainProjects = allProjects
   .filter(p => p.category === 'design' || p.category === 'development')
   .slice(0, 9);
 
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ...personWebsiteGraph(),
+    {
+      "@type": "HomePage",
+      "@id": canonical(),
+      name: `${SITE.name} — ${SITE.role}`,
+      description: SITE.description,
+      url: canonical(),
+      isPartOf: { "@id": `${SITE.url}/#website` },
+    },
+  ],
+};
+
 ---
 
-<SEO lang="en" title="Donaël Walter — Design Engineer & Creative Developer | Design, UI/UX, Front-End" description="I help startups, agencies, and premium brands turn goals into polished web experiences — blending branding, UX, UI, and development in one workflow." ogImage={OG_IMAGE.src} canonical="https://donaelwalter.com" jsonLd={{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://donaelwalter.com/#person","name":"Donaël Walter","url":"https://donaelwalter.com","jobTitle":["Brand Designer","Creative Developer","Front-End Engineer"],"knowsAbout":["Branding","UX Design","UI Design","Front-End Development","Web Development"]},{"@type":"WebSite","@id":"https://donaelwalter.com/#website","url":"https://donaelwalter.com","name":"Donaël Walter","description":"Brand designer and creative developer — blending branding, UX, UI, and front-end development into polished web experiences.","publisher":{"@id":"https://donaelwalter.com/#person"}}]}}>
+<SEO lang="en" title={pageTitle()} description={SITE.statement} ogImage={OG_IMAGE.src} canonical={canonical()} jsonLd={homeJsonLd}>
 	<Layout>
 		<main class={HomeStyles.home_page}>
 			<header class={HomeStyles.hero} data-hero>
@@ -31,8 +49,9 @@ const mainProjects = allProjects
 					</h1>
 				</div>
 				<p class={HomeStyles.description}>
-					I turn product and brand goals into premium web experiences.
-					Bridging branding, design, and code in one workflow — from visual identity to polished front-end development.
+					Donaël Walter — design engineer &amp; creative developer based in Lyon, France.
+					I turn product and brand goals into polished web experiences,
+					building on branding, design, and code in one workflow — from visual identity to polished front-end development.
 				</p>
 				<div class={HomeStyles.cta_group}>
 					<Button type="link" href="/projects">View Projects</Button>
@@ -46,6 +65,57 @@ const mainProjects = allProjects
 					<div class={HomeStyles.line}></div>
 				</div>
 				<ProjectList client:load projects={mainProjects} />
+			</section>
+
+			<!-- 			<section>
+				<div class={HomeStyles.section_title}>
+					<h2>Services</h2>
+					<div class={HomeStyles.line}></div>
+				</div>
+				<ul class={HomeStyles.info_list}>
+					{
+						SITE.services.map((service) => (
+							<li>
+								<h3>{service.title}</h3>
+								<p>{service.description}</p>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+
+			<section>
+				<div class={HomeStyles.section_title}>
+					<h2>Process</h2>
+					<div class={HomeStyles.line}></div>
+				</div>
+				<ol class={HomeStyles.info_list}>
+					{
+						SITE.process.map((step) => (
+							<li>
+								<h3>{step.title}</h3>
+								<p>{step.description}</p>
+							</li>
+						))
+					}
+				</ol>
+			</section> -->
+
+
+			<section class={HomeStyles.cta}>
+				<Text type="h2" size="xl">Want to book a call ?</Text>
+				<div>
+					<p>
+						I'm a {SITE.role.toLowerCase()} blending branding, design, and code into one workflow.<br/>
+						Let's talk about your project and see how I can help, no strings attached.
+						{SITE.availability}
+					</p>
+					<div>
+						<Button type="link" href={BOOKING_URI}>
+							Book a call
+						</Button>
+					</div>
+				</div>
 			</section>
 		</main>
 	</Layout>
