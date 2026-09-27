@@ -12,6 +12,14 @@ const RMenu = [
     name: 'Prices',
     subField: [
       {
+        name: "for Agencies / Studios",
+        link: '/agencies/'
+      },
+      {
+        name: "for Startups / Product teams",
+        link: '/startups/'
+      },
+      {
         name: "Independent Designer",
         link: '/independent-designer/'
       },
@@ -19,10 +27,7 @@ const RMenu = [
         name: "Independent Developer",
         link: '/independent-developer/'
       },
-      {
-        name: "Independent Photographer",
-        link: '/independent-photographer/'
-      }
+
     ]
   },
   {
@@ -33,7 +38,7 @@ const RMenu = [
         link: "/projects/design/"
       },
       {
-        name: "Web Development",
+        name: "Web/Product Development",
         link: "/projects/development/"
       },
       {
