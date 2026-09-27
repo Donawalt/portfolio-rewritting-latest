@@ -4,6 +4,7 @@ import Heading from "../molecules/Heading";
 import Section from "../organisms/Section";
 import Button from "../atoms/Button/index";
 import { SliceMachine } from "../utils/SliceMachine.astro";
+import { SITE, BOOKING_URI } from "@/config/site";
 const { type, title, subTitle, content, cover, comitments } = Astro.props;
 
 // console.log("Landing", content)
@@ -112,6 +113,22 @@ const { type, title, subTitle, content, cover, comitments } = Astro.props;
     )
 }
 
+    <section class="do_landing_cta">
+        <h2 class="do_landing_cta-title">Want to book a call ?</h2>
+        <div>
+            <p>
+                I'm a {SITE.role.toLowerCase()} blending branding, design, and code into one workflow.
+                Let's talk about your project and see how I can help, no strings attached.
+                {SITE.availability}
+            </p>
+            <div>
+                <Button type="link" href={BOOKING_URI}>
+                    Get in Touch
+                </Button>
+            </div>
+        </div>
+    </section>
+
 <style lang="scss" scoped>
     [data-hero-project-image] {
         opacity: 0;
@@ -175,6 +192,77 @@ const { type, title, subTitle, content, cover, comitments } = Astro.props;
             @include mq(tablet, max) {
                 grid-column: 1/ 9;
             }
+        }
+    }
+.do_landing_cta {
+        @include interpolate(
+            margin-top,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            32px,
+            120px
+        );
+        @include interpolate(
+            margin-bottom,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            32px,
+            80px
+        );
+        @include interpolate(
+            padding-left,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            16px,
+            32px
+        );
+        @include interpolate(
+            padding-right,
+            map-get($breakpoints, "tablet"),
+            map-get($breakpoints, "desktop"),
+            16px,
+            32px
+        );
+
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin: auto;
+        max-width: 1440px;
+        text-align: center;
+
+        :global(h2) {
+            text-transform: uppercase;
+        }
+
+        & > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 900px;
+            text-align: center;
+
+            @include interpolate(
+                gap,
+                map-get($breakpoints, "tablet"),
+                map-get($breakpoints, "desktop"),
+                16px,
+                32px
+            );
+
+                & > div {
+                    margin: auto;
+                    width: fit-content;
+                    
+                }
+            
+        }
+        @include mq(tablet, max) {
+            flex-direction: column;
+            gap: 32px;
         }
     }
 </style>
