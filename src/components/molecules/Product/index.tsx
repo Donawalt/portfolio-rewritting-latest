@@ -29,7 +29,7 @@ const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' |
     }
 
     if (type === 'custom') {
-        return <Custom tag={tagValue()} content={content}/>;
+        return <Custom tag={tagValue()} content={content} />;
     }
 
     return (
@@ -37,8 +37,8 @@ const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' |
             <div className={Style["do_tag"]}><Tag type='nj'>2 {tagValue()}</Tag></div>
             <h3 className='do-text-l'>{name}</h3>
             <div className={Style["do_prices"]}>
-                <p>{prices.eur} €</p>
-                <p>US$ {prices.usd} </p>
+                <p>US$ {prices.usd}</p>
+                <p>{prices.eur} € {type === 'retainer' && "/ month"}</p>
             </div>
             <Button type="link" href="mailto:contact@donaelwalter.com">Get in Touch</Button>
             <ul>
