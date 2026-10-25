@@ -8,35 +8,20 @@ import { SOCIALS } from '../../../config/site';
 
 const RMenu = [
   // set Prices , Portfolio , Blog , About , 
+
   {
-    name: 'Prices',
-    link: '/overflow-design-build-partner/'
-  },
-  {
-    name: 'Portfolio',
-    subField: [
-      {
-        name: "Visual Identity Design",
-        link: "/projects/design/"
-      },
-      {
-        name: "Web/Product Development",
-        link: "/projects/development/"
-      },
-      {
-        name: "Photography",
-        link: "/projects/photography/"
-      }
-    ]
+    name: 'About',
+    link: '/about'
   },
   {
     name: 'Blog',
     link: '/blog/'
   },
   {
-    name: 'About',
-    link: '/about'
+    name: 'Prices',
+    link: '/overflow-design-build-partner/'
   }
+
 ]
 const blogMenu = {
   left: [
@@ -50,9 +35,25 @@ const blogMenu = {
 const baseMenu = {
   left: [
     {
-      name: 'Projects',
+      name: 'All Projects',
       link: '/projects'
-    }
+    }, {
+      name: 'Portfolio',
+      subField: [
+        {
+          name: "Visual Identity Design",
+          link: "/projects/design/"
+        },
+        {
+          name: "Web/Product Development",
+          link: "/projects/development/"
+        },
+        {
+          name: "Photography",
+          link: "/projects/photography/"
+        }
+      ]
+    },
   ],
   right: RMenu
 }
@@ -114,7 +115,7 @@ const MenuList = ({ list }: { list: MenuItem[] }) => {
   const SubList = ({ subList }: { subList: MenuItem[] }) => {
     return (
       <ul className={Style.do_submenu} role="menu">
-       <MenuList list={subList} />
+        <MenuList list={subList} />
       </ul>
     );
   };
@@ -126,7 +127,7 @@ const MenuList = ({ list }: { list: MenuItem[] }) => {
       >
 
         {el.link ? (
-          <a href={el.link} target={/** if external link set _tagert else _self*/ el.link.includes("https") ? "_blank" : "_self" } className='do-text-xs'>{el.name}</a>
+          <a href={el.link} target={/** if external link set _tagert else _self*/ el.link.includes("https") ? "_blank" : "_self"} className='do-text-xs'>{el.name}</a>
         ) : (
           <span className='do-text-xs'
             role={el.subField ? 'menuitem' : undefined}
@@ -161,7 +162,7 @@ const MobileMenu = () => {
         </div> : null
       }
 
-      <button onClick={()=>{
+      <button onClick={() => {
         setIsOpen(!isOpen)
       }}>{isOpen ? 'Close' : 'Menu'}</button>
     </section>
