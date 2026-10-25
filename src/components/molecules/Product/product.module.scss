@@ -15,14 +15,14 @@
 
     .do_prices {
         p:nth-child(1) {
-            font-size: 60px;
+            font-size: 40px;
             font-weight: 400;
             font-style: normal;
             line-height: normal;
         }
 
         p:nth-child(2) {
-            font-size: 30px;
+            font-size: 24px;
         }
     }
 
@@ -33,25 +33,26 @@
     }
 
     ul {
-        @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 32px, 48px);
+        @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 32px);
+        @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 32px);
 
         li {
             display: flex;
             align-items: center;
         }
     }
-
-    &.do_custom {
-        justify-content: center;
-        align-items: center;
-
-        button,a {
+  button,a {
             @include mq('tablet', min) {
                 width: fit-content;
             }
 
             margin: auto;
         }
+    &.do_custom {
+        justify-content: center;
+        align-items: center;
+
+      
 
         &>p {
             text-align: center;
