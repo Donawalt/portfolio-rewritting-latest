@@ -3,6 +3,7 @@
     @include grid(8, 16px, 32px);
     div{
         grid-column: 1 / 5;
+        max-width: 600px;
         h2{
             text-transform: uppercase;
             @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 60px );
@@ -13,7 +14,7 @@
         li{
             display: flex;
             align-items: center;
-            @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 0px, 16px );
+            @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 0px, 8px );
             svg{
                 @include interpolate(width, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 14px, 18px );
             }
