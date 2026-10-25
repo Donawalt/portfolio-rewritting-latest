@@ -17,14 +17,15 @@ const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' |
 
     const tagValue = () => {
         switch (type) {
-            case ('retainer' || 'offers'):
+            case 'daily rate':
+            case 'retainer':
+            case 'offers':
                 return quantity > 1 ? 'spots left' : 'spot left';
-                break;
-            case ('physical' || 'digital'):
-                return quantity > 1 ? 'left' : 'left'
+
+            case 'physical':
+            case 'digital':
             default:
-                return quantity > 1 ? 'left' : 'left'
-                break;
+                return quantity > 1 ? 'left' : 'left';
         }
     }
 
@@ -38,7 +39,7 @@ const Product = (props: { type: 'retainer' | 'physical' | 'digital' | 'offers' |
             <h3 className='do-text-l'>{name}</h3>
             <div className={Style["do_prices"]}>
                 <p>US$ {prices.usd}</p>
-                <p>{prices.eur} € {type === 'retainer' && "/ month"}</p>
+                <p>{prices.eur} € {type === 'retainer' && "/ month"}{type === 'daily rate' && "/ day"}</p>
             </div>
             <Button type="link" href="mailto:contact@donaelwalter.com">Get in Touch</Button>
             <ul>

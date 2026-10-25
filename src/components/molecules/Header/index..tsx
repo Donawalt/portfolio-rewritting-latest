@@ -10,25 +10,7 @@ const RMenu = [
   // set Prices , Portfolio , Blog , About , 
   {
     name: 'Prices',
-    subField: [
-      {
-        name: "for Agencies / Studios",
-        link: '/agencies/'
-      },
-      {
-        name: "for Startups / Product teams",
-        link: '/startups/'
-      },
-      {
-        name: "Independent Designer",
-        link: '/independent-designer/'
-      },
-      {
-        name: "Independent Developer",
-        link: '/independent-developer/'
-      },
-
-    ]
+    link: '/overflow-design-build-partner/'
   },
   {
     name: 'Portfolio',
