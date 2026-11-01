@@ -36,12 +36,29 @@ const Text = ({ name = '', label = '', placeholder = 'this is a text components'
     )
 }
 
-export default (props: { type: string; name: string; label: string; placeholder: string, required: boolean }) => {
+const Select = ({ name = '', label = '', required = false, options = [] }) => {
+    const [value, setValue] = useState('');
+    return (
+        <fieldset className={Style.root + ' ' + (value.length > 0 && Style.not_empty)}>
+            <label className="do-text-default" htmlFor={name}>{label}</label>
+            <select className="do-text-default" style={{
+                marginTop: '.4rem'
+            }} name={name} id={name} required={required} data-value={value} value={value} onChange={(e) => handleChange(e, setValue)} onBlur={(e) => handleChange(e, setValue)}>
+                <option value=""></option>
+                {options.map((opt) => (<option key={opt.value || opt} value={opt.value || opt}>{opt.label || opt}</option>))}
+            </select>
+        </fieldset>
+    )
+}
+
+export default (props: { type: string; name: string; label: string; placeholder: string, required: boolean, options?: Array<{value: string, label: string}> }) => {
     switch (props.type) {
         case 'text':
             return <Text name={props.name} label={props.label} placeholder={props.placeholder} required={props.required}/>
         case 'area':
             return <Area name={props.name} label={props.label} placeholder={props.placeholder} required={props.required}/>
+        case 'select':
+            return <Select name={props.name} label={props.label} required={props.required} options={props.options || []}/>
         default:
             return <Text type={props.type} name={props.name} label={props.label} placeholder={props.placeholder} required={props.required}/>
     }

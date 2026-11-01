@@ -47,3 +47,17 @@
         }
     }
 }
+.nameRow {
+    display: flex;
+    gap: 1rem!important;
+    width: 100%;
+    padding: 0px!important;
+    > * {
+        flex: 1 1 50%;
+        margin-bottom: 0;
+    }
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
+}
+

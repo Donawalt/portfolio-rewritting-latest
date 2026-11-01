@@ -61,9 +61,10 @@ const ContactForm = () => {
     };
 
     const clearForm = () => {
-        let inputs = form.current.querySelectorAll('input, textarea');
+        let inputs = form.current.querySelectorAll('input, textarea, select');
         inputs.forEach(element => {
             element.value = '';
+            element.dispatchEvent(new Event('change', { bubbles: true }));
         });
     }
 
@@ -72,7 +73,7 @@ const ContactForm = () => {
         console.log(e);
 
         const formData = new FormData(form.current);
-        if (formData.get('firstname') && formData.get('lastname') && formData.get('message')) {
+        if (formData.get('firstname') && formData.get('lastname') && formData.get('email') && formData.get('message') && formData.get('personType') && formData.get('budget')) {
             nextStep();
             fetch("/", {
                 method: "POST",
@@ -98,9 +99,13 @@ const ContactForm = () => {
     return (
         <form name="aboutContact" ref={form} className={Style.root} onSubmit={sendContact} disabled={stateMachine.current !== "empty"} data-netlify={true} netlify>
             <input type="hidden" name="form-name" value="aboutContact" />
-            <Input type='text' name='firstname' label='Firstname' required={true} />
-            <Input type='text' name='lastname' label='Lastname' required={true} />
+            <div className={Style.nameRow}>
+                <Input type='text' name='firstname' label='Firstname' required={true} />
+                <Input type='text' name='lastname' label='Lastname' required={true} />
+            </div>
             <Input type='email' name='email' label='Mail' required={true} />
+            <Input type='select' name='personType' label='You are' required={true} options={[{value:'Individual',label:'Individual'},{value:'Agency',label:'Agency'},{value:'Startup',label:'Startup'}]} />
+            <Input type='select' name='budget' label='Project budget range' required={true} options={[{value:'$5,000 – $10,000',label:'$5,000 – $10,000'},{value:'$10,000 – $25,000',label:'$10,000 – $25,000'},{value:'$25,000+',label:'$25,000+'},{value:"Not sure / Let's discuss",label:"Not sure / Let's discuss"}]} />
             <Input type='area' name='message' label='Message' required={true} />
             {stateMachine.current === "empty" ? ' ' : stateMachine.current}
             {(stateMachine.current === 'success' || stateMachine.current === 'error') && <Message type={stateMachine.current} message={stateMachine.steps[stateMachine.current].message} />}
