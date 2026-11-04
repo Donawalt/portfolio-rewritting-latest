@@ -7,7 +7,9 @@ import {
     BasicPicture,
     DoublePicture,
     GridPicture,
+    BasicVideo,
 } from "../organisms/Section/slices/Media";
+import { urlFileBuilder } from '../../assets/scripts/utils/api/urlBuilder';
 /// LANDING 
 import FAQ from '../organisms/Section/slices/FAQ';
 import Steps from '../organisms/Section/slices/Steps';
@@ -33,6 +35,34 @@ if (node._type === "images" && Object.keys(node).length === 3) {
     });
 
     // console.log(node)
+}
+
+if ((node._type === "video" || node._type === "videos") && node.video) {
+    if (node.video.asset?._ref) {
+        node.url = urlFileBuilder(node.video.asset._ref);
+    } else if (typeof node.video === 'string') {
+        node.url = urlFileBuilder(node.video);
+    } else if (node.video.url) {
+        node.url = urlFileBuilder(node.video.url);
+    }
+    if (!node.poster && node.posterImage?.asset?._ref) {
+        node.poster = node.posterImage.asset._ref;
+    } else if (!node.poster && node.video.poster) {
+        node.poster = node.video.poster;
+    }
+    if (!node.width) node.width = 1440;
+    if (!node.height) node.height = 810;
+    if (typeof node.lazy === 'undefined') node.lazy = true;
+} else if ((node._type === "video" || node._type === "videos") && node.asset?._ref) {
+    node.url = urlFileBuilder(node.asset._ref);
+    if (!node.width) node.width = 1440;
+    if (!node.height) node.height = 810;
+    if (typeof node.lazy === 'undefined') node.lazy = true;
+} else if ((node._type === "video" || node._type === "videos") && node.url) {
+    node.url = urlFileBuilder(node.url);
+    if (!node.width) node.width = 1440;
+    if (!node.height) node.height = 810;
+    if (typeof node.lazy === 'undefined') node.lazy = true;
 }
 
 let firstProject;
@@ -132,6 +162,19 @@ if(node._type === 'projects_snippet'){
     }
     
     </div>)}
+
+{(node._type === "video" || node._type === "videos") && (
+    <div>
+        <BasicVideo
+            url={node.url || urlFileBuilder(node.video?.asset?._ref) || urlFileBuilder(node.asset?._ref) || urlFileBuilder(node.video)}
+            poster={node.poster || node.posterImage?.asset?._ref || node.video?.poster}
+            width={node.width || 1440}
+            height={node.height || 810}
+            lazy={typeof node.lazy === 'undefined' ? true : node.lazy}
+            client:load
+        />
+    </div>
+)}
 
 {
     node._type === 'prices' && (

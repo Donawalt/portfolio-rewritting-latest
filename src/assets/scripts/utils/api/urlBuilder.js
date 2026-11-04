@@ -10,6 +10,27 @@ import { getImageDimensions } from "@sanity/asset-utils";
 // Get a pre-configured url-builder from your sanity client
 const builder = createImageUrlBuilder({ dataset: 'production', projectId: '6mijc31d'});
 
+const PROJECT_ID = '6mijc31d';
+const DATASET = 'production';
+
+export const urlFileBuilder = (id) => {
+  if (!id) return null;
+  if (typeof id === 'string' && (id.startsWith('http://') || id.startsWith('https://'))) {
+    return id;
+  }
+  // Handle Sanity file asset reference like file-<id>-<ext>
+  if (typeof id === 'string' && id.startsWith('file-')) {
+    const parts = id.split('-');
+    if (parts.length >= 3) {
+      const ext = parts[parts.length - 1];
+      const assetId = parts.slice(1, parts.length - 1).join('-');
+      return `https://cdn.sanity.io/files/${PROJECT_ID}/${DATASET}/${assetId}.${ext}`;
+    }
+  }
+  // If it's already a full path or different format
+  return id;
+};
+
 // Then we like to make a simple function like this that gives the
 // builder an image and returns the builder for you to specify additional
 // parameters:
@@ -89,10 +110,3 @@ export const urlImageBuilder = (id, width, height, cropData, hotspot, type) => {
 
 //   return `https://cdn.sanity.io/images/wb1evjha/rdo/${params[1]}-${params[2]}.${params[3]}${query}`;
 // };
-
-
-export const urlFileBuilder = (id) => {
-  let params = id.split("-");
-
-  return `https://cdn.sanity.io/files/wb1evjha/rdo/${params[1]}.${params[2]}`;
-};

@@ -161,7 +161,7 @@ export const DoublePicture = ({ pictureLeft, pictureRight, up}) => {
 // Video
 export const BasicVideo = ({ url, poster, width, height, lazy }) => {
   return (
-    <section>
+    <section className={MediaStyle.basic_picture}>
       <Video
         url={url}
         poster={poster}
