@@ -27,6 +27,16 @@ export const urlFileBuilder = (id) => {
       return `https://cdn.sanity.io/files/${PROJECT_ID}/${DATASET}/${assetId}.${ext}`;
     }
   }
+  // Handle Sanity image asset reference like image-<id>-<width>x<height>-<ext>
+  // Used for video posters, which are stored as image references.
+  if (typeof id === 'string' && id.startsWith('image-')) {
+    const parts = id.split('-');
+    if (parts.length >= 3) {
+      const ext = parts[parts.length - 1];
+      const assetId = parts.slice(1, parts.length - 1).join('-');
+      return `https://cdn.sanity.io/images/${PROJECT_ID}/${DATASET}/${assetId}.${ext}?w=1280&q=75&auto=format`;
+    }
+  }
   // If it's already a full path or different format
   return id;
 };
@@ -34,17 +44,46 @@ export const urlFileBuilder = (id) => {
 // Then we like to make a simple function like this that gives the
 // builder an image and returns the builder for you to specify additional
 // parameters:
-export const urlImageBuilder = (id, width, height, cropData, hotspot, type) => {
+export const urlImageBuilder = (id, width, height, cropData, type) => {
   const percentToPx = (percent, dimension) => {
     return parseInt((percent / 100) * dimension);
   };
 
   const originalDimensions = getImageDimensions(id);
+  const isWebp = type === 'webp';
+
+  // Never ask the CDN for more pixels than the source has: upscaled images are
+  // both blurry and several times larger. Scale width and height together so
+  // the requested aspect ratio (and therefore the crop) stays identical.
+  const clampToOriginal = (targetWidth, targetHeight) => {
+    if (!targetWidth || !targetHeight) {
+      return { width: targetWidth, height: targetHeight };
+    }
+    const scale = Math.min(
+      1,
+      originalDimensions.width / targetWidth,
+      originalDimensions.height / targetHeight
+    );
+    return {
+      width: Math.max(1, Math.round(targetWidth * scale)),
+      height: Math.max(1, Math.round(targetHeight * scale)),
+    };
+  };
+
+  const finalise = (image) => {
+    const sized = image.quality(isWebp ? 75 : 78);
+    return (isWebp ? sized.format('webp') : sized).url();
+  };
 
   if (!cropData) {
-    return builder.image(id).width(width).height(height).url();
+    const size = clampToOriginal(width, height);
+    let image = builder.image(id);
+    if (size.width) image = image.width(size.width);
+    if (size.height) image = image.height(size.height);
+    return finalise(image);
   }
 
+  const size = clampToOriginal(width, height);
   const cropDataInPx = {
     left: percentToPx(cropData?.left * 100, originalDimensions.width),
     right: percentToPx(cropData?.right * 100, originalDimensions.width),
@@ -52,10 +91,8 @@ export const urlImageBuilder = (id, width, height, cropData, hotspot, type) => {
     bottom: percentToPx(cropData?.top * 100, originalDimensions.height),
   };
 
-  return builder
+  let image = builder
     .image(id)
-    .width(width)
-    .height(height)
     .rect(
       // X
       cropData?.left ? cropDataInPx.left : 0,
@@ -65,8 +102,12 @@ export const urlImageBuilder = (id, width, height, cropData, hotspot, type) => {
       originalDimensions.width - cropDataInPx.left - cropDataInPx.right,
       // Height
       originalDimensions.height - cropDataInPx.top - cropDataInPx.bottom
-    )
-    .url();
+    );
+
+  if (size.width) image = image.width(size.width);
+  if (size.height) image = image.height(size.height);
+
+  return finalise(image);
 };
 
 

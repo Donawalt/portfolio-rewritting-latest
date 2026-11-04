@@ -1,0 +1,13 @@
+{
+  "sourcesDir": "~/Documents",
+  "workDir": ".video-migration",
+  "outputDir": ".video-migration/encoded",
+  "maxShortEdge": 1080,
+  "fps": 50,
+  "crf": 30,
+  "preset": "medium",
+  "maxDuration": 30,
+  "audio": false,
+  "overrides": {},
+  "files": {}
+}

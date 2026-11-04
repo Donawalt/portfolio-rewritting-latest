@@ -258,12 +258,12 @@ const Picture = (props) => {
         <source
           type="image/webp"
           media={`(min-width: ${BREAKPOINTS.desktop + 1}px)`}
-          data-src-set={`${imgs?.desktop?.webp[1]} 1x, ${imgs?.desktop?.webp[2] ? imgs?.desktop?.webp[2] + ' 2x' : ''} `}
+          data-src-set={`${imgs?.desktop?.webp[0]} 1x, ${imgs?.desktop?.webp[1]} 2x`}
         />
         <source
           type="image/jpeg"
           media={`(min-width: ${BREAKPOINTS.desktop + 1}px)`}
-          data-src-set={`${imgs?.desktop?.jpeg[1]} 1x, ${imgs?.desktop?.jpeg[2] ? imgs?.desktop?.jpeg[2] + ' 2x' : ''} `}
+          data-src-set={`${imgs?.desktop?.jpeg[0]} 1x, ${imgs?.desktop?.jpeg[1]} 2x`}
         />
         <source
           type="image/webp"
@@ -307,12 +307,12 @@ const Picture = (props) => {
             <source
               type="image/webp"
               media={`(min-width: ${BREAKPOINTS.desktop + 1}px)`}
-              srcSet={`${imgs?.desktop?.webp[1]} 1x, ${imgs?.desktop?.webp[2]} 2x`}
+              srcSet={`${imgs?.desktop?.webp[0]} 1x, ${imgs?.desktop?.webp[1]} 2x`}
             />
             <source
               type="image/jpeg"
               media={`(min-width: ${BREAKPOINTS.desktop + 1}px)`}
-              srcSet={`${imgs?.desktop?.jpeg[1]} 1x, ${imgs?.desktop?.jpeg[2]} 2x`}
+              srcSet={`${imgs?.desktop?.jpeg[0]} 1x, ${imgs?.desktop?.jpeg[1]} 2x`}
             />
             <source
               type="image/webp"

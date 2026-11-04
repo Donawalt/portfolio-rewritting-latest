@@ -27,3 +27,5 @@ pnpm-debug.log*
 .netlify
 .agents/*
 .opencode/*
+# video migration working files
+.video-migration/
