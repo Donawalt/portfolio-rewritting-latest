@@ -33,6 +33,10 @@ const {
       <>
         <link rel="canonical" href={canonical} />
         <meta property="og:url" content={canonical} />
+
+         <!-- AEO & GEO handling -->
+      <link rel="llms-txt" href={`${canonical}llms.txt`} />
+      <link rel="llms-full-txt" href={`${canonical}llms-full.txt`} />
       </>
     )}
 
@@ -61,6 +65,8 @@ const {
     <meta name="twitter:title" content={ogTitle ? ogTitle : title} />
     <meta name="twitter:description" content={ogDescription ? ogDescription : description} />
     <meta name="twitter:image" content={new URL(ogImage || defaultOgImage.src, Astro.site).href} />
+
+   
 
     {
       jsonLd && (

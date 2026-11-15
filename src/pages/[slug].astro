@@ -11,7 +11,7 @@ import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 export const getStaticPaths = (async () => {
     const allLandings = await client.fetch(getAllLandings());
 
-    return allLandings.map((page, index)=>{
+    return allLandings.map((page: { seoSlug: { current: any; }; }, index: any)=>{
         return {
             params: {slug: page.seoSlug.current},
             props: {page}

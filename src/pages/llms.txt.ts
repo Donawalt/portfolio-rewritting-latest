@@ -32,6 +32,7 @@ export async function GET() {
   const body = `${CORE}
 ${projectsCount ? `\n## Projects\n${projectsCount}` : ""}
 ${latestArticles ? `\n## Latest articles\n${latestArticles}` : ""}
+Full context: /llms-full.txt
 `;
 
   return new Response(body, {

@@ -17,7 +17,7 @@ import { getAllProjects } from "../assets/scripts/utils/api/api";
 const allProjects = await client.fetch(getAllProjects());
 
 const mainProjects = allProjects
-  .filter(p => p.category === 'design' || p.category === 'development')
+  .filter((p: { category: string; }) => p.category === 'design' || p.category === 'development')
   .slice(0, 9);
 
 const homeJsonLd = {
@@ -25,7 +25,7 @@ const homeJsonLd = {
   "@graph": [
     ...personWebsiteGraph(),
     {
-      "@type": "HomePage",
+      "@type": "WebPage",
       "@id": canonical(),
       name: `${SITE.name} — ${SITE.role}`,
       description: SITE.description,
