@@ -1,4 +1,4 @@
-import { CORE } from "@/config/llms";
+import { LLMS_TXT_CORE } from "@/config/llms";
 import { canonical } from "@/config/site";
 import { client } from "@/assets/scripts/utils/api/sanityClient";
 import { getAllArticles, getAllProjects } from "@/assets/scripts/utils/api/api";
@@ -13,7 +13,7 @@ export async function GET() {
   const projectsCount = categories
     .map((cat) => {
       const count = (projects ?? []).filter((project: any) => project?.category === cat).length;
-      return `- ${cat}: ${count} ${count === 1 ? "project" : "projects"}`;
+      return `- [${cat}](${canonical(`/projects/${cat}`)}): ${count} ${count === 1 ? "project" : "projects"}`;
     })
     .join("\n");
 
@@ -25,14 +25,16 @@ export async function GET() {
     .slice(0, 5)
     .map(
       (article: any) =>
-        `- ${article?.title} — ${canonical(`/blog/${article?.seoSlug?.current}`)}`
+        `- [${article?.title}](${canonical(`/blog/${article?.seoSlug?.current}`)})`
     )
     .join("\n");
 
-  const body = `${CORE}
+  const body = `${LLMS_TXT_CORE}
 ${projectsCount ? `\n## Projects\n${projectsCount}` : ""}
 ${latestArticles ? `\n## Latest articles\n${latestArticles}` : ""}
-Full context: /llms-full.txt
+
+## Optional
+- [Full context](/llms-full.txt): Complete details for projects, articles, landing pages, and FAQ
 `;
 
   return new Response(body, {

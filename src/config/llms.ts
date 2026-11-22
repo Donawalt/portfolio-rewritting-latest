@@ -40,3 +40,34 @@ ${officialPagesSection}
 
 ## Profiles
 ${profilesSection}`;
+
+const specOfficialPagesSection = SITE.officialPages
+  .map((page) => `- [${page.name}](${canonical(page.path)})`)
+  .join("\n");
+
+const specProfilesSection = [
+  ...SOCIALS.map((social) => `- [${social.name}](${social.url})`),
+  `- [Email: ${SITE.email}](mailto:${SITE.email})`,
+].join("\n");
+
+export const LLMS_TXT_CORE = `# ${SITE.name} — ${SITE.role}
+
+> ${SITE.statement}
+
+**About**
+${SITE.bio}
+
+**Services**
+${servicesSection}
+
+**Process**
+${processSection}
+
+**Availability**
+- ${SITE.availability}
+
+## Key pages
+${specOfficialPagesSection}
+
+## Profiles
+${specProfilesSection}`;
