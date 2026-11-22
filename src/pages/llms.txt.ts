@@ -1,5 +1,4 @@
-import { LLMS_TXT_CORE } from "@/config/llms";
-import { canonical } from "@/config/site";
+import { LLMS_TXT_CORE, markdownUrl } from "@/config/llms";
 import { client } from "@/assets/scripts/utils/api/sanityClient";
 import { getAllArticles, getAllProjects } from "@/assets/scripts/utils/api/api";
 
@@ -13,7 +12,7 @@ export async function GET() {
   const projectsCount = categories
     .map((cat) => {
       const count = (projects ?? []).filter((project: any) => project?.category === cat).length;
-      return `- [${cat}](${canonical(`/projects/${cat}`)}): ${count} ${count === 1 ? "project" : "projects"}`;
+      return `- [${cat}](${markdownUrl(`/projects/${cat}`)}): ${count} ${count === 1 ? "project" : "projects"}`;
     })
     .join("\n");
 
@@ -25,7 +24,7 @@ export async function GET() {
     .slice(0, 5)
     .map(
       (article: any) =>
-        `- [${article?.title}](${canonical(`/blog/${article?.seoSlug?.current}`)})`
+        `- [${article?.title}](${markdownUrl(`/blog/${article?.seoSlug?.current}`)})`
     )
     .join("\n");
 

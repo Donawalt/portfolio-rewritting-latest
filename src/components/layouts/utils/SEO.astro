@@ -35,8 +35,10 @@ const {
         <meta property="og:url" content={canonical} />
 
          <!-- AEO & GEO handling -->
-      <link rel="llms-txt" href={`${canonical}llms.txt`} />
-      <link rel="llms-full-txt" href={`${canonical}llms-full.txt`} />
+      <link rel="llms-txt" href={new URL('/llms.txt', Astro.site).href} />
+      <link rel="llms-full-txt" href={new URL('/llms-full.txt', Astro.site).href} />
+      <link rel="alternate" type="text/markdown" href={new URL(`${Astro.url.pathname.replace(/\/$/, "")}/index.md`, Astro.site).href} />
+      <link rel="describedby" href={new URL('/llms.txt', Astro.site).href} />
       </>
     )}
 

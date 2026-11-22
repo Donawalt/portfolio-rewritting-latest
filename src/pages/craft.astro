@@ -1,7 +1,6 @@
 ---
 import Layout from "../components/layouts/Layout.astro";
 import SEO from "../components/layouts/utils/SEO.astro";
-import Scene from '../components/organisms/Section/slices/Scene/index.jsx';
 
 import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 
@@ -33,11 +32,6 @@ const craftJsonLd = {
 				<p class="tagline">Experiments · WebGL · Three.js</p>
 			</header>
 			
-			<section class="scene-container">
-				<div class="canvas">
-					<Scene client:load />
-				</div>
-			</section>
 			
 			<section class="info">
 				<p>This portfolio is built with Astro, React, Three.js, and GSAP — a custom tech stack that lets me create immersive, performant web experiences.</p>

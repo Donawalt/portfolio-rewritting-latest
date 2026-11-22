@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "astro dev --host",
     "start": "astro dev",
-    "build": "astro build && npm run validate:llms",
+    "build": "astro build && node scripts/generate-llms-md.mjs && npm run validate:llms && npm run validate:llms-pages",
     "validate:llms": "node scripts/validate-llms.mjs",
+    "validate:llms-pages": "node scripts/validate-llms.mjs --pages",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -38,6 +39,7 @@
     "three": "^0.182.0"
   },
   "devDependencies": {
-    "@types/node": "^25.0.3"
+    "@types/node": "^25.0.3",
+    "parse5": "^7.3.0"
   }
 }

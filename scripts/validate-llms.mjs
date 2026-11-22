@@ -5,8 +5,43 @@
  *
  * Usage: node scripts/validate-llms.mjs [path/to/llms.txt]
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
+
+if (process.argv.includes("--pages")) {
+  const pageErrors = [];
+  const maps = readdirSync("dist").filter((file) => /^sitemap-\d+\.xml$/.test(file));
+  const urls = maps.flatMap((file) => {
+    const xml = readFileSync(resolve("dist", file), "utf8");
+    return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  });
+
+  for (const url of urls) {
+    const pathname = decodeURIComponent(new URL(url).pathname).replace(/^\//, "");
+    const markdownPath = resolve("dist", pathname, "index.md");
+    if (!existsSync(markdownPath)) {
+      pageErrors.push(`missing Markdown page ${markdownPath} for ${url}`);
+      continue;
+    }
+    const markdown = readFileSync(markdownPath, "utf8").replace(/^\uFEFF/, "").trim();
+    if (!/^# \S/.test(markdown)) {
+      pageErrors.push(`${markdownPath} must start with an H1`);
+    }
+    if (markdown.split(/\r?\n/).filter((line) => line.trim()).length < 3) {
+      pageErrors.push(`${markdownPath} has no content beyond its headings`);
+    }
+  }
+
+  if (!maps.length) pageErrors.push("no sitemap-*.xml found in dist/");
+
+  if (pageErrors.length) {
+    console.error("llms pages validator:");
+    for (const error of pageErrors) console.error(`  - ${error}`);
+    process.exit(1);
+  }
+  console.log(`llms pages validator: OK (${urls.length} Markdown pages)`);
+  process.exit(0);
+}
 
 const target = resolve(process.argv[2] ?? "dist/llms.txt");
 

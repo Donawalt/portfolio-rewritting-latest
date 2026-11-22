@@ -1,5 +1,7 @@
 import { SITE, SOCIALS, canonical } from "@/config/site";
 
+export const markdownUrl = (path = "") => `${canonical(path).replace(/\/$/, "")}/index.md`;
+
 const servicesSection = SITE.services
   .map(
     (service) => `- ${service.title}${service.description ? ` — ${service.description}` : ""}`
@@ -42,7 +44,7 @@ ${officialPagesSection}
 ${profilesSection}`;
 
 const specOfficialPagesSection = SITE.officialPages
-  .map((page) => `- [${page.name}](${canonical(page.path)})`)
+  .map((page) => `- [${page.name}](${markdownUrl(page.path)})`)
   .join("\n");
 
 const specProfilesSection = [
