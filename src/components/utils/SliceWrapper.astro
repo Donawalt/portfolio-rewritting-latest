@@ -1,6 +1,5 @@
 ---
-import { client } from '../../assets/scripts/utils/api/sanityClient';
-import { getDocumentById } from '../../assets/scripts/utils/api/api';
+import { getProjectById } from '../../assets/scripts/utils/api/data';
 import Citation from "../organisms/Section/slices/Citation";
 import {
     FullPicture,
@@ -18,7 +17,7 @@ import Prices from '../organisms/Section/slices/Prices';
 
 let { node } = Astro.props;
 if (node._type === "images" && Object.keys(node).length === 3) {
-    node.images = node.images.map((el) => {
+    node.images = node.images.map((el: { asset: { _ref: any; }; alt: any; }) => {
         return {
             url: el.asset?._ref,
             widthDesktop: 500,
@@ -68,8 +67,8 @@ if ((node._type === "video" || node._type === "videos") && node.video) {
 let firstProject;
 let secondProject;
 if(node._type === 'projects_snippet'){
-    firstProject = await client.fetch(getDocumentById(node.project_one._ref));
-    secondProject = await client.fetch(getDocumentById(node.project_two._ref));
+    firstProject = await getProjectById(node.project_one._ref);
+    secondProject = await getProjectById(node.project_two._ref);
 }
 
 ---

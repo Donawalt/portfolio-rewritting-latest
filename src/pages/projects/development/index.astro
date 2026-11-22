@@ -2,13 +2,12 @@
 import Layout from "../../../components/layouts/Layout.astro";
 import SEO from "../../../components/layouts/utils/SEO.astro";
 
-import { client } from "../../../assets/scripts/utils/api/sanityClient";
-import { getAllProjects } from "../../../assets/scripts/utils/api/api";
+import { getProjects } from "../../../assets/scripts/utils/api/data";
 //
 import Heading from '../../../components/molecules/Heading';
 import ProjectList from '../../../components/molecules/ProjectList'
 
-let allProjects = await client.fetch(getAllProjects());
+let allProjects = await getProjects();
 allProjects = allProjects.filter(el => el.category === 'development')
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_DEVELOPMENT_PROJECTS.jpg";
 

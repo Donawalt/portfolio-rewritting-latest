@@ -44,7 +44,7 @@ const Footer = () => {
         </defs>
       </svg>
       </li>
-      <li><a className='do-text-xs' href={dribbble} target='_blank'>Dribble</a></li>
+      <li><a className='do-text-xs' href={dribbble} target='_blank'>Dribbble</a></li>
     </ul>
   </footer>)
 }

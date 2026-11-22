@@ -1,12 +1,11 @@
 import { CORE, markdownUrl } from "@/config/llms";
-import { client } from "@/assets/scripts/utils/api/sanityClient";
-import { getAllArticles, getAllLandings, getAllProjects } from "@/assets/scripts/utils/api/api";
+import { getArticles, getLandings, getProjects } from "@/assets/scripts/utils/api/data";
 
 export async function GET() {
   const [projects, articles, landings] = await Promise.all([
-    client.fetch(getAllProjects()).catch(() => [] as any[]),
-    client.fetch(getAllArticles()).catch(() => [] as any[]),
-    client.fetch(getAllLandings()).catch(() => [] as any[]),
+    getProjects().catch(() => [] as any[]),
+    getArticles().catch(() => [] as any[]),
+    getLandings().catch(() => [] as any[]),
   ]);
 
   const categories = ["design", "development", "photography"];

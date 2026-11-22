@@ -11,10 +11,9 @@ import { SITE, BOOKING_URI, BOOKING_SUBJECT, canonical, pageTitle, personWebsite
 
 import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_HOME.jpg";
 
-import { client } from "../assets/scripts/utils/api/sanityClient";
-import { getAllProjects } from "../assets/scripts/utils/api/api";
+import { getProjects } from "../assets/scripts/utils/api/data";
 
-const allProjects = await client.fetch(getAllProjects());
+const allProjects = await getProjects();
 
 const mainProjects = allProjects
   .filter((p: { category: string; }) => p.category === 'design' || p.category === 'development')

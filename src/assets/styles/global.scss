@@ -1,3 +1,7 @@
+// Font declarations must be emitted once, globally — not through Sass
+// additionalData, which would copy them into every CSS module.
+@import "./fonts.scss";
+
 body,
 html {
     background-color: map-get($brands-primary, 'background');

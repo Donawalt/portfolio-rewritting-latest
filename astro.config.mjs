@@ -28,25 +28,13 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "${pathSrc}/assets/styles/root.scss";`
+          // Only inject declarations that emit no CSS. Injecting a global
+          // stylesheet here duplicated every @font-face rule into every CSS
+          // module and made Sass re-parse the whole style system for each file.
+          additionalData: `@import "${pathSrc}/assets/styles/variables.scss";\n@import "${pathSrc}/assets/styles/mixins.scss";`
         }
       }
     }
   },
-  site: 'https://www.donaelwalter.com',
-  plugins: [
-  // Import your global SCSS file here
-  {
-    name: 'import-global-scss',
-    config() {
-      return {
-        resolve: {
-          alias: {
-            // Use an alias to import your global SCSS file
-            'global-scss': path.resolve(__dirname, 'src/assets/styles/root.scss').replace(/\\/g, "/")
-          }
-        }
-      };
-    }
-  }]
+  site: 'https://www.donaelwalter.com'
 });

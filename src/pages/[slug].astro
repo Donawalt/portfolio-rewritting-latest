@@ -3,13 +3,12 @@ import type { GetStaticPaths } from "astro";
 import Layout from "../components/layouts/Layout.astro";
 import SEO from "../components/layouts/utils/SEO.astro";
 import Landing from "../components/templates/Landing.astro";
-import { client } from "../assets/scripts/utils/api/sanityClient";
-import { getAllLandings } from "../assets/scripts/utils/api/api";
+import { getLandings } from "../assets/scripts/utils/api/data";
 import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
 import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 
 export const getStaticPaths = (async () => {
-    const allLandings = await client.fetch(getAllLandings());
+    const allLandings = await getLandings();
 
     return allLandings.map((page: { seoSlug: { current: any; }; }, index: any)=>{
         return {

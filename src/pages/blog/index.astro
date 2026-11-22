@@ -14,10 +14,9 @@ import { mockCategories, mockArticles } from "@/mock/blog";
 import Button from "@/components/atoms/Button";
 
 import Text from "@/components/atoms/Text/index.";
-import { client } from "@/assets/scripts/utils/api/sanityClient";
-import { getAllArticles } from "@/assets/scripts/utils/api/api";
+import { getArticles } from "@/assets/scripts/utils/api/data";
 
-let allArticles = await client.fetch(getAllArticles()); 
+let allArticles = await getArticles(); 
 
 const blogJsonLd = {
   "@context": "https://schema.org",

@@ -1,9 +1,8 @@
 import rss from '@astrojs/rss';
-import { client } from '@/assets/scripts/utils/api/sanityClient';
-import { getAllArticles } from '@/assets/scripts/utils/api/api';
+import { getArticles } from '@/assets/scripts/utils/api/data';
 
 export async function GET(context) {
-  const articles = await client.fetch(getAllArticles());
+  const articles = await getArticles();
 
   return rss({
     title: "Donaël Walter — Blog",
