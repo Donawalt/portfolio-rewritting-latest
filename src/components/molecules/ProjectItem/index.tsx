@@ -22,7 +22,7 @@ const ProjectItem = ({ index, title, picture, link, variant = 'default' }: Proje
 
     return (
         <a href={link ? link : "/projects/design"} className={rootClass}>
-            <h3 className='do-text-s'>{title ? title : "Lorem ipsum dolor"}</h3>
+            <h3 className='do-text-s'>{title ? title : "Untitled project"}</h3>
             <div>
                 {picture && <Picture url={picture.asset._ref} widthDesktop={680}
                     heightDesktop={500}
@@ -30,7 +30,7 @@ const ProjectItem = ({ index, title, picture, link, variant = 'default' }: Proje
                     heightMobile={500}
                     alt={picture.alt} lazy={true} localSize={true}/>}
                     {!picture && (<picture>
-                    <img src="https://source.unsplash.com/random/1920×1080" alt="Image de test" />
+                    <img src="https://source.unsplash.com/random/1920×1080" alt="Project preview" />
                 </picture>)}
             </div>
             <svg width="46" height="43" viewBox="0 0 46 43" fill="none" xmlns="http://www.w3.org/2000/svg">

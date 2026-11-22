@@ -100,10 +100,10 @@ const ContactForm = () => {
         <form name="aboutContact" ref={form} className={Style.root} onSubmit={sendContact} disabled={stateMachine.current !== "empty"} data-netlify={true} netlify>
             <input type="hidden" name="form-name" value="aboutContact" />
             <div className={Style.nameRow}>
-                <Input type='text' name='firstname' label='Firstname' required={true} />
-                <Input type='text' name='lastname' label='Lastname' required={true} />
+                <Input type='text' name='firstname' label='First name' required={true} />
+                <Input type='text' name='lastname' label='Last name' required={true} />
             </div>
-            <Input type='email' name='email' label='Mail' required={true} />
+            <Input type='email' name='email' label='Email' required={true} />
             <Input type='select' name='personType' label='You are' required={true} options={[{value:'Individual',label:'Individual'},{value:'Agency',label:'Agency'},{value:'Startup',label:'Startup'}]} />
             <Input type='select' name='budget' label='Project budget range' required={true} options={[{value:'$5,000 – $10,000',label:'$5,000 – $10,000'},{value:'$10,000 – $25,000',label:'$10,000 – $25,000'},{value:'$25,000+',label:'$25,000+'},{value:"Not sure / Let's discuss",label:"Not sure / Let's discuss"}]} />
             <Input type='area' name='message' label='Message' required={true} />

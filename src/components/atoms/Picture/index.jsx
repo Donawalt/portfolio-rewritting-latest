@@ -29,7 +29,7 @@ import { crossProduct } from "../../../assets/scripts/utils/math";
 If pictures is in locale , one picture is equal to 10 pictures imported 
 <Picture 
     images={{mobile:{jpeg: ['hero-mobile-base.jpg', 'hero-mobile-retina.jpg'], webp: ['hero-mobile-base.webp', 'hero-desktop-retina.webp']}, desktop:{jpeg: ['hero-desktop-base.jpg', 'hero-desktop-retina.jpg'], webp: ['hero-desktop-base.webp', 'hero-desktop-retina.webp']}}} 
-    alt="Ceci est le texte alternatif par défaut" 
+    alt="Image description"
     posterMobile={'hero-mobile-lazy.jpg'} 
     posterDesktop={'hero-desktop-lazy.jpg'}
     widthDesktop={"400"}
@@ -44,7 +44,7 @@ If url used
 <Picture 
     url="sanity-url/" 
     crop={ null} 
-    alt="Ceci est le texte alternatif par défaut" 
+    alt="Image description"
     widthDesktop={"400"}
     heightDesktop={"300"}
     widthMobile={"40"}
@@ -345,7 +345,7 @@ const test = ({ type }) => {
       <Picture
         url="sanity-url/"
         crop={/*  Crop DATA */ null}
-        alt="Ceci est le texte alternatif par défaut"
+        alt="Image description"
         widthDesktop={"400"}
         heightDesktop={"300"}
         widthMobile={"40"}
@@ -375,7 +375,7 @@ const test = ({ type }) => {
           ],
         },
       }}
-      alt="Ceci est le texte alternatif par défaut"
+      alt="Image description"
       posterMobile={"hero-mobile-lazy.jpg"}
       posterDesktop={"hero-desktop-lazy.jpg"}
       widthDesktop={"400"}

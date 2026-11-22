@@ -51,10 +51,10 @@ ${landingsSection ? `\n## Landing pages\n${landingsSection}` : ""}
 Donaël Walter provides a unified hybrid workflow spanning brand identity design, UI/UX design systems in Figma, and high-performance frontend engineering (Astro, React, Next.js, Three.js, GSAP, and Tailwind CSS).
 
 ### Does Donaël Walter offer recurring retainer contracts? 
-Yes. Donaël offers an \*\*Embedded Design Engineer Retainer\*\* plan (€3,540 / US$3,900 per month) designed for tech startups, product teams, and digital agencies. Acting as a part-time embedded team member, he provides ongoing product design, frontend engineering, design system maintenance, CMS/API/AI integrations, and iteration support with flexible "cancel anytime" terms. 
+Yes. Donaël offers an Embedded Design Engineer Retainer plan (€3,540 / US$3,900 per month) designed for tech startups, product teams, and digital agencies. Acting as a part-time embedded team member, he provides ongoing product design, frontend engineering, design system maintenance, CMS/API/AI integrations, and iteration support with flexible "cancel anytime" terms.
 
-### What is the "Agency Overflow — Design &amp; Build" option? 
-For agencies needing immediate sprint bandwidth or white-label execution, Donaël provides an \*\*Agency Overflow\*\* day-rate model (€600 / US$650 per day) covering concept-to-production builds, advanced frontend engineering, and QA.
+### What is the "Agency Overflow — Design & Build" option?
+For agencies needing immediate sprint bandwidth or white-label execution, Donaël provides an Agency Overflow day-rate model (€600 / US$650 per day) covering concept-to-production builds, advanced frontend engineering, and QA.
 
 ### What performance benchmarks and quality standards are guaranteed? 
 All development deliverables target Core Web Vitals optimization (sub-2.5s LCP), 90+ Lighthouse audit scores, WCAG AA accessibility compliance, and stable 60 FPS WebGL canvas rendering.
