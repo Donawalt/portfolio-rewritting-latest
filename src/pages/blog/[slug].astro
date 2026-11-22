@@ -137,6 +137,7 @@ if (article?.seoImage?.asset?._ref) {
           <Picture
             client:load
             url={article?.author?.picture?.asset?._ref}
+            alt={`Portrait of ${article.author.name}`}
             widthDesktop={120}
             heightDesktop={120}
             widthMobile={56}
@@ -153,6 +154,7 @@ if (article?.seoImage?.asset?._ref) {
         <Picture
           client:load
           url={article.seoImage.asset._ref}
+          alt={article.seoTitle || article.title || "Article cover image"}
           widthDesktop={1200}
           heightDesktop={630}
           widthMobile={640}

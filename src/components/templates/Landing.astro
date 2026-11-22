@@ -87,7 +87,7 @@ const { type, title, subTitle, content, cover, comitments } = Astro.props;
     <Section
         type="media-h-picture"
         url={cover.asset._ref}
-        alt={cover.alt}
+        alt={cover.alt || title}
         widthDesktop={1376}
         heightDesktop={400}
         widthMobile={640}

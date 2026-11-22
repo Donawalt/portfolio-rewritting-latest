@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "astro dev --host",
     "start": "astro dev",
-    "build": "astro build && node scripts/generate-llms-md.mjs && npm run validate:llms && npm run validate:llms-pages",
+    "build": "astro build && node scripts/generate-llms-md.mjs && npm run validate:llms && npm run validate:llms-pages && npm run validate:alt",
     "validate:llms": "node scripts/validate-llms.mjs",
     "validate:llms-pages": "node scripts/validate-llms.mjs --pages",
+    "validate:alt": "node scripts/check-image-alt.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

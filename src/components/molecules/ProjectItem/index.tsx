@@ -28,9 +28,9 @@ const ProjectItem = ({ index, title, picture, link, variant = 'default' }: Proje
                     heightDesktop={500}
                     widthMobile={300}
                     heightMobile={500}
-                    alt={picture.alt} lazy={true} localSize={true}/>}
+                    alt={picture.alt || `Preview of ${title}`} lazy={true} localSize={true}/>}
                     {!picture && (<picture>
-                    <img src="https://source.unsplash.com/random/1920×1080" alt="Project preview" />
+                    <img src="https://source.unsplash.com/random/1920×1080" alt="" />
                 </picture>)}
             </div>
             <svg width="46" height="43" viewBox="0 0 46 43" fill="none" xmlns="http://www.w3.org/2000/svg">

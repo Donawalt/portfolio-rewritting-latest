@@ -102,7 +102,7 @@ export const FullPicture = ({
 };
 
 export const GridPicture = (props) => {
-  const {pictures} = props; 
+  const {pictures, title} = props; 
   return (
     <section className={MediaStyle.grid_picture}>
       {pictures && pictures.map((image, index) => (image?.url && <li key={image?.url}>
@@ -110,7 +110,7 @@ export const GridPicture = (props) => {
           url={image?.url}
           crop={image?.crop}
           images={image?.images}
-          alt={image?.alt}
+          alt={image?.alt || title || ""}
           posterMobile={image?.posterMobile}
           posterDesktop={image?.posterDesktop}
           widthDesktop={image?.widthDesktop}
@@ -125,14 +125,14 @@ export const GridPicture = (props) => {
   );
 };
 
-export const DoublePicture = ({ pictureLeft, pictureRight, up}) => {
+export const DoublePicture = ({ pictureLeft, pictureRight, up, title}) => {
   return (
     <section className={MediaStyle.do_double_picture + " " + MediaStyle[up]}>
       <Picture
         url={pictureLeft?.url}
         crop={pictureLeft?.crop}
         images={pictureLeft?.images}
-        alt={pictureLeft?.alt}
+        alt={pictureLeft?.alt || title || ""}
         posterMobile={pictureLeft?.posterMobile}
         posterDesktop={pictureLeft?.posterDesktop}
         widthDesktop={pictureLeft?.widthDesktop}
@@ -145,7 +145,7 @@ export const DoublePicture = ({ pictureLeft, pictureRight, up}) => {
         url={pictureRight?.url}
         crop={pictureRight?.crop}
         images={pictureRight?.images}
-        alt={pictureRight?.alt}
+        alt={pictureRight?.alt || title || ""}
         posterMobile={pictureRight?.posterMobile}
         posterDesktop={pictureRight?.posterDesktop}
         widthDesktop={pictureRight?.widthDesktop}

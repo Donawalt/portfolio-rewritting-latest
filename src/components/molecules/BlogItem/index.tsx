@@ -25,7 +25,7 @@ const BlogItem = ({category, title, description, date, readingTime, author}: Blo
         <p>{category}</p>
         <p>{description.slice(0, 200)}{description.length > 200 && '...'}</p>
         <div className={Style.info}>
-            <img src={ImageUrl} alt="author" /><br/>
+            <img src={ImageUrl} alt={`Portrait of ${author?.name ?? "the author"}`} /><br/>
             <p>Author: {author.name}</p>
             <p><span>{new Date(date).toDateString()}</span><span>•</span><span>{Math.ceil(readingTime/60)} min read</span></p>
         </div>

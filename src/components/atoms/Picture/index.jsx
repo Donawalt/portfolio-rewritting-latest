@@ -18,7 +18,7 @@ import { crossProduct } from "../../../assets/scripts/utils/math";
  * -------------
  * This function is used to render an image component that supports lazy-loading and responsive images. It takes three parameters, url, alt, and lazy, all of which are optional.
  * The url parameter is a string representing the URL of the image to be displayed.
- * The alt parameter is a string representing the alternative text for the image. This is displayed if the image cannot be loaded for some reason.
+ * The alt parameter is a string representing the alternative text for the image. It defaults to an empty string: an omitted alt marks a decorative image, so every rendered image element always has the attribute.
  * The lazy parameter is a boolean that indicates whether lazy-loading should be enabled for the image. If this is set to true, the image will only be loaded when it becomes visible in the viewport.
  * If lazy is true, a blurred version of the image is displayed until the image becomes visible in the viewport. The widthMobile, heightMobile, widthDesktop, heightDesktop, and crop parameters are used to generate the various versions of the image that will be loaded. If url is not provided, the posterMobile and posterDesktop parameters are used as the source URLs for the blurred version of the image.
  * If lazy is false, the image will be loaded immediately and the width and height parameters will be used to set the dimensions of the image.
@@ -65,7 +65,7 @@ const Picture = (props) => {
       },
     },
     url,
-    alt,
+    alt = "",
     lazy,
     posterMobile,
     posterDesktop,

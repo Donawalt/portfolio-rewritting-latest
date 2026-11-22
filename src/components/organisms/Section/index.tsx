@@ -72,7 +72,7 @@ const Section = (props: {
           url={url}
           crop={crop}
           images={images}
-          alt={alt}
+          alt={alt || title}
           posterMobile={posterMobile}
           posterDesktop={posterDesktop}
           widthDesktop={widthDesktop}
@@ -89,7 +89,7 @@ const Section = (props: {
           url={url}
           crop={crop}
           images={images}
-          alt={alt}
+          alt={alt || title}
           posterMobile={posterMobile}
           posterDesktop={posterDesktop}
           widthDesktop={widthDesktop}
@@ -105,7 +105,7 @@ const Section = (props: {
           url={url}
           crop={crop}
           images={images}
-          alt={alt}
+          alt={alt || title}
           posterMobile={posterMobile}
           posterDesktop={posterDesktop}
           widthDesktop={widthDesktop}
@@ -116,10 +116,10 @@ const Section = (props: {
         />
       );
     case "media-g-picture":
-      return <GridPicture pictures={pictures} />;
+      return <GridPicture pictures={pictures} title={title} />;
     case "media-d-picture":
       return (
-        <DoublePicture pictureLeft={pictureLeft} pictureRight={pictureRight} up={null}/>
+        <DoublePicture pictureLeft={pictureLeft} pictureRight={pictureRight} up={null} title={title}/>
       );
     case "media-b-video":
       return (
@@ -139,7 +139,7 @@ const Section = (props: {
           url={url}
           crop={crop}
           images={images}
-          alt={alt}
+          alt={alt || title}
           posterMobile={posterMobile}
           posterDesktop={posterDesktop}
           widthDesktop={widthDesktop}

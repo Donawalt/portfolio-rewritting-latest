@@ -25,7 +25,7 @@ if (node._type === "images" && Object.keys(node).length === 3) {
             heightMobile: 900,
             widthMobile: 600,
             crop: null,
-            alt: el?.alt,
+            alt: el?.alt || node.title || "Portfolio project image",
             posterDesktop: null,
             posterMobile: null,
             lazy: true,
@@ -91,7 +91,7 @@ if(node._type === 'projects_snippet'){
                 heightMobile={900}
                 widthMobile={600}
                 crop={null}
-                alt={node.images[0].alt}
+                alt={node.images[0].alt || node.title || "Portfolio project image"}
                 posterDesktop={null}
                 posterMobile={null}
                 lazy={true}
@@ -109,7 +109,7 @@ if(node._type === 'projects_snippet'){
                 heightMobile={900}
                 widthMobile={600}
                 crop={null}
-                alt={node.images[0].alt}
+                alt={node.images[0].alt || node.title || "Portfolio project image"}
                 posterDesktop={null}
                 posterMobile={null}
                 lazy={true}
@@ -130,7 +130,7 @@ if(node._type === 'projects_snippet'){
                         heightMobile: 900,
                         widthMobile: 600,
                         crop: null,
-                        alt: node.images[0].alt,
+                        alt: node.images[0].alt || node.title || "Portfolio project image",
                         posterDesktop: null,
                         posterMobile: null,
                         lazy: true,
@@ -143,7 +143,7 @@ if(node._type === 'projects_snippet'){
                         heightMobile: 900,
                         widthMobile: 600,
                         crop: null,
-                        alt: node.images[1].alt,
+                        alt: node.images[1].alt || node.title || "Portfolio project image",
                         posterDesktop: null,
                         posterMobile: null,
                         lazy: true,
