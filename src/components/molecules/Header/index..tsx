@@ -3,7 +3,7 @@
 
 import Style from './style.module.scss';
 import Logo from '../../atoms/Logo/index.';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { SOCIALS } from '../../../config/site';
 
 const RMenu = [
@@ -77,7 +77,7 @@ const mobileMenu = [
     ]
   },
   {
-    name: undefined,
+    name: 'Quick links',
     subField: [
       // projects , blog , about 
       {
@@ -95,7 +95,7 @@ const mobileMenu = [
     ]
   },
   {
-    name: undefined,
+    name: 'Social links',
     subField: SOCIALS.map(({ name, url }) => ({
       name,
       link: url,
@@ -109,48 +109,64 @@ interface MenuItem {
   subField?: MenuItem[];
 }
 
-const MenuList = ({ list }: { list: MenuItem[] }) => {
-
-
-  const SubList = ({ subList }: { subList: MenuItem[] }) => {
-    return (
-      <ul className={Style.do_submenu} role="menu">
-        <MenuList list={subList} />
-      </ul>
-    );
-  };
+const NavItem = ({ item }: { item: MenuItem }) => {
+  const hasSubField = Boolean(item.subField?.length);
+  const submenuId = useId();
+  const [open, setOpen] = useState(false);
 
   return (
-    <>{list.map((el, index) => (
-      <li
-        key={el.name + index}
-      >
+    <li
+      onPointerEnter={event => hasSubField && event.pointerType === 'mouse' && setOpen(true)}
+      onPointerLeave={event => hasSubField && event.pointerType === 'mouse' && setOpen(false)}
+    >
+      {item.link ? (
+        <a
+          href={item.link}
+          target={item.link.includes('https') ? '_blank' : '_self'}
+          className='do-text-xs'
+        >
+          {item.name}
+        </a>
+      ) : (
+        <button
+          type='button'
+          className='do-text-xs'
+          aria-expanded={hasSubField ? open : undefined}
+          aria-controls={hasSubField ? submenuId : undefined}
+          onClick={() => hasSubField && setOpen(value => !value)}
+          onKeyDown={event => {
+            if (event.key === 'Escape' && hasSubField) setOpen(false);
+          }}
+        >
+          {item.name}
+          <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g clipPath="url(#clip0_2536_1014)">
+              <path fillRule="evenodd" clipRule="evenodd" d="M7.52599 6.77113L3.75466 2.9998L4.69732 2.05713L7.99732 5.35713L11.2973 2.05713L12.24 2.9998L8.46866 6.77113C8.34364 6.89611 8.1741 6.96632 7.99732 6.96632C7.82055 6.96632 7.65101 6.89611 7.52599 6.77113Z" fill="#CCCCCC" />
+            </g>
+            <defs>
+              <clipPath id="clip0_2536_1014">
+                <rect width="8" height="16" fill="white" transform="translate(16) rotate(90)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </button>
+      )}
+      {hasSubField && (
+        <ul id={submenuId} data-open={open} className={Style.do_submenu}>
+          <MenuList list={item.subField!} />
+        </ul>
+      )}
+    </li>
+  );
+};
 
-        {el.link ? (
-          <a href={el.link} target={/** if external link set _tagert else _self*/ el.link.includes("https") ? "_blank" : "_self"} className='do-text-xs'>{el.name}</a>
-        ) : (
-          <span className='do-text-xs'
-            role={el.subField ? 'menuitem' : undefined}
-            aria-haspopup={el.subField ? 'true' : undefined}>
-            {el.name}
-            <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <g clipPath="url(#clip0_2536_1014)">
-                <path fillRule="evenodd" clipRule="evenodd" d="M7.52599 6.77113L3.75466 2.9998L4.69732 2.05713L7.99732 5.35713L11.2973 2.05713L12.24 2.9998L8.46866 6.77113C8.34364 6.89611 8.1741 6.96632 7.99732 6.96632C7.82055 6.96632 7.65101 6.89611 7.52599 6.77113Z" fill="#CCCCCC" />
-              </g>
-              <defs>
-                <clipPath id="clip0_2536_1014">
-                  <rect width="8" height="16" fill="white" transform="translate(16) rotate(90)" />
-                </clipPath>
-              </defs>
-            </svg>
-          </span>
-        )}
-        {el.subField && <SubList subList={el.subField} />}
-      </li>
+const MenuList = ({ list }: { list: MenuItem[] }) => {
+  return (
+    <>{list.map((el, index) => (
+      <NavItem key={(el.name || 'item') + '-' + index} item={el} />
     ))}</>
   );
-
-}
+};
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);

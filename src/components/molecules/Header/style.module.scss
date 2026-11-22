@@ -92,6 +92,7 @@
             .do_submenu {
                 display: flex;
                 pointer-events: none;
+                visibility: hidden;
                 opacity: 0;
                 width: fit-content;
                 position: absolute;
@@ -149,7 +150,13 @@
                 }
             }
 
-            span {
+            button {
+                appearance: none;
+                background: transparent;
+                border: 0;
+                padding: 0;
+                color: inherit;
+                font: inherit;
                 cursor: pointer;
                 transition: 300ms;
 
@@ -159,8 +166,14 @@
                 }
             }
 
+            button:focus-visible,
+            a:focus-visible {
+                outline: 2px solid cornflowerblue;
+                outline-offset: 2px;
+            }
+
             &:hover {
-                span {
+                button {
                     color: cornflowerblue;
                     cursor: pointer;
 
@@ -174,10 +187,12 @@
                 }
             }
 
-            &:hover>.do_submenu {
+            &:hover>.do_submenu,
+            .do_submenu[data-open='true'] {
 
                 transition: transform 200ms ease-in, opacity 300ms ease-out;
                 transform: translateY(62px) translateX(-50%);
+                visibility: visible;
                 opacity: 1;
                 pointer-events: all;
             }
@@ -309,26 +324,38 @@
                 margin-bottom: 8px;
             }
 
-            span {
+            li > button {
+                appearance: none;
+                background: transparent;
+                border: none;
+                border-bottom: 1px solid #202020;
+                border-radius: 0;
+                padding: 0 0 8px 0;
+                margin: 0 0 8px 0;
                 color: #7B7B7B;
                 display: inline-block;
                 text-align: center;
-                
+                font-family: inherit;
+                font-size: 15px;
                 font-style: normal;
                 font-weight: 500;
                 line-height: 97%;
                 /* 13.58px */
                 text-transform: capitalize;
-                
-                border-bottom: 1px solid #202020;
-
-                padding-bottom: 8px;
-                margin-bottom: 8px;
-
 
                 svg {
                     display: none;
                 }
+            }
+
+            .do_submenu[data-open='false'] {
+                display: none;
+            }
+
+            .do_submenu[data-open='true'] {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
             }
 
             a {
