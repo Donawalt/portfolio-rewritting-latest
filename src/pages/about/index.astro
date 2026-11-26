@@ -7,6 +7,8 @@ import { SITE, canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 import Section from "../../components/organisms/Section";
 import AboutStyle from "./about.module.scss";
 
+const aboutDescription = "Design engineer & creative developer in Lyon, helping startups, agencies and high-ticket brands ship fast, accessible, distinctive brand-to-code websites.";
+
 // Import demo assets
 import AboutPortraitDesktopJPEG from "../../assets/images/pages/about/desktop-about-portrait-one.jpg";
 import AboutPortraitDesktopWEBP from "../../assets/images/pages/about/desktop-about-portrait-one.webp";
@@ -53,7 +55,7 @@ const aboutJsonLd = {
 };
 ---
 
-<SEO lang="en" title={pageTitle("About")} description={SITE.statement} ogImage={OG_IMAGE.src} canonical={canonical("/about")} jsonLd={aboutJsonLd}>
+<SEO lang="en" title={pageTitle("About")} description={aboutDescription} ogImage={OG_IMAGE.src} canonical={canonical("/about")} jsonLd={aboutJsonLd}>
     <Layout>
         <main class={AboutStyle.do_about_page}>
             <section class={AboutStyle.do_about_hero} data-landing-hero>

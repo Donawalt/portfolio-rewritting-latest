@@ -1,4 +1,5 @@
 import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
+import type { SanityImageRef } from "@/types/blog";
 import Style from "./style.module.scss";
 
 export type BlogItemProps = {
@@ -9,13 +10,17 @@ export type BlogItemProps = {
     readingTime: number,
     author: {
         name: string,
-        picture: string, 
+        picture: string | SanityImageRef, 
     }
 }
 
 
 const BlogItem = ({category, title, description, date, readingTime, author}: BlogItemProps) => {
-    const ImageUrl = urlImageBuilder(author?.picture?.asset?._ref, 48, 48, undefined);
+    const pictureRef =
+        typeof author?.picture === "string"
+            ? author.picture
+            : author?.picture?.asset?._ref;
+    const ImageUrl = urlImageBuilder(pictureRef, 48, 48, undefined);
 
     console.log("Image Url", ImageUrl);
 

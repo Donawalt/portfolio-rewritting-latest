@@ -8,11 +8,11 @@ import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
 import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 
 export const getStaticPaths = (async () => {
-    let allLandings = await getProjects();
-    allLandings = allLandings.filter(el => el.category === 'photography')
+    let allLandings: any[] = await getProjects();
+    allLandings = allLandings.filter((el: { category: string; }) => el.category === 'photography')
 
     const allLandingsLength = allLandings.length;
-    return allLandings.map((page, index)=>{
+    return allLandings.map((page: { seoSlug: { current: any; }; }, index: number)=>{
 
         const nextPage = index === allLandingsLength - 1 ? allLandings[0] : allLandings[index + 1];
         return {
@@ -22,8 +22,8 @@ export const getStaticPaths = (async () => {
     });
 }) satisfies GetStaticPaths;
 
-const {slug, type} = Astro.params;
-const {page, nextPage} = Astro.props;
+const { slug } = Astro.params;
+const { page, nextPage }: { page: any; nextPage: any } = Astro.props;
 
 const canonicalUrl = canonical(`/projects/photography/${page?.seoSlug?.current}`);
 const projectJsonLd = {
@@ -43,7 +43,7 @@ const projectJsonLd = {
   ]
 };
 ---
-<SEO lang="en" title={pageTitle(page?.seoTitle)} description={page?.seoDescription} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref)} canonical={canonicalUrl} jsonLd={projectJsonLd}>
+<SEO lang="en" title={pageTitle(page?.seoTitle)} description={page?.seoDescription} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref, undefined, undefined, undefined, "jpg")} canonical={canonicalUrl} jsonLd={projectJsonLd}>
 	<Layout>
         <Project title={page?.name} subTitle={page?.subtitle} cover={page?.cover} tag={page?.tag} introduction={page?.introduction} skills={page?.skills} content={page?.content} nextProject={nextPage} slug={slug}/>
     </Layout>

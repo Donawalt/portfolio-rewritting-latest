@@ -4,19 +4,22 @@ import Heading from "@/components/molecules/Heading";
 import Picture from "@/components/atoms/Picture";
 import SEO from "../../components/layouts/utils/SEO.astro";
 
-import OG_IMAGE from "@/assets/images/layout/og/OG_IMAGE_LISTING_PROJECTS.jpg";
 import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 import { getArticles } from "@/assets/scripts/utils/api/data";
 import { PortableText } from "astro-portabletext";
-import { createImageUrlBuilder } from "@sanity/image-url";
 import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
-import ReadingProgress from "@/components/atoms/ReadingProgress";
 
 export const getStaticPaths = async () => {
-  const articles = await getArticles();
-  return articles.map((article, index) => {
+  const articles: any[] = await getArticles();
+  return articles.map((article: any, index: number) => {
     const nextArticle = articles[index + 1] || articles[0];
-    article.seoImage = urlImageBuilder(article?.seoImage?.asset?._ref);
+    article.seoImageUrl = urlImageBuilder(
+      article?.seoImage?.asset?._ref,
+      undefined,
+      undefined,
+      undefined,
+      "jpg"
+    );
     return {
       params: {
         slug: article?.seoSlug?.current,
@@ -26,7 +29,6 @@ export const getStaticPaths = async () => {
   });
 };
 
-const { slug } = Astro.params;
 const { article, nextArticle }: { article: any; nextArticle: any } =
   Astro.props;
 
@@ -55,7 +57,7 @@ const articleJsonLd = {
       datePublished: article?._createdAt,
       dateModified: articleLastMod,
       mainEntityOfPage: canonicalUrl,
-      image: article?.seoImage,
+      image: article?.seoImageUrl,
       "author": {
         "@type": "Person",
         "@id": `${canonical()}#person`,
@@ -68,18 +70,20 @@ const articleJsonLd = {
   ]
 };
 
-let coverImageUrl: string | null = null;
-if (article?.seoImage?.asset?._ref) {
-  coverImageUrl = urlImageBuilder(article.seoImage.asset._ref);
-}
+const coverImageUrl: string | null = article?.seoImageUrl ?? null;
 ---
 
 <SEO
   lang="en"
   title={pageTitle(article?.seoTitle)}
   description={article?.seoDescription}
-  ogImage={article?.seoImage}
+  ogImage={article?.seoImageUrl}
   canonical={canonicalUrl}
+  ogType="article"
+  articlePublishedTime={article?._createdAt}
+  articleModifiedTime={articleLastMod}
+  articleAuthor={article?.author?.name}
+  articleSection={article?.category}
   jsonLd={articleJsonLd}
 >
   <Layout type="blog">
@@ -153,7 +157,7 @@ if (article?.seoImage?.asset?._ref) {
       <figure class="do-cover-image">
         <Picture
           client:load
-          url={article.seoImage.asset._ref}
+          url={article?.seoImage?.asset?._ref}
           alt={article.seoTitle || article.title || "Article cover image"}
           widthDesktop={1200}
           heightDesktop={630}

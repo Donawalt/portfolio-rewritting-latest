@@ -50,7 +50,9 @@ export const urlImageBuilder = (id, width, height, cropData, type) => {
   };
 
   const originalDimensions = getImageDimensions(id);
-  const isWebp = type === 'webp';
+  // WebP is the default output for any caller that does not explicitly ask for
+  // JPEG. This prevents PNG sources from staying PNG when no type is passed.
+  const isJpeg = type === 'jpg' || type === 'jpeg';
 
   // Never ask the CDN for more pixels than the source has: upscaled images are
   // both blurry and several times larger. Scale width and height together so
@@ -71,8 +73,13 @@ export const urlImageBuilder = (id, width, height, cropData, type) => {
   };
 
   const finalise = (image) => {
-    const sized = image.quality(isWebp ? 75 : 78);
-    return (isWebp ? sized.format('webp') : sized).url();
+    // fit=max prevents implicit upscaling. Explicit formats keep PNG sources
+    // from being served as PNG: WebP by default, JPEG only where requested.
+    const sized = image
+      .fit('max')
+      .quality(isJpeg ? 75 : 72)
+      .format(isJpeg ? 'jpg' : 'webp');
+    return sized.url();
   };
 
   if (!cropData) {
@@ -88,7 +95,7 @@ export const urlImageBuilder = (id, width, height, cropData, type) => {
     left: percentToPx(cropData?.left * 100, originalDimensions.width),
     right: percentToPx(cropData?.right * 100, originalDimensions.width),
     top: percentToPx(cropData?.top * 100, originalDimensions.height),
-    bottom: percentToPx(cropData?.top * 100, originalDimensions.height),
+    bottom: percentToPx(cropData?.bottom * 100, originalDimensions.height),
   };
 
   let image = builder

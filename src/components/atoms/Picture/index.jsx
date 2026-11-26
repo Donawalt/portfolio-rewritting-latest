@@ -124,8 +124,8 @@ const Picture = (props) => {
     ? {
       mobile: {
         jpeg: [
-          urlImageBuilder(url, widthMobile, Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile)), crop),
-          urlImageBuilder(url, widthMobile * 2, Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile * 2)), crop),
+          urlImageBuilder(url, widthMobile, Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile)), crop, "jpg"),
+          urlImageBuilder(url, widthMobile * 2, Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile * 2)), crop, "jpg"),
         ],
         webp: [
           urlImageBuilder(url, widthMobile, Math.round(crossProduct(localSize ? widthMobile: originalDimension.width, localSize ? heightMobile: originalDimension.height, widthMobile)), crop, "webp"),
@@ -140,9 +140,8 @@ const Picture = (props) => {
       },
       desktop: {
         jpeg: [
-          urlImageBuilder(url, widthDesktop, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop)), crop),
-          urlImageBuilder(url, widthDesktop * 2, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop * 2)), crop),
-          urlImageBuilder(url, widthDesktop * 4, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop * 4)), crop),
+          urlImageBuilder(url, widthDesktop, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop)), crop, "jpg"),
+          urlImageBuilder(url, widthDesktop * 2, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop * 2)), crop, "jpg"),
         ],
         webp: [
           urlImageBuilder(url, widthDesktop, Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop)), crop, "webp"),
@@ -153,17 +152,25 @@ const Picture = (props) => {
             crop,
             "webp"
           ),
-          urlImageBuilder(
-            url,
-            widthDesktop * 4,
-            Math.round(crossProduct(localSize ? widthDesktop: originalDimension.width, localSize ? heightDesktop: originalDimension.height, widthDesktop * 4)),
-            crop,
-            "webp"
-          ),
         ],
       },
     }
     : images;
+
+  // Width descriptors let the browser pick the smallest candidate that still
+  // covers the rendered size. Callers that pass pre-built local arrays without
+  // width props keep the legacy 1x/2x descriptors.
+  const mobileWidth = Number(widthMobile) > 0 ? Number(widthMobile) : 0;
+  const desktopWidth = Number(widthDesktop) > 0 ? Number(widthDesktop) : 0;
+  const useWidthDescriptors = Boolean(mobileWidth && desktopWidth);
+  const srcSet = (urls, width) =>
+    useWidthDescriptors
+      ? `${urls[0]} ${width}w, ${urls[1]} ${width * 2}w`
+      : `${urls[0]} 1x, ${urls[1]} 2x`;
+  const sizes = useWidthDescriptors
+    ? `(max-width: ${BREAKPOINTS.tablet - 1}px) ${mobileWidth}px, ${desktopWidth}px`
+    : undefined;
+  const decoding = lazy ? "async" : undefined;
 
   // Init lazy functions
   const setIntersect = (state) => {
@@ -248,32 +255,38 @@ const Picture = (props) => {
         <source
           type="image/webp"
           media={`(max-width: ${BREAKPOINTS.tablet - 1}px)`}
-          data-src-set={`${imgs?.mobile?.webp[0]} 1x, ${imgs?.mobile?.webp[1]} 2x`}
+          data-src-set={`${srcSet(imgs?.mobile?.webp, mobileWidth)}`}
+          sizes={sizes}
         />
         <source
           type="image/jpeg"
           media={`(max-width: ${BREAKPOINTS.tablet - 1}px)`}
-          data-src-set={`${imgs?.mobile?.jpeg[0]} 1x, ${imgs?.mobile?.jpeg[1]} 2x`}
+          data-src-set={`${srcSet(imgs?.mobile?.jpeg, mobileWidth)}`}
+          sizes={sizes}
         />
         <source
           type="image/webp"
           media={`(min-width: ${BREAKPOINTS.desktop + 1}px)`}
-          data-src-set={`${imgs?.desktop?.webp[0]} 1x, ${imgs?.desktop?.webp[1]} 2x`}
+          data-src-set={`${srcSet(imgs?.desktop?.webp, desktopWidth)}`}
+          sizes={sizes}
         />
         <source
           type="image/jpeg"
           media={`(min-width: ${BREAKPOINTS.desktop + 1}px)`}
-          data-src-set={`${imgs?.desktop?.jpeg[0]} 1x, ${imgs?.desktop?.jpeg[1]} 2x`}
+          data-src-set={`${srcSet(imgs?.desktop?.jpeg, desktopWidth)}`}
+          sizes={sizes}
         />
         <source
           type="image/webp"
           media={`(min-width: ${BREAKPOINTS.tablet}px)`}
-          data-src-set={`${imgs?.desktop?.webp[0]} 1x, ${imgs?.desktop?.webp[1]} 2x`}
+          data-src-set={`${srcSet(imgs?.desktop?.webp, desktopWidth)}`}
+          sizes={sizes}
         />
         <source
           type="image/jpeg"
           media={`(min-width: ${BREAKPOINTS.tablet}px)`}
-          data-src-set={`${imgs?.desktop?.jpeg[0]} 1x, ${imgs?.desktop?.jpeg[1]} 2x`}
+          data-src-set={`${srcSet(imgs?.desktop?.jpeg, desktopWidth)}`}
+          sizes={sizes}
         />
         <img
           src={undefined}
@@ -281,6 +294,8 @@ const Picture = (props) => {
           alt={alt}
           width={widthDesktop}
           height={heightDesktop}
+          sizes={sizes}
+          decoding={decoding}
         />
         {lazy && (
           <div className="picture-blur">
@@ -297,38 +312,46 @@ const Picture = (props) => {
             <source
               type="image/webp"
               media={`(max-width: ${BREAKPOINTS.tablet - 1}px)`}
-              srcSet={`${imgs?.mobile?.webp[0]} 1x, ${imgs?.mobile?.webp[1]} 2x`}
+              srcSet={`${srcSet(imgs?.mobile?.webp, mobileWidth)}`}
+              sizes={sizes}
             />
             <source
               type="image/jpeg"
               media={`(max-width: ${BREAKPOINTS.tablet - 1}px)`}
-              srcSet={`${imgs?.mobile?.jpeg[0]} 1x, ${imgs?.mobile?.jpeg[1]} 2x`}
+              srcSet={`${srcSet(imgs?.mobile?.jpeg, mobileWidth)}`}
+              sizes={sizes}
             />
             <source
               type="image/webp"
               media={`(min-width: ${BREAKPOINTS.desktop + 1}px)`}
-              srcSet={`${imgs?.desktop?.webp[0]} 1x, ${imgs?.desktop?.webp[1]} 2x`}
+              srcSet={`${srcSet(imgs?.desktop?.webp, desktopWidth)}`}
+              sizes={sizes}
             />
             <source
               type="image/jpeg"
               media={`(min-width: ${BREAKPOINTS.desktop + 1}px)`}
-              srcSet={`${imgs?.desktop?.jpeg[0]} 1x, ${imgs?.desktop?.jpeg[1]} 2x`}
+              srcSet={`${srcSet(imgs?.desktop?.jpeg, desktopWidth)}`}
+              sizes={sizes}
             />
             <source
               type="image/webp"
               media={`(min-width: ${BREAKPOINTS.tablet}px)`}
-              srcSet={`${imgs?.desktop?.webp[0]} 1x, ${imgs?.desktop?.webp[1]} 2x`}
+              srcSet={`${srcSet(imgs?.desktop?.webp, desktopWidth)}`}
+              sizes={sizes}
             />
             <source
               type="image/jpeg"
               media={`(min-width: ${BREAKPOINTS.tablet}px)`}
-              srcSet={`${imgs?.desktop?.jpeg[0]} 1x, ${imgs?.desktop?.jpeg[1]} 2x`}
+              srcSet={`${srcSet(imgs?.desktop?.jpeg, desktopWidth)}`}
+              sizes={sizes}
             />
             <img
               src={imgs?.desktop?.jpeg[0]}
               alt={alt}
               width={widthDesktop}
               height={heightDesktop}
+              sizes={sizes}
+              decoding={decoding}
             />
           </noscript>
         )}

@@ -8,9 +8,9 @@ import { urlImageBuilder } from "@/assets/scripts/utils/api/urlBuilder";
 import { canonical, pageTitle, personWebsiteGraph } from "@/config/site";
 
 export const getStaticPaths = (async () => {
-    const allLandings = await getLandings();
+    const allLandings: any[] = await getLandings();
 
-    return allLandings.map((page: { seoSlug: { current: any; }; }, index: any)=>{
+    return allLandings.map((page: { seoSlug: { current: any; }; }) => {
         return {
             params: {slug: page.seoSlug.current},
             props: {page}
@@ -18,8 +18,7 @@ export const getStaticPaths = (async () => {
     });
 }) satisfies GetStaticPaths;
 
-const {slug, type} = Astro.params;
-const {page}:{page: any} = Astro.props;
+const { page }: { page: any } = Astro.props;
 
 const pageSlug = page?.seoSlug?.current;
 const canonicalUrl = canonical(pageSlug);
@@ -39,7 +38,7 @@ const webPageJsonLd = {
 };
 ---
 
-<SEO lang="en" title={pageTitle(page.seoTitle)} description={page.seoDescription} ogDescription={page.seoDescription} keywords={page?.seoKeywords} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref)} canonical={canonicalUrl} jsonLd={webPageJsonLd}>
+<SEO lang="en" title={pageTitle(page.seoTitle)} description={page.seoDescription} ogDescription={page.seoDescription} keywords={page?.seoKeywords} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref, undefined, undefined, undefined, "jpg")} canonical={canonicalUrl} jsonLd={webPageJsonLd}>
 	<Layout>
 		<Landing type={page.category} title={page.name} subTitle={page.subtitle} cover={page.cover} content={page.content} comitments={page.comitments}/>
 	</Layout>

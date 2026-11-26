@@ -55,7 +55,11 @@ const BlogList = ({
                         filteredArticles.map((el, index) => {
                             return <li key={el.title + index}>
                                 <a href={`/blog/${el.slug || el?.seoSlug?.current}/`}>
-                                    <BlogItem  {...el} date={el?._createdAt} description={el?.seoDescription}/>
+                                    <BlogItem
+                                        {...el}
+                                        date={el?._createdAt ?? el?.date ?? ""}
+                                        description={el?.seoDescription ?? el?.description ?? ""}
+                                    />
                                 </a>
                             </li>
                         })

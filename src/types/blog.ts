@@ -1,6 +1,10 @@
+export type SanityImageRef = {
+    asset?: { _ref?: string };
+};
+
 export interface Author {
     name: string;
-    picture: string;
+    picture: string | SanityImageRef;
 }
 
 export interface Article {
@@ -11,6 +15,9 @@ export interface Article {
     readingTime: number;
     author: Author;
     slug: string;
+    seoSlug?: { current?: string };
+    seoDescription?: string;
+    _createdAt?: string;
 }
 
 export type Category = "Development" | "Design" | "Photography" | "Thoughts";

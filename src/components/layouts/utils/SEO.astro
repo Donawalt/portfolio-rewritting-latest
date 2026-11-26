@@ -17,6 +17,15 @@ const {
   locale = 'en_US',
   jsonLd,
 } = Astro.props;
+
+// Pages are emitted as directory indexes and served at /path/, which is also
+// what the sitemap contains. Normalize the incoming canonical once here so it
+// matches the final URL instead of pointing at the 301-redirecting /path.
+const canonicalUrl = canonical ? new URL(canonical, Astro.site) : null;
+if (canonicalUrl && !canonicalUrl.pathname.endsWith('/')) {
+  canonicalUrl.pathname += '/';
+}
+const canonicalHref = canonicalUrl?.href;
 ---
 <!DOCTYPE html>
 <html lang={lang}>
@@ -31,8 +40,8 @@ const {
 
     {canonical && (
       <>
-        <link rel="canonical" href={canonical} />
-        <meta property="og:url" content={canonical} />
+        <link rel="canonical" href={canonicalHref} />
+        <meta property="og:url" content={canonicalHref} />
 
          <!-- AEO & GEO handling -->
       <link rel="llms-txt" href={new URL('/llms.txt', Astro.site).href} />
