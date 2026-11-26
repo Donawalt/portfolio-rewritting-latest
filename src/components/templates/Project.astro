@@ -68,7 +68,7 @@ let baseUrl = (() => {
 {
     introduction && skills && (
         <section class="do_project_hero">
-            <div>
+            <div class="do_project_intro">
                 <PortableText value={introduction} />
             </div>
 
@@ -322,6 +322,46 @@ let baseUrl = (() => {
 
         p {
             margin-top: 16px;
+        }
+    }
+
+    .do_project_intro,
+    .do_project_content {
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: map-get($brands-primary, "accent");
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease, text-decoration-color 0.2s ease;
+
+            &:hover {
+                color: map-get($brands-primary, "accent");
+            }
+
+            &:focus-visible {
+                outline: 2px solid map-get($brands-primary, "accent");
+                outline-offset: 3px;
+            }
+        }
+    }
+
+    .do_project_intro {
+        p + p {
+            margin-top: 16px;
+        }
+        p:first-child {
+            margin-top: 0;
+        }
+        strong,
+        em {
+            color: inherit;
+        }
+        @include mq(tablet, max) {
+            p {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
         }
     }
 </style>
