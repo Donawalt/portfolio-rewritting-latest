@@ -1,53 +1,256 @@
 @import "../../../assets//styles/variables.scss";
 @import "../../../assets/styles/mixins.scss";
 
+/*
+ * Footer — from the "Footer G IMP" design (Doop: canvas 5_zRa5FVz9).
+ * Tokens: ground #060606 / text #FFFFFF (variables.scss), hairline rgba(255,255,255,.1),
+ * accent cornflowerblue (same value the previous footer used on hover).
+ */
 .do_footer {
-    display: flex;
-    justify-content: space-between;
-    margin: 0px 28px;
-    padding-top: 16px;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    border-top: 1px solid gray;
-    align-items: flex-end;
-    ul {
-        display: flex;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 64px 32px 0;
 
-        li {
-            position: relative;
-            margin-left: 24px;
-            a{
-                color: inherit;
-                text-decoration: none;
-                transition: 300ms;
-                &:hover{
-                    color: cornflowerblue;
-                    filter: url("#filter-2");
-                }
+    @include mq(tablet, max) {
+        padding: 48px 20px 0;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 300ms;
+        &:hover {
+            color: cornflowerblue;
+            text-decoration: underline;
+        }
+    }
+
+    .eyebrow {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+
+        @include mq(tablet, max) {
+            font-size: 10px;
+            letter-spacing: 1.6px;
+        }
+    }
+
+    .display {
+        margin: 0;
+        font-family: 'scillaregular', 'Times New Roman', serif;
+        text-transform: uppercase;
+        @include interpolate(font-size, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 44px, 72px);
+        line-height: 98%;
+        letter-spacing: 2px;
+
+        @include mq(tablet, max) {
+            line-height: 102%;
+            letter-spacing: 1px;
+        }
+    }
+
+    .muted {
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 300;
+    }
+
+    .star {
+        display: inline-block;
+        vertical-align: -0.08em;
+    }
+    .star_accent {
+        color: cornflowerblue;
+        width: 0.62em;
+        height: 0.62em;
+    }
+    .star_dim {
+        color: rgba(255, 255, 255, 0.4);
+        width: 0.8em;
+        height: 0.8em;
+        margin-right: 10px;
+    }
+
+    // Hero: statement left, availability + CTA right
+    .hero {
+        @include grid(8, 16px, 0px);
+        align-items: end;
+
+        &_l {
+            grid-column: 1 / 7;
+            .eyebrow {
+                margin-bottom: 20px;
             }
-            svg {
-                position: absolute;
-                right: -12px;
-                top: 50%;
-                transform: translate(50%, -50%);
+        }
+
+        &_r {
+            grid-column: 7 / 9;
+            padding-bottom: 6px;
+            p {
+                margin: 0;
+                font-size: 16px;
+                line-height: 160%;
+            }
+        }
+
+        @include mq(tablet, max) {
+            @include grid(1, 0px, 0px);
+            align-items: start;
+
+            &_l .eyebrow {
+                margin-bottom: 16px;
+            }
+
+            &_r {
+                grid-column: 1 / 2;
+                padding-bottom: 0;
+                p {
+                    font-size: 15px;
+                    margin-top: 20px;
+                }
             }
         }
     }
-    @include interpolate(margin, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 28px );
-    @include interpolate(margin-top, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 40px );
-    @include interpolate(margin-bottom, map-get($breakpoints, "tablet"), map-get($breakpoints, "desktop"), 16px, 40px );
-    @include mq(tablet, max){
-        margin: 16px;
-        flex-direction: column-reverse;
+
+    .btn_accent {
+        display: inline-flex;
         align-items: center;
-        ul{
-            margin-bottom: 16px;
-            li{
-                margin-left: 26px;
-                &:nth-child(1){
-                    margin-left: 0px;
-                }
+        margin-top: 20px;
+        border-radius: 100px;
+
+
+        @include mq(tablet, max) {
+            color: #FFFFFF;
+            margin-top: 24px;
+            width: 100%;
+            display: flex;
+            font-size: 17px;
+        }
+
+        a:hover {
+            color: #ffff;
+            text-decoration: none;
+        }
+    }
+
+    // Decorative ruler with tick marks
+    .ruler {
+        height: 9px;
+        margin-top: 44px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        // background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 1px, transparent 1px, transparent 80px);
+
+        @include mq(tablet, max) {
+            margin-top: 36px;
+            background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 1px, transparent 1px, transparent 32px);
+        }
+    }
+
+    // Proof strip: mobile only, per the design frames
+    .proof {
+        display: none;
+
+        @include mq(tablet, max) {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 16px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            > div {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                font-weight: 300;
             }
+
+            .star_dim {
+                width: 12px;
+                height: 12px;
+                margin-right: 8px;
+            }
+        }
+    }
+
+    .cols {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        padding: 32px 0 40px;
+
+        .eyebrow {
+            margin-bottom: 14px;
+        }
+
+        a {
+            display: block;
+            font-size: 17px;
+            font-weight: 300;
+            line-height: 200%;
+        }
+
+        p {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 300;
+            line-height: 200%;
+        }
+
+        @include mq(tablet, max) {
+            grid-template-columns: 1fr 1fr;
+            gap: 24px 16px;
+            padding: 28px 0 36px;
+
+            .eyebrow {
+                margin-bottom: 10px;
+            }
+
+            a {
+                font-size: 16px;
+                padding: 6px 0;
+            }
+
+            p {
+                font-size: 16px;
+                padding: 0;
+            }
+        }
+    }
+
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 12px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.4);
+
+        p, a {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        @include mq(tablet, max) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 18px 0 28px;
+            font-size: 13px;
+
+            a {
+                color: #FFFFFF;
+                padding: 8px 0;
+            }
+        }
+    }
+
+    @include mq(tablet, max) {
+        .display {
+            @include interpolate(font-size, map-get($breakpoints, "phone-small"), map-get($breakpoints, "tablet"), 38px, 44px);
         }
     }
 }
