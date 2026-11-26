@@ -43,7 +43,7 @@ const projectJsonLd = {
   ]
 };
 ---
-<SEO lang="en" title={pageTitle(page?.seoTitle)} description={page?.seoDescription} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref, undefined, undefined, undefined, "jpg")} canonical={canonicalUrl} jsonLd={projectJsonLd}>
+<SEO lang="en" title={pageTitle(page?.seoTitle)} description={page?.seoDescription} keywords={page?.seoKeywords} ogImage={page?.seoImage && urlImageBuilder(page?.seoImage.asset._ref, undefined, undefined, undefined, "jpg")} canonical={canonicalUrl} jsonLd={projectJsonLd}>
 	<Layout>
         <Project title={page?.name} subTitle={page?.subtitle} cover={page?.cover} tag={page?.tag} introduction={page?.introduction} skills={page?.skills} content={page?.content} nextProject={nextPage} slug={slug}/>
     </Layout>
